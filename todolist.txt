@@ -1,3 +1,5 @@
+TODO
+
 CONTRAT COMMUN 
 - Schema DB: noms des tables et champs (pour eviter les surprises)
 - Routes API a partager (noms + methodes)
