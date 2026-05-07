@@ -4,6 +4,7 @@ USE projet_regime_alimentaire;
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
+
 CREATE TABLE IF NOT EXISTS users (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     nom VARCHAR(120) NOT NULL,
