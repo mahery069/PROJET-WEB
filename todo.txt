@@ -1,4 +1,4 @@
-TODO
+TODOLIST
 
 CONTRAT COMMUN 
 - Schema DB: noms des tables et champs (pour eviter les surprises)
