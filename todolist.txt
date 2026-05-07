@@ -1,0 +1,123 @@
+============================================================
+  TODO 3 PERSONNES - PROJET REGIME ALIMENTAIRE
+  Mode: travail en parallele sans attente bloquante
+============================================================
+
+REGLES COMMUNES
+[] Branche cible: dev
+[] Interdit: merge sur main
+[] 1 branche par personne: feat/A-*, feat/B-*, feat/C-*
+[] Pull request courte et frequente
+[] Point de synchro rapide: 15 min / jour
+
+CONTRAT COMMUN (A FAIRE EN PREMIER - 30 A 45 MIN)
+[] Valider schema DB final (noms tables/champs)
+[] Valider routes API (front/back/wallet)
+[] Valider format JSON (success, message, data, errors)
+[] Valider regles metier (IMC, remise Gold 15%, achat regime)
+
+------------------------------------------------------------
+PERSONNE A - BACK OFFICE + DONNEES
+------------------------------------------------------------
+
+A1. Base de donnees
+[] Creer/finaliser tables: users, user_health, regimes, activites, codes_wallet, user_regimes, parametres
+[] Ajouter contraintes: FK, unique email, unique code
+[] Ajouter index utiles
+[] Seeds: 5 users, 5 regimes, 5 activites, 15 codes wallet
+
+A2. Back office auth
+[] Login admin (separe du front)
+[] Middleware de protection routes admin
+[] Logout admin
+
+A3. Back office CRUD
+[] CRUD regimes (liste, ajout, modif, suppression)
+[] CRUD activites (liste, ajout, modif, suppression)
+[] Gestion codes wallet (liste, ajout, valider/invalider)
+[] CRUD parametres (prix Gold, tranches IMC, autres)
+
+A4. Dashboard
+[] Stats globales (users, ventes regimes, etc.)
+[] Graphe repartition objectifs
+[] Graphe regimes les plus souscrits
+[] Tableau croise objectif/regime
+
+LIVRABLE A
+[] Espace admin fonctionnel
+[] DB + seeds stables
+
+------------------------------------------------------------
+PERSONNE B - FRONT OFFICE UTILISATEUR
+------------------------------------------------------------
+
+B1. Auth utilisateur
+[] Inscription etape 1 (nom, email, genre, date naissance, mdp)
+[] Inscription etape 2 (taille, poids)
+[] Login utilisateur
+[] Logout utilisateur
+
+B2. Profil et IMC
+[] Page profil (completer/modifier)
+[] Calcul IMC
+[] Affichage categorie IMC (sous-poids, normal, surpoids, obese)
+
+B3. Objectifs et suggestions
+[] Choix objectif (augmenter, reduire, imc ideal)
+[] Afficher regimes suggeres
+[] Afficher activites recommandees
+[] Afficher duree estimee
+
+B4. Export
+[] Export PDF (regime + activites recommandees)
+
+LIVRABLE B
+[] Parcours utilisateur complet de l inscription aux suggestions
+[] UI front stable
+
+------------------------------------------------------------
+PERSONNE C - WALLET + GOLD + ACHAT
+------------------------------------------------------------
+
+C1. Wallet
+[] Affichage solde
+[] Recharge via code (AJAX sans reload)
+[] Validation code + MAJ solde
+[] Gestions erreurs (code invalide/deja utilise)
+
+C2. Achat regime
+[] Achat regime depuis front
+[] Deduction solde
+[] Blocage si solde insuffisant
+[] Enregistrer souscription dans user_regimes
+
+C3. Option Gold
+[] Page presentation offre Gold
+[] Achat Gold via wallet
+[] Appliquer remise 15% sur regimes pour membre Gold
+
+C4. Tests integration
+[] Test flux recharge -> achat regime
+[] Test flux achat Gold -> remise appliquee
+[] Test cas limites (double achat, code deja utilise, solde insuffisant)
+
+LIVRABLE C
+[] Wallet + Gold + Achat regime operationnels
+[] Endpoints AJAX fiables
+
+------------------------------------------------------------
+PLANNING CONSEILLE (EXEMPLE 4 JOURS)
+------------------------------------------------------------
+
+[] Jour 1: contrat commun + dev parallele A/B/C
+[] Jour 2: dev parallele + premier branchement API reel
+[] Jour 3: integration complete + corrections
+[] Jour 4: tests finaux + demo
+
+------------------------------------------------------------
+CHECKLIST FINALE
+------------------------------------------------------------
+
+[] Toutes les taches du todo initial sont couvertes
+[] Aucun merge sur main
+[] Branche dev stable et prete pour validation
