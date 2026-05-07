@@ -5,13 +5,31 @@ CONTRAT COMMUN
 - Regles metier: calcul IMC, remise Gold 15%, comportement achat
 
 PERSONNE A - Admin & donnees 
-PERSONNE A - Admin & donnees (Bolt)
+- Tache 1: finaliser la base de donnees et les contraintes (FK, unique, index)
+- Tache 2: ecrire les migrations et les seeds (5 users, 5 regimes, 5 activites, 15 codes)
+- Tache 3: creer l espace admin: login, middleware, logout
+- Tache 4: CRUD pour regimes et activites, gestion des codes wallet
+- Tache 5: tableau de bord simple (stats + 2 graphes)
+
+Resultat attendu A: espace admin fonctionnel, DB prete avec seeds
 
 PERSONNE B - Front utilisateur 
-PERSONNE B - Front utilisateur (Maherey)
+- Tache 1: inscription (etape 1: nom/email/mdp, etape 2: taille/poids)
+- Tache 2: login/logout et page profil (modification)
+- Tache 3: calcul IMC et affichage de la categorie
+- Tache 4: page objectifs et suggestions (regimes + activites)
+- Tache 5: export PDF du resume propose
+
+Resultat attendu B: parcours utilisateur testable du debut a la suggestion
 
 PERSONNE C - Wallet & achat 
-PERSONNE C - Wallet & achat (Mia)
+- Tache 1: afficher le solde wallet de l utilisateur
+- Tache 2: recharge via code en AJAX (sans reload) + validation
+- Tache 3: achat de regime (deduction du solde, enregistrement souscription)
+- Tache 4: option Gold (page, achat via wallet, remise 15%)
+- Tache 5: ecrire tests d integration pour les flux critiques
+
+Resultat attendu C: wallet, achat et Gold fonctionnels et testes
 
 CHECKLIST 
 - Toutes les pages et fonctions principales presentes
