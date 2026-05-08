@@ -16,3 +16,7 @@ $routes->get('/auth/register', 'Auth::registerStep1');
 $routes->post('/auth/register-step1', 'Auth::handleRegisterStep1');
 $routes->post('/auth/register-step2', 'Auth::handleRegisterStep2');
 $routes->get('/auth/logout', 'Auth::logout');
+
+// Profile routes
+$routes->get('/profil', 'Auth::profile');
+$routes->post('/profil', 'Auth::updateProfile');

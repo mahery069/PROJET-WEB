@@ -130,4 +130,20 @@ class Auth extends BaseController
     {
         return view('auth/forgot-password');
     }
+
+    /**
+     * Display the profile form
+     */
+    public function profile()
+    {
+        return view('auth/profile');
+    }
+
+    /**
+     * Handle profile update (placeholder)
+     */
+    public function updateProfile()
+    {
+        return redirect()->back()->with('success', 'Profil mis a jour.');
+    }
 }
