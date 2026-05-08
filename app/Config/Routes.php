@@ -6,10 +6,10 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->get('/', 'Home::index');
+
+// Mahery - Authentication routes
 $routes->get('/formulaire', 'Auth::registerStep1');
 $routes->get('/formulaire-step2', 'Auth::registerStep2');
-
-// Authentication routes
 $routes->get('/auth/login', 'Auth::login');
 $routes->post('/auth/login', 'Auth::handleLogin');
 $routes->get('/auth/register', 'Auth::registerStep1');
@@ -17,23 +17,26 @@ $routes->post('/auth/register-step1', 'Auth::handleRegisterStep1');
 $routes->post('/auth/register-step2', 'Auth::handleRegisterStep2');
 $routes->get('/auth/logout', 'Auth::logout');
 
-// Profile routes
+// Mahery - Profile routes
 $routes->get('/profil', 'Auth::profile');
 $routes->post('/profil', 'Auth::updateProfile');
 
-// Objectifs & suggestions
+// Mahery - Objectifs & suggestions
 $routes->get('/objectifs', 'Auth::objectifs');
 $routes->get('/objectifs/data', 'Auth::objectifsData');
-// Wallet routes
+
+// Bolton - Wallet UI pages
+$routes->get('wallet/gold', 'Wallet::goldPage');
+
+// Bolton - Wallet routes
 $routes->get('wallet/balance', 'Wallet::balance');
 $routes->post('wallet/redeem', 'Wallet::redeem');
+$routes->post('wallet/purchase', 'Wallet::purchase');
+$routes->get('wallet/subscriptions', 'Wallet::subscriptions');
+$routes->post('wallet/gold/purchase', 'Wallet::purchaseGold');
+$routes->get('wallet/gold/status', 'Wallet::goldStatus');
 
-// Auth routes
-$routes->get('auth/login', 'Auth::login');
-$routes->post('auth/handle-login', 'Auth::handleLogin');
-$routes->get('auth/logout', 'Auth::logout');
-
-// Admin routes (protected by AdminAuth filter)
+// Miangola - Admin routes (protected by AdminAuth filter)
 $routes->group('admin', ['filter' => 'AdminAuth'], function($routes) {
     $routes->get('dashboard', 'Admin::dashboard');
 });
