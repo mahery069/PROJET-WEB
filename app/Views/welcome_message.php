@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <h1>Selecteur de regime alimentaire</h1>
-        <p>Bienvenue sur l'application de selection de regime alimentaire.</p>
+        
         <section id="wallet-widget" style="margin-top:20px;padding:12px;border:1px solid #ddd;border-radius:6px;max-width:420px;">
             <h2>Wallet</h2>
             <div style="margin-bottom:8px;">Solde: <strong id="wallet-balance">0.00 €</strong></div>

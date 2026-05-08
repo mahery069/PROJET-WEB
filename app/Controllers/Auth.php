@@ -14,9 +14,7 @@ class Auth extends BaseController
         $this->userModel = new User();
     }
 
-    /**
-     * Admin login page
-     */
+   
     public function login()
     {
         $session = session();
@@ -26,9 +24,7 @@ class Auth extends BaseController
         return view('auth/admin_login');
     }
 
-    /**
-     * Handle admin login
-     */
+    
     public function handleLogin()
     {
         $email = $this->request->getPost('email');
@@ -44,7 +40,7 @@ class Auth extends BaseController
             return redirect()->back()->with('error', 'Email ou mot de passe incorrect');
         }
 
-        // Login successful
+
         session()->set([
             'admin_id' => $user['id'],
             'admin_email' => $user['email'],
@@ -55,9 +51,7 @@ class Auth extends BaseController
         return redirect()->to('/admin/dashboard')->with('success', 'Bienvenue ' . $user['nom']);
     }
 
-    /**
-     * Admin logout
-     */
+   
     public function logout()
     {
         session()->remove(['admin_id', 'admin_email', 'admin_nom', 'admin_role']);

@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS codes_wallet (
 	CONSTRAINT fk_codes_wallet_id_utilisateur FOREIGN KEY (id_utilisateur) REFERENCES users(id) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- 6. Table user_wallet
+
 CREATE TABLE IF NOT EXISTS user_wallet (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	id_user INT UNSIGNED NOT NULL,
