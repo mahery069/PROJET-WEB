@@ -86,6 +86,7 @@
 
             <div class="button-group">
                 <button type="submit">Enregistrer</button>
+                <button type="button" class="secondary" onclick="window.location.href='/export-pdf'" title="Exporter en PDF">📄 Exporter PDF</button>
                 <button type="button" class="secondary" onclick="window.location.href='/'">Retour</button>
             </div>
         </form>

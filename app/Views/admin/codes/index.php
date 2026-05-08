@@ -59,6 +59,7 @@
                     <td>
                         <?php if (!$code['est_utilise']): ?>
                             <a href="/admin/codes/validate/<?= $code['id'] ?>" class="btn btn-success" style="padding: 5px 10px; font-size: 12px;">Valider</a>
+                            <a href="/admin/codes/delete/<?= $code['id'] ?>" class="btn" style="padding: 5px 10px; font-size: 12px; background: #dc3545;" onclick="return confirm('Supprimer ce code?');">Supprimer</a>
                         <?php endif; ?>
                     </td>
                 </tr>

@@ -100,6 +100,26 @@ class CreateInitialTables extends Migration
         $this->forge->addForeignKey('id_utilisateur', 'users', 'id', 'SET NULL', 'CASCADE');
         $this->forge->createTable('codes_wallet');
 
+        // User regimes subscriptions table
+        $this->forge->addField([
+            'id' => ['type' => 'INT', 'unsigned' => true, 'auto_increment' => true],
+            'id_user' => ['type' => 'INT', 'unsigned' => true],
+            'id_regime' => ['type' => 'INT', 'unsigned' => true],
+            'date_debut' => ['type' => 'DATE'],
+            'date_fin' => ['type' => 'DATE'],
+            'prix_paye' => ['type' => 'DECIMAL', 'constraint' => '10,2'],
+            'est_actif' => ['type' => 'TINYINT', 'constraint' => 1, 'default' => 1],
+            'created_at' => ['type' => 'TIMESTAMP', 'default' => 'CURRENT_TIMESTAMP'],
+            'updated_at' => ['type' => 'TIMESTAMP', 'default' => 'CURRENT_TIMESTAMP', 'on_update' => 'CURRENT_TIMESTAMP'],
+        ]);
+        $this->forge->addPrimaryKey('id');
+        $this->forge->addKey('id_user');
+        $this->forge->addKey('id_regime');
+        $this->forge->addKey('est_actif');
+        $this->forge->addForeignKey('id_user', 'users', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('id_regime', 'regimes', 'id', 'CASCADE', 'CASCADE');
+        $this->forge->createTable('user_regimes');
+
         // User wallet table
         $this->forge->addField([
             'id' => ['type' => 'INT', 'unsigned' => true, 'auto_increment' => true],
@@ -132,6 +152,7 @@ class CreateInitialTables extends Migration
     {
         $this->forge->dropTable('user_logs');
         $this->forge->dropTable('user_wallet');
+        $this->forge->dropTable('user_regimes');
         $this->forge->dropTable('codes_wallet');
         $this->forge->dropTable('activites');
         $this->forge->dropTable('regimes');

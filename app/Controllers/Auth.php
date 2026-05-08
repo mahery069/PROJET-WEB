@@ -326,4 +326,122 @@ class Auth extends BaseController
             'data' => $suggestions,
         ]);
     }
+
+    /**
+     * Export user profile and suggestions as PDF
+     */
+    public function exportPDF()
+    {
+        $session = session();
+        $userId = $session->get('user_id');
+
+        if (!$userId) {
+            return redirect()->to('/auth/login')->with('error', 'Veuillez vous connecter');
+        }
+
+        $db = db_connect();
+        $user = $db->table('users')->where('id', $userId)->get()->getRowArray();
+        $health = $db->table('user_health')->where('id_user', $userId)->get()->getRowArray();
+        $subscriptions = $db->table('user_regimes')
+            ->select('user_regimes.*, regimes.nom, regimes.description, regimes.prix')
+            ->join('regimes', 'user_regimes.id_regime = regimes.id')
+            ->where('user_regimes.id_user', $userId)
+            ->where('user_regimes.est_actif', 1)
+            ->get()
+            ->getResultArray();
+
+        // Build HTML content
+        $html = '<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Profil Utilisateur - NutriPlan</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; color: #333; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 8px; margin-bottom: 30px; }
+        h1 { margin: 0; font-size: 28px; }
+        .section { margin: 20px 0; }
+        .section-title { background: #f0f0f0; padding: 10px; font-weight: bold; border-left: 4px solid #667eea; margin: 20px 0 10px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background: #f9f9f9; font-weight: bold; }
+        .info-box { background: #f9f9f9; padding: 15px; border-radius: 8px; margin: 10px 0; }
+        .footer { text-align: center; color: #999; font-size: 12px; margin-top: 40px; }
+        .imc { font-size: 18px; font-weight: bold; color: #667eea; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Profil Utilisateur - NutriPlan</h1>
+        <p>Rapport généré le ' . date('d/m/Y H:i') . '</p>
+    </div>
+
+    <div class="section">
+        <div class="section-title">Informations Personnelles</div>
+        <div class="info-box">
+            <p><strong>Nom:</strong> ' . htmlspecialchars($user['nom'] ?? 'N/A') . '</p>
+            <p><strong>Email:</strong> ' . htmlspecialchars($user['email']) . '</p>
+            <p><strong>Genre:</strong> ' . htmlspecialchars($user['genre'] ?? 'N/A') . '</p>
+            <p><strong>Statut Gold:</strong> ' . ($user['is_gold'] ? '✓ Membre Gold (15% remise)' : 'Standard') . '</p>
+        </div>
+    </div>';
+
+        if ($health) {
+            $imc = $health['poids_kg'] / (($health['taille_cm'] / 100) * ($health['taille_cm'] / 100));
+            $html .= '
+    <div class="section">
+        <div class="section-title">Données de Santé</div>
+        <div class="info-box">
+            <p><strong>Taille:</strong> ' . htmlspecialchars($health['taille_cm']) . ' cm</p>
+            <p><strong>Poids:</strong> ' . htmlspecialchars($health['poids_kg']) . ' kg</p>
+            <p><strong>IMC (Indice de Masse Corporelle):</strong> <span class="imc">' . number_format($imc, 2) . '</span></p>
+            <p><strong>Objectif:</strong> ' . htmlspecialchars($health['objectif']) . '</p>
+        </div>
+    </div>';
+        }
+
+        if (!empty($subscriptions)) {
+            $html .= '
+    <div class="section">
+        <div class="section-title">Régimes Actifs</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Régime</th>
+                    <th>Description</th>
+                    <th>Prix Payé</th>
+                    <th>Date Fim</th>
+                </tr>
+            </thead>
+            <tbody>';
+
+            foreach ($subscriptions as $sub) {
+                $html .= '
+                <tr>
+                    <td>' . htmlspecialchars($sub['nom']) . '</td>
+                    <td>' . htmlspecialchars(substr($sub['description'] ?? '', 0, 50)) . '...</td>
+                    <td>€' . number_format($sub['prix_paye'], 2) . '</td>
+                    <td>' . htmlspecialchars($sub['date_fin']) . '</td>
+                </tr>';
+            }
+
+            $html .= '
+            </tbody>
+        </table>
+    </div>';
+        }
+
+        $html .= '
+    <div class="footer">
+        <p>© ' . date('Y') . ' NutriPlan - Tous droits réservés</p>
+    </div>
+</body>
+</html>';
+
+        // Set headers for PDF download
+        header('Content-Type: text/html; charset=utf-8');
+        header('Content-Disposition: inline; filename="profil_' . $user['id'] . '.html"');
+        
+        echo $html;
+    }
 }

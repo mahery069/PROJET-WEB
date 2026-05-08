@@ -20,6 +20,7 @@ $routes->get('/auth/logout', 'Auth::logout');
 // Mahery - Profile routes
 $routes->get('/profil', 'Auth::profile');
 $routes->post('/profil', 'Auth::updateProfile');
+$routes->get('/export-pdf', 'Auth::exportPDF');
 
 // Mahery - Objectifs & suggestions
 $routes->get('/objectifs', 'Auth::objectifs');
@@ -71,6 +72,7 @@ $routes->group('admin', ['filter' => 'AdminAuth'], function($routes) {
     $routes->get('codes', 'Admin::codesIndex');
     $routes->get('codes/create', 'Admin::codesCreate');
     $routes->post('codes', 'Admin::codesStore');
+    $routes->get('codes/delete/(:num)', 'Admin::codesDelete/$1');
     $routes->get('codes/validate/(:num)', 'Admin::codesValidate/$1');
 });
 
