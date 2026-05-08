@@ -47,47 +47,70 @@ class Auth extends BaseController
     }
 
     /**
-     * Display the registration form
+     * Display the registration form - Step 1
      */
-    public function register()
+    public function registerStep1()
     {
-        if (session()->has('user_id')) {
-            return redirect()->to('/dashboard');
-        }
-
-        return view('auth/register');
+        return view('auth/formulaire');
     }
 
     /**
-     * Handle registration form submission
+     * Handle registration step 1 - Store data in session
      */
-    public function handleRegister()
+    public function handleRegisterStep1()
     {
+        return redirect()->to('/formulaire-step2');
+    }
+
+    /**
+     * Display the registration form - Step 2
+     */
+    public function registerStep2()
+    {
+        return view('auth/formuaire2');
+    }
+
+    /**
+     * Handle registration step 2 - Final registration
+     */
+    public function handleRegisterStep2()
+    {
+        // Check if step 1 is completed
+        if (!session()->has('register_step1')) {
+            return redirect()->to('/auth/register');
+        }
+
         // Validate input
         if (!$this->validate([
-            'email'    => 'required|valid_email|is_unique[users.email]',
-            'password' => 'required|min_length[6]',
-            'pass_confirm' => 'required|matches[password]'
+            'taille' => 'required|numeric|greater_than[100]|less_than[250]',
+            'poids' => 'required|numeric|greater_than[30]|less_than[200]'
         ])) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', $this->validator->listErrors());
         }
 
-        $email = $this->request->getPost('email');
-        $password = $this->request->getPost('password');
+        $step1 = session('register_step1');
+        $taille = $this->request->getPost('taille');
+        $poids = $this->request->getPost('poids');
 
         // TODO: Store user in database
         // Example:
         // $userModel = new UserModel();
         // $userModel->insert([
-        //     'email'         => $email,
-        //     'password_hash' => password_hash($password, PASSWORD_BCRYPT),
+        //     'name'          => $step1['nom'],
+        //     'email'         => $step1['email'],
+        //     'password_hash' => password_hash($step1['password'], PASSWORD_BCRYPT),
+        //     'taille'        => $taille,
+        //     'poids'         => $poids,
         //     'created_at'    => date('Y-m-d H:i:s')
         // ]);
 
+        // Clear session
+        session()->remove('register_step1');
+
         return redirect()->to('/auth/login')
-            ->with('success', 'Inscription réussie. Veuillez vous connecter.');
+            ->with('success', 'Inscription réussie! Connectez-vous');
     }
 
     /**

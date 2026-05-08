@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<form>
+<form method="POST" action="/auth/register-step1">
     <fieldset>
     <legend>Informations personnelles</legend>
 <label for="nom">Nom:</label>
@@ -16,9 +16,9 @@
 <input type="text" id="prenom" name="prenom">
 
 
-<label for="date">DATE:</label>
+<!--<label for="date">DATE:</label>
 <input type="date" name="date" id="date">
-<!-- Date de naissance :
+ Date de naissance :
 <input type="text" placeholder="JJ">
 <input type="text" placeholder="MM">
 <input type="text" placeholder="AAAA"><br><br> -->
@@ -39,8 +39,10 @@
     <legend>securite</legend>
 <label for="password">Mot de passe</label>
 <input type="password" id="password" name="password">
+<label for="password_confirm">Confirmer le mot de passe</label>
+<input type="password" id="password_confirm" name="password_confirm">
 </fieldset>
-<button type="submit">Créer mon compte</button>
+<button type="submit">Suivant</button>
 </form>
 
 </body>
