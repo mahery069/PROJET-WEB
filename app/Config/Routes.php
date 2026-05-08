@@ -23,3 +23,4 @@ $routes->post('/profil', 'Auth::updateProfile');
 
 // Objectifs & suggestions
 $routes->get('/objectifs', 'Auth::objectifs');
+$routes->get('/objectifs/data', 'Auth::objectifsData');

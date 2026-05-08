@@ -246,4 +246,54 @@ class Auth extends BaseController
     {
         return view('auth/objectifs');
     }
+
+    /**
+     * Return suggestions from DB (regimes + activites)
+     */
+    public function objectifsData()
+    {
+        $objectif = $this->request->getGet('objectif');
+
+        $db = db_connect();
+        $regimesBuilder = $db->table('regimes')->where('actif', 1);
+
+        if ($objectif === 'augmenter') {
+            $regimesBuilder->where('variation_poids >', 0);
+        } elseif ($objectif === 'reduire') {
+            $regimesBuilder->where('variation_poids <', 0);
+        } elseif ($objectif === 'imc_ideal') {
+            $regimesBuilder->where('variation_poids >=', -0.2)->where('variation_poids <=', 0.2);
+        }
+
+        $regimes = $regimesBuilder->orderBy('variation_poids', 'DESC')->limit(3)->get()->getResultArray();
+
+        $activites = $db->table('activites')
+            ->where('actif', 1)
+            ->orderBy('intensite', 'ASC')
+            ->limit(3)
+            ->get()
+            ->getResultArray();
+
+        $suggestions = [];
+        $count = max(count($regimes), count($activites));
+        for ($i = 0; $i < $count; $i++) {
+            $regime = $regimes[$i] ?? null;
+            $activite = $activites[$i] ?? null;
+
+            if (!$regime && !$activite) {
+                continue;
+            }
+
+            $suggestions[] = [
+                'regime' => $regime ? $regime['nom'] : 'Regime a definir',
+                'impact' => $regime ? (string) $regime['variation_poids'] . ' kg' : '-',
+                'activite' => $activite ? $activite['nom'] : 'Activite a definir',
+            ];
+        }
+
+        return $this->response->setJSON([
+            'success' => true,
+            'data' => $suggestions,
+        ]);
+    }
 }

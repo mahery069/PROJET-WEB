@@ -3,88 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accueil - Sélecteur de Régime Alimentaire</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        
-        .container {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            padding: 50px;
-            max-width: 600px;
-            text-align: center;
-        }
-        
-        h1 {
-            color: #333;
-            font-size: 32px;
-            margin-bottom: 20px;
-        }
-        
-        p {
-            color: #666;
-            font-size: 16px;
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-        
-        .buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        a {
-            display: inline-block;
-            padding: 12px 25px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: 600;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        
-        a:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-        
-        .secondary {
-            background: #f0f0f0;
-            color: #333;
-        }
-        
-        .secondary:hover {
-            background: #e0e0e0;
-        }
-    </style>
+    <title>NutriPlan — Accueil</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/nutriplan-home.css">
 </head>
 <body>
-    <div class="container">
-        <h1>🍽️ Sélecteur de Régime Alimentaire</h1>
-        <p>Bienvenue! Cette application vous aide à choisir le régime alimentaire qui correspond le mieux à vos besoins et objectifs santé.</p>
-        
-        <div class="buttons">
-            <a href="/formulaire">📋 Formulaire</a>
-            <a href="/auth/login" class="secondary">🔐 Se Connecter</a>
+
+<div class="imc-badge">
+    <span class="dot"></span>
+    Calcul IMC integre
+</div>
+
+<div class="page-wrapper">
+
+    <div class="header">
+        <div class="logo-pill">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 3c1.7 0 3 1.3 3 3s-1.3 3-3 3-3-1.3-3-3 1.3-3 3-3zm0 14.2c-2.5 0-4.7-1.3-6-3.2.03-2 4-3.1 6-3.1 2 0 5.97 1.1 6 3.1-1.3 1.9-3.5 3.2-6 3.2z" />
+            </svg>
+            NutriPlan S4
         </div>
+        <h1>Bienvenue sur<br><span>NutriPlan</span></h1>
+        <p class="subtitle">Selectionnez votre espace pour acceder a l'application de gestion des regimes alimentaires personnalises.</p>
     </div>
+
+    <div class="cards-grid">
+
+        <a class="card card-user" href="/auth/login">
+            <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="8" r="4" fill="#2d6a4f" opacity="0.9" />
+                    <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#2d6a4f" stroke-width="2" stroke-linecap="round" fill="none" />
+                </svg>
+            </div>
+            <div class="card-label">Espace</div>
+            <div class="card-title">Utilisateur</div>
+            <p class="card-desc">Gerez votre profil, decouvrez vos regimes personnalises et atteignez vos objectifs sante.</p>
+            <div class="card-features">
+                <div class="feature-item"><span class="feature-dot"></span>Calcul IMC & objectifs</div>
+                <div class="feature-item"><span class="feature-dot"></span>Suggestions de regimes</div>
+                <div class="feature-item"><span class="feature-dot"></span>Porte-monnaie & Option Gold</div>
+                <div class="feature-item"><span class="feature-dot"></span>Export PDF</div>
+            </div>
+            <span class="cta-btn">Acceder <span class="cta-arrow">→</span></span>
+        </a>
+
+        <a class="card card-admin" href="#">
+            <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="3" y="3" width="8" height="8" rx="2" fill="#e65100" opacity="0.9" />
+                    <rect x="13" y="3" width="8" height="8" rx="2" fill="#e65100" opacity="0.55" />
+                    <rect x="3" y="13" width="8" height="8" rx="2" fill="#e65100" opacity="0.55" />
+                    <rect x="13" y="13" width="8" height="8" rx="2" fill="#e65100" opacity="0.9" />
+                </svg>
+            </div>
+            <div class="card-label">Espace</div>
+            <div class="card-title">Administrateur</div>
+            <p class="card-desc">Espace administrateur en preparation. Contenu a venir.</p>
+            <div class="card-features">
+                <div class="feature-item"><span class="feature-dot"></span>Dashboard & graphiques</div>
+                <div class="feature-item"><span class="feature-dot"></span>CRUD regimes & activites</div>
+                <div class="feature-item"><span class="feature-dot"></span>Validation codes porte-monnaie</div>
+                <div class="feature-item"><span class="feature-dot"></span>Gestion des parametres</div>
+            </div>
+            <span class="cta-btn">A venir <span class="cta-arrow">→</span></span>
+        </a>
+
+    </div>
+
+    <p class="footer-note">Projet S4 — <strong>CodeIgniter + PHP + MySQL</strong> · Groupe mixte de 3</p>
+
+</div>
+
 </body>
 </html>

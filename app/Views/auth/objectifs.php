@@ -162,9 +162,9 @@
                 <label for="objectif">Objectif</label>
                 <select id="objectif" name="objectif">
                     <option value="">Selectionner un objectif</option>
-                    <option value="gain">Augmenter son poids</option>
-                    <option value="perte">Reduire son poids</option>
-                    <option value="ideal">Atteindre l'IMC ideal</option>
+                    <option value="augmenter">Augmenter son poids</option>
+                    <option value="reduire">Reduire son poids</option>
+                    <option value="imc_ideal">Atteindre l'IMC ideal</option>
                 </select>
 
                 <label for="duree">Duree (semaines)</label>
@@ -173,7 +173,7 @@
                 <div class="actions">
                     <button type="button" onclick="updateSuggestions()">Voir les suggestions</button>
                 </div>
-                <div class="hint">Les suggestions sont des exemples front pour la demo (regimes + activites).</div>
+                <div class="hint">Suggestions chargees depuis la base (regimes + activites).</div>
             </div>
 
             <div class="card">
@@ -186,67 +186,43 @@
     </div>
 
     <script>
-        const data = {
-            gain: [
-                {
-                    regime: "Regime hypercalorique",
-                    impact: "+0.5 kg/semaine",
-                    activite: "Musculation 3x/semaine"
-                },
-                {
-                    regime: "Regime proteine + glucides",
-                    impact: "+0.3 kg/semaine",
-                    activite: "Marche active 2x/semaine"
-                }
-            ],
-            perte: [
-                {
-                    regime: "Regime hypocalorique",
-                    impact: "-0.6 kg/semaine",
-                    activite: "Cardio 4x/semaine"
-                },
-                {
-                    regime: "Regime mediterraneen",
-                    impact: "-0.4 kg/semaine",
-                    activite: "Natation 2x/semaine"
-                }
-            ],
-            ideal: [
-                {
-                    regime: "Regime equilibre",
-                    impact: "Stabilisation",
-                    activite: "Jogging 3x/semaine"
-                },
-                {
-                    regime: "Regime fractionne",
-                    impact: "Stabilisation",
-                    activite: "Yoga 2x/semaine"
-                }
-            ]
-        };
-
-        function updateSuggestions() {
+        async function updateSuggestions() {
             const target = document.getElementById("suggestions");
             const objectif = document.getElementById("objectif").value;
             const duree = document.getElementById("duree").value;
 
-            if (!objectif || !data[objectif]) {
+            if (!objectif) {
                 target.innerHTML = '<div class="empty">Choisissez un objectif pour voir des suggestions.</div>';
                 return;
             }
 
-            const items = data[objectif];
-            const duration = duree ? `${duree} semaines` : "duree non precisee";
+            target.innerHTML = '<div class="empty">Chargement...</div>';
 
-            target.innerHTML = items.map((item) => {
-                return `
-                    <div class="suggestion">
-                        <div><strong>${item.regime}</strong> <span class="tag">${item.impact}</span></div>
-                        <div class="activity">Activite: ${item.activite}</div>
-                        <div class="hint">Duree: ${duration}</div>
-                    </div>
-                `;
-            }).join('');
+            try {
+                const url = `/objectifs/data?objectif=${encodeURIComponent(objectif)}`;
+                const response = await fetch(url);
+                const payload = await response.json();
+                const items = payload.data || [];
+
+                if (!items.length) {
+                    target.innerHTML = '<div class="empty">Aucune suggestion trouvee.</div>';
+                    return;
+                }
+
+                const duration = duree ? `${duree} semaines` : "duree non precisee";
+
+                target.innerHTML = items.map((item) => {
+                    return `
+                        <div class="suggestion">
+                            <div><strong>${item.regime}</strong> <span class="tag">${item.impact}</span></div>
+                            <div class="activity">Activite: ${item.activite}</div>
+                            <div class="hint">Duree: ${duration}</div>
+                        </div>
+                    `;
+                }).join('');
+            } catch (e) {
+                target.innerHTML = '<div class="empty">Erreur de chargement.</div>';
+            }
         }
     </script>
 </body>
