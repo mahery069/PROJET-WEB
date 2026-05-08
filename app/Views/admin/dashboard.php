@@ -36,39 +36,77 @@
         <?php endif; ?>
         
         <h2>Bienvenue <?= $admin_nom ?> !</h2>
-        <p>Selectionnez une section pour commencer:</p>
-        
+        <p>Statistiques rapides et graphiques.</p>
+
         <div class="dashboard-grid">
             <div class="dashboard-card">
                 <h3>Utilisateurs</h3>
-                <p>Gerer les utilisateurs et leurs roles</p>
-                <a href="#">Voir les utilisateurs</a>
+                <p><strong><?= $stats['total_users'] ?? 0 ?></strong> utilisateurs</p>
             </div>
-            
+
+            <div class="dashboard-card">
+                <h3>Solde total Wallet</h3>
+                <p><strong><?= number_format($stats['total_wallet'] ?? 0, 2) ?> €</strong></p>
+            </div>
+
             <div class="dashboard-card">
                 <h3>Regimes</h3>
-                <p>Creer et modifier les regimes alimentaires</p>
-                <a href="#">Gerer les regimes</a>
+                <p><strong><?= $stats['total_regimes'] ?? 0 ?></strong> regimes</p>
             </div>
-            
+
             <div class="dashboard-card">
                 <h3>Activites</h3>
-                <p>Creer et modifier les activites</p>
-                <a href="#">Gerer les activites</a>
+                <p><strong><?= $stats['total_activites'] ?? 0 ?></strong> activites</p>
             </div>
-            
+
             <div class="dashboard-card">
                 <h3>Codes Wallet</h3>
-                <p>Gerer les codes de recharge wallet</p>
-                <a href="#">Gerer les codes</a>
+                <p><strong><?= $stats['total_codes'] ?? 0 ?></strong> codes (<strong><?= $stats['used_codes'] ?? 0 ?></strong> utilises)</p>
             </div>
-            
-            <div class="dashboard-card">
-                <h3>Statistiques</h3>
-                <p>Voir les statistiques et rapports</p>
-                <a href="#">Voir les stats</a>
+        </div>
+
+        <div style="margin-top:30px; display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+            <div class="dashboard-card" style="padding:16px;">
+                <h3>Codes utilisés vs non utilisés</h3>
+                <canvas id="codesChart" width="400" height="250"></canvas>
+            </div>
+
+            <div class="dashboard-card" style="padding:16px;">
+                <h3>Top 5 soldes utilisateurs</h3>
+                <canvas id="topUsersChart" width="400" height="250"></canvas>
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Data passed from PHP
+        const codesData = {
+            labels: ['Utilisés', 'Non utilisés'],
+            datasets: [{
+                data: [<?= (int)($codesChart['used'] ?? 0) ?>, <?= (int)($codesChart['unused'] ?? 0) ?>],
+                backgroundColor: ['#28a745', '#ffc107']
+            }]
+        };
+
+        const topUsersLabels = <?= json_encode($topUsersChart['labels'] ?? []) ?>;
+        const topUsersData = <?= json_encode($topUsersChart['data'] ?? []) ?>;
+
+        // Codes doughnut
+        new Chart(document.getElementById('codesChart').getContext('2d'), {
+            type: 'doughnut',
+            data: codesData,
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+
+        // Top users bar
+        new Chart(document.getElementById('topUsersChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: topUsersLabels,
+                datasets: [{ label: 'Solde (€)', data: topUsersData, backgroundColor: '#007bff' }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+    </script>
 </body>
 </html>
