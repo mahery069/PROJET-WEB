@@ -7,15 +7,17 @@
 </head>
 <body>
 
-<form>
+<form id="registerStep2" novalidate>
     <fieldset>
         <legend>Etape 2 : Informations physiques</legend>
 
         <label for="taille">Taille (cm) :</label>
         <input type="number" id="taille" name="taille" min="100" max="250" required>
+        <div id="tailleError"></div>
 
         <label for="poids">Poids (kg) :</label>
         <input type="number" id="poids" name="poids" min="30" max="200" step="0.1" required>
+        <div id="poidsError"></div>
 
         <br><br>
 
@@ -24,6 +26,8 @@
         </button>
     </fieldset>
 </form>
+
+<script src="/assets/js/register-validation.js" defer></script>
 
 </body>
 </html>
