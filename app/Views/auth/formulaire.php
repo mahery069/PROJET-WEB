@@ -22,12 +22,6 @@
 <input type="text" placeholder="JJ">
 <input type="text" placeholder="MM">
 <input type="text" placeholder="AAAA"><br><br> -->
-Pays :
-<select>
-<option>Choisir</option>
-<option>France</option>
-<option>Madagascar</option>
-</select><br><br>
 
 
 </fieldset>
