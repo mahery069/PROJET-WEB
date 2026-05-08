@@ -6,9 +6,17 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->get('/', 'Home::index');
+
+// Wallet UI pages
+$routes->get('wallet/gold', 'Wallet::goldPage');
+
 // Wallet routes
 $routes->get('wallet/balance', 'Wallet::balance');
 $routes->post('wallet/redeem', 'Wallet::redeem');
+$routes->post('wallet/purchase', 'Wallet::purchase');
+$routes->get('wallet/subscriptions', 'Wallet::subscriptions');
+$routes->post('wallet/gold/purchase', 'Wallet::purchaseGold');
+$routes->get('wallet/gold/status', 'Wallet::goldStatus');
 
 // Auth routes
 $routes->get('auth/login', 'Auth::login');
