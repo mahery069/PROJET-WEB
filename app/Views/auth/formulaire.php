@@ -26,6 +26,9 @@
 </select>
 <div id="genreError"></div>
 
+<label for="date_naissance">Date de naissance:</label>
+<input type="date" id="date_naissance" name="date_naissance">
+
 
 <!--<label for="date">DATE:</label>
 <input type="date" name="date" id="date">

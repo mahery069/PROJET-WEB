@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<form id="registerStep2" novalidate>
+<form id="registerStep2" method="POST" action="/auth/register-step2" novalidate>
     <fieldset>
         <legend>Etape 2 : Informations physiques</legend>
 
@@ -18,6 +18,14 @@
         <label for="poids">Poids (kg) :</label>
         <input type="number" id="poids" name="poids" min="30" max="200" step="0.1" required>
         <div id="poidsError"></div>
+
+        <label for="objectif">Objectif :</label>
+        <select id="objectif" name="objectif" required>
+            <option value="">Selectionner</option>
+            <option value="augmenter">Augmenter son poids</option>
+            <option value="reduire">Reduire son poids</option>
+            <option value="imc_ideal">Atteindre l'IMC ideal</option>
+        </select>
 
         <br><br>
 

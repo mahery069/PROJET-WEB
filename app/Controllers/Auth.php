@@ -19,31 +19,22 @@ class Auth extends BaseController
      */
     public function handleLogin()
     {
-        // Validate input
-        if (!$this->validate([
-            'email'    => 'required|valid_email',
-            'password' => 'required|min_length[6]'
-        ])) {
-            return redirect()->back()
-                ->withInput()
-                ->with('error', 'Email ou mot de passe invalide');
-        }
-
         $email = $this->request->getPost('email');
         $password = $this->request->getPost('password');
 
-        // TODO: Verify credentials against database
-        // Example:
-        // $userModel = new UserModel();
-        // $user = $userModel->where('email', $email)->first();
-        // 
-        // if ($user && password_verify($password, $user['password_hash'])) {
-        //     session()->set(['user_id' => $user['id']]);
-        //     return redirect()->to('/dashboard');
-        // }
+        $db = db_connect();
+        $user = $db->table('users')->where('email', $email)->get()->getRowArray();
 
-        return redirect()->back()
-            ->with('error', 'Identifiants invalides');
+        if (!$user || !password_verify($password ?? '', $user['mot_de_passe'])) {
+            return redirect()->back()->with('error', 'Identifiants invalides');
+        }
+
+        session()->set([
+            'user_id' => $user['id'],
+            'user_email' => $user['email'],
+        ]);
+
+        return redirect()->to('/profil');
     }
 
     /**
@@ -59,6 +50,17 @@ class Auth extends BaseController
      */
     public function handleRegisterStep1()
     {
+        session()->set([
+            'register_step1' => [
+                'nom' => $this->request->getPost('nom'),
+                'prenom' => $this->request->getPost('prenom'),
+                'email' => $this->request->getPost('email'),
+                'password' => $this->request->getPost('password'),
+                'genre' => $this->request->getPost('genre'),
+                'date_naissance' => $this->request->getPost('date_naissance'),
+            ]
+        ]);
+
         return redirect()->to('/formulaire-step2');
     }
 
@@ -75,42 +77,58 @@ class Auth extends BaseController
      */
     public function handleRegisterStep2()
     {
-        // Check if step 1 is completed
         if (!session()->has('register_step1')) {
             return redirect()->to('/auth/register');
-        }
-
-        // Validate input
-        if (!$this->validate([
-            'taille' => 'required|numeric|greater_than[100]|less_than[250]',
-            'poids' => 'required|numeric|greater_than[30]|less_than[200]'
-        ])) {
-            return redirect()->back()
-                ->withInput()
-                ->with('error', $this->validator->listErrors());
         }
 
         $step1 = session('register_step1');
         $taille = $this->request->getPost('taille');
         $poids = $this->request->getPost('poids');
+        $objectif = $this->request->getPost('objectif');
+        $email = $step1['email'] ?? '';
 
-        // TODO: Store user in database
-        // Example:
-        // $userModel = new UserModel();
-        // $userModel->insert([
-        //     'name'          => $step1['nom'],
-        //     'email'         => $step1['email'],
-        //     'password_hash' => password_hash($step1['password'], PASSWORD_BCRYPT),
-        //     'taille'        => $taille,
-        //     'poids'         => $poids,
-        //     'created_at'    => date('Y-m-d H:i:s')
-        // ]);
+        $nomComplet = trim(($step1['nom'] ?? '') . ' ' . ($step1['prenom'] ?? ''));
 
-        // Clear session
+        if ($email === '') {
+            return redirect()->back()->with('error', 'Email obligatoire.');
+        }
+
+        $db = db_connect();
+        $existing = $db->table('users')->where('email', $email)->get()->getRowArray();
+        if ($existing) {
+            return redirect()->back()->with('error', 'Cet email existe deja.');
+        }
+        $db->transStart();
+
+        $db->table('users')->insert([
+            'nom' => $nomComplet === '' ? ($step1['nom'] ?? '') : $nomComplet,
+            'email' => $email,
+            'mot_de_passe' => password_hash($step1['password'] ?? '', PASSWORD_BCRYPT),
+            'genre' => $step1['genre'] ?? 'autre',
+            'date_naissance' => $step1['date_naissance'] ?? date('Y-m-d'),
+            'role' => 'user',
+            'is_gold' => 0,
+        ]);
+
+        $userId = $db->insertID();
+
+        $db->table('user_health')->insert([
+            'id_user' => $userId,
+            'taille_cm' => $taille,
+            'poids_kg' => $poids,
+            'objectif' => $objectif ?: 'imc_ideal',
+        ]);
+
+        $db->transComplete();
+
+        if ($db->transStatus() === false) {
+            return redirect()->back()->with('error', 'Erreur lors de l\'inscription.');
+        }
+
         session()->remove('register_step1');
 
         return redirect()->to('/auth/login')
-            ->with('success', 'Inscription réussie! Connectez-vous');
+            ->with('success', 'Inscription reussie! Connectez-vous');
     }
 
     /**
@@ -118,6 +136,21 @@ class Auth extends BaseController
      */
     public function logout()
     {
+        $userId = session('user_id');
+        if ($userId) {
+            try {
+                $db = db_connect();
+                $db->table('user_logs')->insert([
+                    'id_user' => $userId,
+                    'action' => 'logout',
+                    'ip_address' => $this->request->getIPAddress(),
+                    'user_agent' => $this->request->getUserAgent()->getAgentString(),
+                ]);
+            } catch (\Throwable $e) {
+                // Ignore log errors
+            }
+        }
+
         session()->destroy();
         return redirect()->to('/auth/login')
             ->with('success', 'Vous avez été déconnecté');
@@ -136,7 +169,19 @@ class Auth extends BaseController
      */
     public function profile()
     {
-        return view('auth/profile');
+        $userId = session('user_id');
+        if (!$userId) {
+            return redirect()->to('/auth/login');
+        }
+
+        $db = db_connect();
+        $user = $db->table('users')->where('id', $userId)->get()->getRowArray();
+        $health = $db->table('user_health')->where('id_user', $userId)->get()->getRowArray();
+
+        return view('auth/profile', [
+            'user' => $user,
+            'health' => $health,
+        ]);
     }
 
     /**
@@ -144,6 +189,53 @@ class Auth extends BaseController
      */
     public function updateProfile()
     {
+        $userId = session('user_id');
+        if (!$userId) {
+            return redirect()->to('/auth/login');
+        }
+
+        $nom = $this->request->getPost('nom');
+        $prenom = $this->request->getPost('prenom');
+        $nomComplet = trim(($nom ?? '') . ' ' . ($prenom ?? ''));
+        $email = $this->request->getPost('email');
+        $genre = $this->request->getPost('genre');
+        $dateNaissance = $this->request->getPost('date_naissance');
+        $taille = $this->request->getPost('taille');
+        $poids = $this->request->getPost('poids');
+        $objectif = $this->request->getPost('objectif');
+
+        $db = db_connect();
+        $db->transStart();
+
+        $db->table('users')->where('id', $userId)->update([
+            'nom' => $nomComplet === '' ? ($nom ?? '') : $nomComplet,
+            'email' => $email,
+            'genre' => $genre,
+            'date_naissance' => $dateNaissance,
+        ]);
+
+        $health = $db->table('user_health')->where('id_user', $userId)->get()->getRowArray();
+        if ($health) {
+            $db->table('user_health')->where('id_user', $userId)->update([
+                'taille_cm' => $taille,
+                'poids_kg' => $poids,
+                'objectif' => $objectif,
+            ]);
+        } else {
+            $db->table('user_health')->insert([
+                'id_user' => $userId,
+                'taille_cm' => $taille,
+                'poids_kg' => $poids,
+                'objectif' => $objectif ?: 'imc_ideal',
+            ]);
+        }
+
+        $db->transComplete();
+
+        if ($db->transStatus() === false) {
+            return redirect()->back()->with('error', 'Erreur lors de la mise a jour.');
+        }
+
         return redirect()->back()->with('success', 'Profil mis a jour.');
     }
 
