@@ -3,6 +3,7 @@ USE projet_regime_alimentaire;
 
 INSERT INTO users (nom, email, mot_de_passe, genre, date_naissance, role, is_gold)
 VALUES
+('Admin', 'admin@example.test', '$2y$10$usesomesillystringforsamplehash..', 'autre', '2000-01-01', 'admin', 0),
 ('Alice Durant','alice@example.test','$2y$10$usesomesillystringforsamplehash..', 'femme', '1990-04-12', 'user', 0),
 ('Boris Ram','boris@example.test','$2y$10$usesomesillystringforsamplehash..', 'homme', '1985-09-03', 'user', 0),
 ('Carla N', 'carla@example.test','$2y$10$usesomesillystringforsamplehash..', 'femme', '1992-11-21', 'user', 0),

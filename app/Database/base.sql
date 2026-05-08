@@ -34,10 +34,7 @@ CREATE TABLE IF NOT EXISTS user_health (
 	PRIMARY KEY (id),
 	UNIQUE KEY uq_user_health_id_user (id_user),
 	KEY idx_user_health_objectif (objectif),
-	CONSTRAINT fk_user_health_id_user
-		FOREIGN KEY (id_user) REFERENCES users(id)
-		ON DELETE CASCADE
-		ON UPDATE CASCADE
+	CONSTRAINT fk_user_health_id_user FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
@@ -91,13 +88,10 @@ CREATE TABLE IF NOT EXISTS codes_wallet (
 	UNIQUE KEY uq_codes_wallet_code (code),
 	KEY idx_codes_wallet_est_utilise (est_utilise),
 	KEY idx_codes_wallet_id_utilisateur (id_utilisateur),
-	CONSTRAINT fk_codes_wallet_id_utilisateur
-		FOREIGN KEY (id_utilisateur) REFERENCES users(id)
-		ON DELETE SET NULL
-		ON UPDATE CASCADE
+	CONSTRAINT fk_codes_wallet_id_utilisateur FOREIGN KEY (id_utilisateur) REFERENCES users(id) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- 6. Table user_wallet
+
 CREATE TABLE IF NOT EXISTS user_wallet (
 	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	id_user INT UNSIGNED NOT NULL,
@@ -107,10 +101,7 @@ CREATE TABLE IF NOT EXISTS user_wallet (
 	PRIMARY KEY (id),
 	UNIQUE KEY uq_user_wallet_id_user (id_user),
 	KEY idx_user_wallet_solde (solde),
-	CONSTRAINT fk_user_wallet_id_user
-		FOREIGN KEY (id_user) REFERENCES users(id)
-		ON DELETE CASCADE
-		ON UPDATE CASCADE
+	CONSTRAINT fk_user_wallet_id_user FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
@@ -129,14 +120,8 @@ CREATE TABLE IF NOT EXISTS user_regimes (
 	KEY idx_user_regimes_id_user (id_user),
 	KEY idx_user_regimes_id_regime (id_regime),
 	KEY idx_user_regimes_est_actif (est_actif),
-	CONSTRAINT fk_user_regimes_id_user
-		FOREIGN KEY (id_user) REFERENCES users(id)
-		ON DELETE CASCADE
-		ON UPDATE CASCADE,
-	CONSTRAINT fk_user_regimes_id_regime
-		FOREIGN KEY (id_regime) REFERENCES regimes(id)
-		ON DELETE CASCADE
-		ON UPDATE CASCADE
+	CONSTRAINT fk_user_regimes_id_user FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT fk_user_regimes_id_regime FOREIGN KEY (id_regime) REFERENCES regimes(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
