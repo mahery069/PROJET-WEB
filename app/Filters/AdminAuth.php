@@ -15,10 +15,13 @@ class AdminAuth implements FilterInterface
         $adminId = $session->get('admin_id');
 
         if (!$adminId) {
-            return redirect()->to('/auth/login')->with('error', 'Veuillez vous connecter');
+            return redirect()->to('/admin/login')->with('error', 'Veuillez vous connecter');
         }
 
-       
+        if ($session->get('admin_role') !== 'admin') {
+            return redirect()->to('/admin/login')->with('error', 'Accès refusé');
+        }
+
         return null;
     }
 
