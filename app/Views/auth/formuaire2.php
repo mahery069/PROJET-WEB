@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscription - Etape 2</title>
+    <link rel="stylesheet" href="/assets/css/app-header.css">
 </head>
 <body>
+
+<?= view('partials/header') ?>
 
 <form id="registerStep2" method="POST" action="/auth/register-step2" novalidate>
     <fieldset>

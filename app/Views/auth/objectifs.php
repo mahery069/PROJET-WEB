@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Objectifs et Suggestions</title>
+    <link rel="stylesheet" href="/assets/css/app-header.css">
     <style>
         :root {
             --bg: #f4f6fb;
@@ -150,6 +151,7 @@
     </style>
 </head>
 <body>
+    <?= view('partials/header') ?>
     <div class="wrap">
         <div class="header">
             <h1>Objectifs et suggestions</h1>

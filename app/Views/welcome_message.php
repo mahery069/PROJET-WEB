@@ -6,6 +6,7 @@
     <title>NutriPlan — Accueil</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="/assets/css/nutriplan-home.css">
 </head>
 <body>
@@ -22,7 +23,7 @@
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 3c1.7 0 3 1.3 3 3s-1.3 3-3 3-3-1.3-3-3 1.3-3 3-3zm0 14.2c-2.5 0-4.7-1.3-6-3.2.03-2 4-3.1 6-3.1 2 0 5.97 1.1 6 3.1-1.3 1.9-3.5 3.2-6 3.2z" />
             </svg>
-            NutriPlan S4
+        
         </div>
         <h1>Bienvenue sur<br><span>NutriPlan</span></h1>
         <p class="subtitle">Selectionnez votre espace pour acceder a l'application de gestion des regimes alimentaires personnalises.</p>
@@ -72,7 +73,7 @@
 
     </div>
 
-    <p class="footer-note">Projet S4 — <strong>CodeIgniter + PHP + MySQL</strong> · Groupe mixte de 3</p>
+    
 
 </div>
 
