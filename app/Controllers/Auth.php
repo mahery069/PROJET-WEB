@@ -2,8 +2,6 @@
 
 namespace App\Controllers;
 
-use CodeIgniter\Controller;
-
 class Auth extends BaseController
 {
     /**
@@ -22,11 +20,19 @@ class Auth extends BaseController
         $email = $this->request->getPost('email');
         $password = $this->request->getPost('password');
 
+        if (empty($email) || empty($password)) {
+            return redirect()->back()->with('error', 'Email et mot de passe requis');
+        }
+
         $db = db_connect();
         $user = $db->table('users')->where('email', $email)->get()->getRowArray();
 
-        if (!$user || !password_verify($password ?? '', $user['mot_de_passe'])) {
-            return redirect()->back()->with('error', 'Identifiants invalides');
+        if (!$user) {
+            return redirect()->back()->with('error', 'Utilisateur non trouvé');
+        }
+
+        if (!password_verify($password, $user['mot_de_passe'])) {
+            return redirect()->back()->with('error', 'Mot de passe incorrect');
         }
 
         session()->set([
@@ -193,18 +199,42 @@ class Auth extends BaseController
         if (!$userId) {
             return redirect()->to('/auth/login');
         }
-
-        $nom = $this->request->getPost('nom');
-        $prenom = $this->request->getPost('prenom');
-        $nomComplet = trim(($nom ?? '') . ' ' . ($prenom ?? ''));
-        $email = $this->request->getPost('email');
-        $genre = $this->request->getPost('genre');
-        $dateNaissance = $this->request->getPost('date_naissance');
-        $taille = $this->request->getPost('taille');
-        $poids = $this->request->getPost('poids');
-        $objectif = $this->request->getPost('objectif');
-
         $db = db_connect();
+        $user = $db->table('users')->where('id', $userId)->get()->getRowArray() ?? [];
+        $health = $db->table('user_health')->where('id_user', $userId)->get()->getRowArray() ?? [];
+
+        $nom = trim((string) $this->request->getPost('nom'));
+        $prenom = trim((string) $this->request->getPost('prenom'));
+        $email = trim((string) $this->request->getPost('email'));
+        $genre = trim((string) $this->request->getPost('genre'));
+        $dateNaissance = trim((string) $this->request->getPost('date_naissance'));
+        $taille = trim((string) $this->request->getPost('taille'));
+        $poids = trim((string) $this->request->getPost('poids'));
+        $objectif = trim((string) $this->request->getPost('objectif'));
+
+        $nomComplet = trim($nom . ' ' . $prenom);
+        if ($nomComplet === '') {
+            $nomComplet = $user['nom'] ?? '';
+        }
+
+        if ($email === '') {
+            $email = $user['email'] ?? '';
+        }
+        if ($genre === '') {
+            $genre = $user['genre'] ?? '';
+        }
+        if ($dateNaissance === '') {
+            $dateNaissance = $user['date_naissance'] ?? '';
+        }
+        if ($taille === '') {
+            $taille = $health['taille_cm'] ?? '';
+        }
+        if ($poids === '') {
+            $poids = $health['poids_kg'] ?? '';
+        }
+        if ($objectif === '') {
+            $objectif = $health['objectif'] ?? '';
+        }
         $db->transStart();
 
         $db->table('users')->where('id', $userId)->update([
@@ -295,59 +325,5 @@ class Auth extends BaseController
             'success' => true,
             'data' => $suggestions,
         ]);
-use App\Models\User;
-use CodeIgniter\HTTP\ResponseInterface;
-
-class Auth extends BaseController
-{
-    protected $userModel;
-
-    public function __construct()
-    {
-        $this->userModel = new User();
-    }
-
-   
-    public function login()
-    {
-        $session = session();
-        if ($session->get('admin_id')) {
-            return redirect()->to('/admin/dashboard');
-        }
-        return view('auth/admin_login');
-    }
-
-    
-    public function handleLogin()
-    {
-        $email = $this->request->getPost('email');
-        $password = $this->request->getPost('password');
-
-        if (empty($email) || empty($password)) {
-            return redirect()->back()->with('error', 'Email et mot de passe requis');
-        }
-
-        $user = $this->userModel->findAdminByEmail($email);
-
-        if (!$user || !User::verifyPassword($password, $user['mot_de_passe'])) {
-            return redirect()->back()->with('error', 'Email ou mot de passe incorrect');
-        }
-
-
-        session()->set([
-            'admin_id' => $user['id'],
-            'admin_email' => $user['email'],
-            'admin_nom' => $user['nom'],
-            'admin_role' => $user['role'],
-        ]);
-
-        return redirect()->to('/admin/dashboard')->with('success', 'Bienvenue ' . $user['nom']);
-    }
-
-   
-    public function logout()
-    {
-        session()->remove(['admin_id', 'admin_email', 'admin_nom', 'admin_role']);
-        return redirect()->to('/auth/login')->with('success', 'Vous avez ete deconnecte');
     }
 }

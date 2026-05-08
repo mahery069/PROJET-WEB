@@ -50,7 +50,7 @@
             <span class="cta-btn">Acceder <span class="cta-arrow">→</span></span>
         </a>
 
-        <a class="card card-admin" href="#">
+        <a class="card card-admin" href="/admin/login">
             <div class="card-icon">
                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect x="3" y="3" width="8" height="8" rx="2" fill="#e65100" opacity="0.9" />
@@ -61,14 +61,14 @@
             </div>
             <div class="card-label">Espace</div>
             <div class="card-title">Administrateur</div>
-            <p class="card-desc">Espace administrateur en preparation. Contenu a venir.</p>
+            <p class="card-desc">Gerez les regimes, activites, codes porte-monnaie et consultez les statistiques avec des graphiques.</p>
             <div class="card-features">
                 <div class="feature-item"><span class="feature-dot"></span>Dashboard & graphiques</div>
                 <div class="feature-item"><span class="feature-dot"></span>CRUD regimes & activites</div>
                 <div class="feature-item"><span class="feature-dot"></span>Validation codes porte-monnaie</div>
                 <div class="feature-item"><span class="feature-dot"></span>Gestion des parametres</div>
             </div>
-            <span class="cta-btn">A venir <span class="cta-arrow">→</span></span>
+            <span class="cta-btn">Acceder <span class="cta-arrow">→</span></span>
         </a>
 
     </div>
