@@ -15,6 +15,14 @@
 <label for="prenom">Prénom:</label>
 <input type="text" id="prenom" name="prenom">
 
+<label for="genre">Genre:</label>
+<select id="genre" name="genre">
+    <option value="">Selectionner</option>
+    <option value="homme">Homme</option>
+    <option value="femme">Femme</option>
+    <option value="autre">Autre</option>
+</select>
+
 
 <!--<label for="date">DATE:</label>
 <input type="date" name="date" id="date">
@@ -39,8 +47,7 @@
     <legend>securite</legend>
 <label for="password">Mot de passe</label>
 <input type="password" id="password" name="password">
-<label for="password_confirm">Confirmer le mot de passe</label>
-<input type="password" id="password_confirm" name="password_confirm">
+
 </fieldset>
 <button type="submit">Suivant</button>
 </form>
