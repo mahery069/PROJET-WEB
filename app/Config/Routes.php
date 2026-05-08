@@ -20,3 +20,6 @@ $routes->get('/auth/logout', 'Auth::logout');
 // Profile routes
 $routes->get('/profil', 'Auth::profile');
 $routes->post('/profil', 'Auth::updateProfile');
+
+// Objectifs & suggestions
+$routes->get('/objectifs', 'Auth::objectifs');

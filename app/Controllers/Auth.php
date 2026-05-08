@@ -146,4 +146,12 @@ class Auth extends BaseController
     {
         return redirect()->back()->with('success', 'Profil mis a jour.');
     }
+
+    /**
+     * Display objectifs and suggestions page
+     */
+    public function objectifs()
+    {
+        return view('auth/objectifs');
+    }
 }
