@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Objectifs et Suggestions</title>
-    <link rel="stylesheet" href="/assets/css/app-header.css">
     <link rel="stylesheet" href="/assets/css/nutriplan.css">
 </head>
 <body>
