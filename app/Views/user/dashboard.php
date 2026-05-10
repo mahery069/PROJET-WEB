@@ -32,7 +32,32 @@
         <div class="nav-item"><a href="/mon-profil">Profil</a></div>
     </div>
 
-    <div class="dashboard-container">
+    <div class="dashboard-container two-column-layout">
+        <aside class="sidebar">
+            <div class="login-card">
+                <h3>NutriBalance</h3>
+                <p class="muted">Solde disponible</p>
+                <div class="balance"><?= number_format((float)($walletBalance ?? 0), 2, ',', ' ') ?> EUR</div>
+                <div style="margin-top:12px">
+                    <a class="btn" href="/porte-monnaie">Ouvrir le porte-monnaie</a>
+                </div>
+            </div>
+
+            <div class="wallet-card">
+                <div class="muted">Abonnements</div>
+                <div class="mini-stat">Active: <?= count($subscriptions ?? []) ?></div>
+                <div style="margin-top:10px">
+                    <a class="btn btn-gold" href="/wallet/gold">Voir Gold</a>
+                </div>
+            </div>
+
+            <div class="admin-card">
+                <div class="muted">Raccourcis</div>
+                <div class="mini-stat">Regimes, Activites, Codes</div>
+            </div>
+        </aside>
+
+        <main class="main-content">
         <div class="stats-top">
             <div class="stat-item">
                 <div class="stat-label">IMC actuel</div>
@@ -95,6 +120,7 @@
                 </div>
             </section>
         </div>
+        </main>
     </div>
 </body>
 </html>

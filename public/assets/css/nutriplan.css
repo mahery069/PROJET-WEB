@@ -395,6 +395,59 @@ button:hover,
     border: 1px solid var(--line);
 }
 
+/* Two column layout used on dashboard */
+.two-column-layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 20px;
+    align-items: start;
+}
+.sidebar {
+    position: relative;
+}
+.sidebar .login-card,
+.sidebar .wallet-card,
+.sidebar .admin-card {
+    padding: 18px;
+    border-radius: 12px;
+    color: #fff;
+    margin-bottom: 16px;
+}
+.sidebar .login-card {
+    background: linear-gradient(180deg, #167a3a 0%, #0f5b2c 100%);
+}
+.sidebar .login-card h3 {
+    margin: 0 0 8px 0;
+    color: #fff;
+}
+.sidebar .wallet-card {
+    background: linear-gradient(180deg, #0b374f 0%, #07253a 100%);
+}
+.sidebar .admin-card {
+    background: linear-gradient(180deg, #1f3d5a 0%, #142b44 100%);
+}
+.wallet-card .balance {
+    font-size: 22px;
+    font-weight: 800;
+    color: #fff;
+}
+.wallet-card .muted {
+    color: rgba(255,255,255,0.85);
+}
+
+/* Small stat box used in sidebar */
+.mini-stat {
+    background: rgba(255,255,255,0.06);
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+/* Main content tweaks */
+.main-content .card-shell { min-height: 140px; }
+.main-content .stat-item { padding: 18px; border-radius: 12px; }
+
+
 .mini-list,
 .suggestions {
     display: grid;
