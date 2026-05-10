@@ -281,4 +281,22 @@ class Admin extends BaseController
 
         return redirect()->to('/admin/codes')->with('success', 'Code validé');
     }
+
+    public function codesDelete($id)
+    {
+        $codeRow = $this->codesModel->find($id);
+        if (!$codeRow) {
+            return redirect()->to('/admin/codes')->with('error', 'Code non trouvé');
+        }
+
+        if ($codeRow['est_utilise']) {
+            return redirect()->to('/admin/codes')->with('error', 'Impossible de supprimer un code déjà utilisé');
+        }
+
+        if ($this->codesModel->delete($id)) {
+            return redirect()->to('/admin/codes')->with('success', 'Code supprimé');
+        }
+
+        return redirect()->to('/admin/codes')->with('error', 'Erreur lors de la suppression');
+    }
 }

@@ -10,7 +10,7 @@ class Activites extends BaseController
     public function index()
     {
         $model = new ActiviteModel();
-        $data = $model->orderBy('id','DESC')->findAll();
+        $data = $model->where('actif', 1)->orderBy('id','DESC')->findAll();
         return $this->response->setJSON(['success'=>true,'data'=>$data]);
     }
 

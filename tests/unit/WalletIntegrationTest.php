@@ -424,4 +424,137 @@ final class WalletIntegrationTest extends DatabaseTestCase
         $goldStatus = json_decode($response->getBody(), true)['data']['is_gold'];
         $this->assertTrue($goldStatus);
     }
+
+    /**
+     * Test: Purchase regime with Gold discount applied
+     */
+    public function testPurchaseRegimeWithGoldDiscount(): void
+    {
+        $db = \Config\Database::connect();
+        
+        // Create a regime with known price
+        $db->table('regimes')->insert([
+            'nom' => 'Regime Gold Discount Test',
+            'description' => 'Test regime for Gold discount',
+            'pourcentage_viande' => 30,
+            'pourcentage_poisson' => 20,
+            'pourcentage_volaille' => 20,
+            'variation_poids' => -2.5,
+            'duree_jours' => 30,
+            'prix' => 100.00,
+            'actif' => 1,
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
+        
+        $regimeId = $db->insertID();
+
+        // Set user as Gold
+        $db->table('users')->where('id', 1)->update(['is_gold' => 1]);
+
+        // Create wallet with sufficient balance
+        $db->table('user_wallet')->insert([
+            'id_user' => 1,
+            'solde' => 100.00,
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
+
+        $response = $this->withSession(['user_id' => 1])
+            ->post('/wallet/purchase', ['regime_id' => $regimeId]);
+
+        $response->assertResponseCode(201);
+        $result = json_decode($response->getBody(), true);
+        $this->assertTrue($result['success']);
+        $this->assertEquals(15, $result['data']['discount_applique']);
+        $this->assertEquals('100.00', $result['data']['prix_original']);
+        // 100.00 * 0.85 = 85.00
+        $this->assertEquals('85.00', $result['data']['prix_paye']);
+        // 100.00 - 85.00 = 15.00
+        $this->assertEquals('15.00', $result['data']['solde_restant']);
+        $this->assertStringContainsString('Remise Gold 15%', $result['message']);
+    }
+
+    /**
+     * Test: Compare regime purchase price with and without Gold
+     */
+    public function testPurchaseRegimePriceComparison(): void
+    {
+        $db = \Config\Database::connect();
+        
+        // Create two regimes with same price
+        $regimePrice = 80.00;
+        
+        // Regime 1 - for non-Gold user
+        $db->table('regimes')->insert([
+            'nom' => 'Regime Non-Gold',
+            'description' => 'Test',
+            'pourcentage_viande' => 30,
+            'pourcentage_poisson' => 20,
+            'pourcentage_volaille' => 20,
+            'variation_poids' => -2.5,
+            'duree_jours' => 30,
+            'prix' => $regimePrice,
+            'actif' => 1,
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
+        $regimeId1 = $db->insertID();
+
+        // Regime 2 - for Gold user
+        $db->table('regimes')->insert([
+            'nom' => 'Regime Gold',
+            'description' => 'Test',
+            'pourcentage_viande' => 30,
+            'pourcentage_poisson' => 20,
+            'pourcentage_volaille' => 20,
+            'variation_poids' => -2.5,
+            'duree_jours' => 30,
+            'prix' => $regimePrice,
+            'actif' => 1,
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
+        $regimeId2 = $db->insertID();
+
+        // User 1 - Non-Gold
+        $db->table('user_wallet')->insert([
+            'id_user' => 2,
+            'solde' => 150.00,
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
+
+        // User 3 - Gold
+        $db->table('users')->where('id', 3)->update(['is_gold' => 1]);
+        $db->table('user_wallet')->insert([
+            'id_user' => 3,
+            'solde' => 150.00,
+            'created_at' => date('Y-m-d H:i:s')
+        ]);
+
+        // Purchase regime - Non-Gold user
+        $response1 = $this->withSession(['user_id' => 2])
+            ->post('/wallet/purchase', ['regime_id' => $regimeId1]);
+        $result1 = json_decode($response1->getBody(), true);
+
+        // Purchase regime - Gold user
+        $response2 = $this->withSession(['user_id' => 3])
+            ->post('/wallet/purchase', ['regime_id' => $regimeId2]);
+        $result2 = json_decode($response2->getBody(), true);
+
+        // Assertions
+        $this->assertTrue($result1['success']);
+        $this->assertTrue($result2['success']);
+
+        // Non-Gold user pays full price
+        $this->assertEquals('80.00', $result1['data']['prix_paye']);
+        $this->assertEquals(0, $result1['data']['discount_applique']);
+
+        // Gold user pays 15% less
+        $this->assertEquals('68.00', $result2['data']['prix_paye']);  // 80.00 * 0.85 = 68.00
+        $this->assertEquals(15, $result2['data']['discount_applique']);
+
+        // Verify wallets updated correctly
+        // Non-Gold: 150.00 - 80.00 = 70.00
+        $this->assertEquals('70.00', $result1['data']['solde_restant']);
+        // Gold: 150.00 - 68.00 = 82.00
+        $this->assertEquals('82.00', $result2['data']['solde_restant']);
+    }
 }
+

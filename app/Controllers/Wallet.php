@@ -193,7 +193,26 @@ class Wallet extends BaseController
             $wallet = $db->table('user_wallet')->where('id_user', $userId)->get()->getRowArray();
         }
 
+        // Get user info to check Gold status
+        $user = $db->table('users')->where('id', $userId)->get()->getRowArray();
+        if (!$user) {
+            $db->transComplete();
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'Utilisateur non trouvé.',
+                'data' => null,
+                'errors' => ['user_id' => 'not_found']
+            ])->setStatusCode(ResponseInterface::HTTP_NOT_FOUND);
+        }
+
         $prix = $regime['prix'];
+        $isGold = (int)$user['is_gold'] === 1;
+        
+        // Apply 15% Gold discount if user has Gold membership
+        if ($isGold) {
+            $prix = bcmul($prix, '0.85', 2);
+        }
+        
         $solde = $wallet['solde'];
 
         // Check if user has enough balance
@@ -244,11 +263,13 @@ class Wallet extends BaseController
 
         return $this->response->setJSON([
             'success' => true,
-            'message' => 'Régime acheté avec succès!',
+            'message' => $isGold ? 'Régime acheté avec succès! 👑 Remise Gold 15% appliquée' : 'Régime acheté avec succès!',
             'data' => [
                 'regime_id' => $regimeId,
                 'regime_nom' => $regime['nom'],
+                'prix_original' => $regime['prix'],
                 'prix_paye' => $prix,
+                'discount_applique' => $isGold ? 15 : 0,
                 'solde_restant' => $newSolde,
                 'date_debut' => $dateDebut,
                 'date_fin' => $dateFin,
