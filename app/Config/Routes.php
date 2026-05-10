@@ -26,6 +26,12 @@ $routes->get('/export-pdf', 'Auth::exportPDF');
 $routes->get('/objectifs', 'Auth::objectifs');
 $routes->get('/objectifs/data', 'Auth::objectifsData');
 
+// User Dashboard routes (protected by user auth)
+$routes->get('/dashboard', 'Dashboard::index');
+$routes->get('/regimes', 'Dashboard::regimes');
+$routes->get('/porte-monnaie', 'Dashboard::wallet');
+$routes->get('/profil', 'Dashboard::index');
+
 // Bolton - Wallet UI pages
 $routes->get('wallet/gold', 'Wallet::goldPage');
 
