@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NutriPlan — Accueil</title>
+    <title>NutriPlan - Accueil</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     
@@ -44,7 +44,7 @@
             <div class="card-features">
                 <div class="feature-item"><span class="feature-dot"></span>Calcul IMC & objectifs</div>
                 <div class="feature-item"><span class="feature-dot"></span>Suggestions de regimes</div>
-                <div class="feature-item"><span class="feature-dot"></span>Porte-monnaie & Option Gold</div>
+                <div class="feature-item"><span class="feature-dot"></span>Porte-monnaie et Option Gold</div>
                 <div class="feature-item"><span class="feature-dot"></span>Export PDF</div>
             </div>
             <span class="cta-btn">Acceder <span class="cta-arrow">→</span></span>
@@ -82,7 +82,7 @@
         
         <section id="wallet-widget" style="margin-top:20px;padding:12px;border:1px solid #ddd;border-radius:6px;max-width:420px;">
             <h2>Wallet</h2>
-            <div style="margin-bottom:8px;">Solde: <strong id="wallet-balance">0.00 €</strong></div>
+            <div style="margin-bottom:8px;">Solde: <strong id="wallet-balance">0.00 EUR</strong></div>
             <div style="display:flex;gap:8px;margin-bottom:8px;">
                 <input id="wallet-user-id" type="number" placeholder="user id" value="1" style="width:80px;padding:6px;" />
                 <input id="wallet-code" type="text" placeholder="Entrez code" style="flex:1;padding:6px;" />
@@ -93,7 +93,6 @@
     </div>
     <script src="/assets/js/script.js"></script>
     <script>
-        // On charge initial balance for demo (reads user id input)
         document.addEventListener('DOMContentLoaded', function(){
             var uidEl = document.getElementById('wallet-user-id');
             if (uidEl) fetchWalletBalance(uidEl.value);

@@ -37,3 +37,5 @@ CHECKLIST
 - Toutes les pages et fonctions principales presentes
 - Seeds charges en dev pour tests
 - Pas de merge sur main; PR vers dev seulement
+
+

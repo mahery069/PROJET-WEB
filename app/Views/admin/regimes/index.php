@@ -3,26 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gérer Régimes</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; }
-        .navbar { background: #333; color: white; padding: 15px 0; }
-        .navbar div { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
-        .navbar a { color: white; text-decoration: none; margin: 0 15px; }
-        .navbar a:hover { color: #667eea; }
-        .container { max-width: 1200px; margin: 20px auto; padding: 20px; }
-        h1 { color: #333; margin: 20px 0; }
-        .actions { margin: 20px 0; }
-        .btn { display: inline-block; padding: 10px 20px; background: #667eea; color: white; text-decoration: none; border-radius: 5px; margin-right: 10px; border: none; cursor: pointer; }
-        .btn:hover { background: #764ba2; }
-        .btn-danger { background: #dc3545; }
-        table { width: 100%; border-collapse: collapse; background: white; margin: 20px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
-        th { background: #f9f9f9; font-weight: 600; }
-        tr:hover { background: #f9f9f9; }
-        .success { background: #d4edda; color: #155724; padding: 12px; border-radius: 5px; margin-bottom: 20px; }
-    </style>
+    <title>Gerer Regimes</title>
+    <link rel="stylesheet" href="/assets/css/nutriplan.css">
 </head>
 <body>
     <div class="navbar">
@@ -30,31 +12,29 @@
             <h1 style="margin: 0;">NutriPlan Admin</h1>
             <div>
                 <a href="/admin/dashboard">Dashboard</a>
-                <a href="/admin/regimes">Régimes</a>
-                <a href="/admin/activites">Activités</a>
-                <a href="/admin/codes">Codes</a>
-                <a href="/admin/logout">Déconnexion</a>
+                <a href="/admin/regimes">Regimes</a>
+                <a href="/admin/activites">Activites</a>
+                <a href="/admin/logout">Deconnexion</a>
             </div>
         </div>
     </div>
 
     <div class="container">
-        <h1>Gérer Régimes</h1>
-
+        <h1>Gerer Regimes</h1>
         <?php if (session()->getFlashdata('success')): ?>
             <div class="success"><?= session()->getFlashdata('success') ?></div>
         <?php endif; ?>
 
         <div class="actions">
-            <a href="/admin/regimes/create" class="btn">+ Ajouter Régime</a>
+            <a href="/admin/regimes/create" class="btn">+ Ajouter Regime</a>
         </div>
 
         <table>
             <thead>
                 <tr>
                     <th>Nom</th>
-                    <th>Durée (jours)</th>
-                    <th>Prix (€)</th>
+                    <th>Duree (jours)</th>
+                    <th>Prix (EUR)</th>
                     <th>Variation Poids (kg)</th>
                     <th>Viande %</th>
                     <th>Actif</th>

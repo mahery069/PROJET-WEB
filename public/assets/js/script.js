@@ -13,8 +13,17 @@ function fetchWalletBalance(userId) {
         .then(function(res){ return res.json(); })
         .then(function(json){
             if (json && json.success && json.data) {
+                var amount = parseFloat(json.data.solde).toFixed(2) + ' €';
                 var el = document.getElementById('wallet-balance');
-                if (el) el.textContent = parseFloat(json.data.solde).toFixed(2) + ' €';
+                if (el) el.textContent = amount;
+
+                var display = document.getElementById('wallet-balance-display');
+                if (display) display.textContent = amount;
+
+                var allBalanceNodes = document.querySelectorAll('[data-wallet-balance]');
+                allBalanceNodes.forEach(function(node) {
+                    node.textContent = amount;
+                });
             }
         }).catch(function(e){ console.error(e); });
 }
@@ -26,6 +35,32 @@ function redeemCode(userId, code) {
         headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
         body: JSON.stringify({ user_id: userId, code: code })
     }).then(function(res){ return res.json(); });
+}
+
+function purchaseRegime(userId, regimeId) {
+    if (!userId || !regimeId) return Promise.reject('missing');
+    return fetch('/wallet/purchase', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+        body: JSON.stringify({ user_id: userId, regime_id: regimeId })
+    }).then(function(res){ return res.json(); });
+}
+
+function purchaseGoldUser(userId) {
+    if (!userId) return Promise.reject('missing');
+    return fetch('/wallet/gold/purchase', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+        body: JSON.stringify({ user_id: userId })
+    }).then(function(res){ return res.json(); });
+}
+
+function applyGoldDiscount(price, isGold) {
+    var amount = parseFloat(price || 0);
+    if (isGold) {
+        amount = amount * 0.85;
+    }
+    return amount.toFixed(2);
 }
 
 // UI wiring for wallet widget

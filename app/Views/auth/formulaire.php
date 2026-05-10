@@ -16,7 +16,7 @@
 <label for="nom">Nom:</label>
 <input type="text" id="nom" name="nom">
 <div id="nomError"></div>
-<label for="prenom">Prénom:</label>
+<label for="prenom">Prenom:</label>
 <input type="text" id="prenom" name="prenom">
 <div id="prenomError"></div>
 
@@ -33,14 +33,6 @@
 <input type="date" id="date_naissance" name="date_naissance">
 
 
-<!--<label for="date">DATE:</label>
-<input type="date" name="date" id="date">
- Date de naissance :
-<input type="text" placeholder="JJ">
-<input type="text" placeholder="MM">
-<input type="text" placeholder="AAAA"><br><br> -->
-
-
 </fieldset>
 
 <fieldset>
@@ -48,7 +40,7 @@
 <label for="email">Email:</label>
 <input type="email" id="email" name="email">
 <div id="emailError"></div>
-<label for="telephone">Téléphone :</label>
+<label for="telephone">Telephone :</label>
 <input type="number" name="telephone" id="telephone">
 <div id="telephoneError"></div>
 

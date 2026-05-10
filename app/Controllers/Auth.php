@@ -9,6 +9,10 @@ class Auth extends BaseController
      */
     public function login()
     {
+        if (session()->get('user_id')) {
+            return redirect()->to('/dashboard');
+        }
+
         return view('auth/login');
     }
 
@@ -38,9 +42,10 @@ class Auth extends BaseController
         session()->set([
             'user_id' => $user['id'],
             'user_email' => $user['email'],
+            'user_name' => $user['nom'] ?? $user['email'],
         ]);
 
-        return redirect()->to('/profil');
+        return redirect()->to('/dashboard');
     }
 
     /**

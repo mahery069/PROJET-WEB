@@ -3,26 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modifier Régime</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; }
-        .navbar { background: #333; color: white; padding: 15px 0; }
-        .navbar div { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
-        .navbar a { color: white; text-decoration: none; margin: 0 15px; }
-        .container { max-width: 800px; margin: 20px auto; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        h1 { color: #333; margin-bottom: 20px; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: 600; color: #555; }
-        input, textarea, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px; }
-        input:focus, textarea:focus, select:focus { outline: none; border-color: #667eea; box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1); }
-        textarea { resize: vertical; min-height: 100px; }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        button { padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
-        button:hover { background: #764ba2; }
-        a { color: #667eea; text-decoration: none; }
-        a:hover { text-decoration: underline; }
-    </style>
+    <title>Modifier Regime</title>
+    <link rel="stylesheet" href="/assets/css/nutriplan.css">
 </head>
 <body>
     <div class="navbar">
@@ -33,11 +15,11 @@
     </div>
 
     <div class="container">
-        <h1>Modifier Régime</h1>
+        <h1>Modifier Regime</h1>
 
         <form method="POST" action="/admin/regimes/update/<?= $regime['id'] ?>">
             <div class="form-group">
-                <label for="nom">Nom du régime</label>
+                <label for="nom">Nom du regime</label>
                 <input type="text" id="nom" name="nom" value="<?= esc($regime['nom']) ?>" required>
             </div>
 
@@ -48,7 +30,7 @@
 
             <div class="form-row">
                 <div class="form-group">
-                    <label for="duree_jours">Durée (jours)</label>
+                    <label for="duree_jours">Duree (jours)</label>
                     <input type="number" id="duree_jours" name="duree_jours" value="<?= $regime['duree_jours'] ?>" required min="1">
                 </div>
                 <div class="form-group">
@@ -84,7 +66,7 @@
                 <input type="checkbox" id="actif" name="actif" value="1" <?= $regime['actif'] ? 'checked' : '' ?> style="width: auto;">
             </div>
 
-            <button type="submit">Mettre à jour</button>
+            <button type="submit">Mettre a jour</button>
             <a href="/admin/regimes">Retour</a>
         </form>
     </div>

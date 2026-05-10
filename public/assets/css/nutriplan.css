@@ -1,0 +1,474 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: #111827;
+    background: #f4f7fb;
+}
+
+a {
+    color: inherit;
+}
+
+.wrap,
+.dashboard-container,
+.container {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 28px 18px 48px;
+}
+
+.hero,
+.panel,
+.card-shell,
+.card,
+.stat-item,
+.subscription,
+.gold-box,
+.login-container,
+.already-gold,
+.info,
+.success,
+.error,
+.stat-card,
+.chart-card,
+.actions,
+.gold-container,
+.header,
+.nav-tabs,
+.action-bar {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+}
+
+.btn,
+.btn-login,
+.btn-purchase,
+.primary-btn,
+button,
+.link-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 999px;
+    padding: 12px 16px;
+    text-decoration: none;
+    font-weight: 700;
+    cursor: pointer;
+    color: #ffffff;
+    background: #1d4ed8;
+}
+
+.btn.secondary,
+.link-button.secondary {
+    background: #0f172a;
+}
+
+.btn.gold,
+.btn-gold {
+    background: linear-gradient(135deg, #a16207, #f59e0b);
+}
+
+.btn-danger,
+.logout {
+    background: #dc3545;
+}
+
+.btn-success {
+    background: #28a745;
+}
+
+.navbar {
+    background: #333333;
+    color: #ffffff;
+    padding: 15px 0;
+}
+
+.navbar div,
+.header-content,
+.action-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 0 20px;
+}
+
+.navbar a,
+.login-footer a,
+.back-link a {
+    text-decoration: none;
+}
+
+.navbar a:hover,
+.login-footer a:hover,
+.back-link a:hover {
+    text-decoration: underline;
+}
+
+.stats-top,
+.stats,
+.stats-grid,
+.grid,
+.overview-grid,
+.charts-grid,
+.panel {
+    display: grid;
+    gap: 16px;
+}
+
+.stats-top,
+.stats-grid,
+.charts-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.stats,
+.grid,
+.overview-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.dashboard-header {
+    background: #333333;
+    color: #ffffff;
+    padding: 30px 0;
+    border-bottom: 1px solid #404040;
+}
+
+.dashboard-header .header-content,
+.action-bar .action-content {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.header-title,
+.hero h1,
+.card h1,
+.card h2,
+.login-container h1,
+.login-container h2,
+.chart-card h3,
+.stat-card h3,
+.actions h2,
+.gold-header h1 {
+    margin: 0 0 8px;
+}
+
+.header-subtitle,
+.hero p,
+.card-desc,
+.stat-subtitle,
+.stat-label,
+.empty-state,
+.message,
+.hint,
+.gold-header .subtitle,
+.gold-price .price-details,
+.subscription .meta,
+.login-footer p,
+.back-link a,
+.panel .empty,
+.card .desc {
+    color: #6b7280;
+}
+
+.nav-tabs {
+    margin: 18px auto 0;
+    padding: 12px 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.nav-item a {
+    padding: 10px 14px;
+    border-radius: 999px;
+    text-decoration: none;
+    background: #eff6ff;
+    color: #1d4ed8;
+    font-weight: 700;
+}
+
+.nav-item a.active {
+    background: #1d4ed8;
+    color: #ffffff;
+}
+
+.dashboard-container,
+.wrap {
+    padding-top: 0;
+}
+
+.stat-item {
+    padding: 18px;
+}
+
+.stat-value {
+    font-size: 28px;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.badge,
+.pill,
+.tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.card-shell,
+.card,
+.panel,
+.gold-box,
+.subscription,
+.stat-card,
+.chart-card,
+.actions,
+.login-container,
+.gold-container,
+.hero,
+.header {
+    padding: 20px;
+}
+
+.mini-list,
+.suggestions {
+    display: grid;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.mini-item,
+.suggestion,
+.subscription,
+.stat,
+.field,
+.form-group {
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    background: #f8fafc;
+    padding: 14px;
+}
+
+.mini-item .price,
+.price-row .current,
+.gold-price .price,
+.wallet-balance strong,
+.stat .value,
+.stat-value {
+    font-weight: 800;
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: baseline;
+}
+
+.message,
+.success,
+.error,
+.empty,
+.info {
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 12px;
+    display: block;
+}
+
+.message.success,
+.success {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.message.error,
+.error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.message.info,
+.info {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.gold-container {
+    max-width: 600px;
+    margin: 40px auto;
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+}
+
+.gold-benefits,
+.gold-price,
+.wallet-info {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.benefit-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 0.95em;
+}
+
+.benefit-item::before {
+    content: "✓";
+    color: #ffd700;
+    font-weight: bold;
+    font-size: 1.3em;
+    margin-right: 12px;
+}
+
+.wallet-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.already-gold {
+    text-align: center;
+    padding: 30px;
+    background: #d4edda;
+    border-radius: 8px;
+    color: #155724;
+}
+
+.back-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.login-container {
+    max-width: 420px;
+    margin: 40px auto;
+}
+
+.login-container form,
+.gold-container form {
+    display: grid;
+    gap: 14px;
+}
+
+.form-group label,
+.field label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 700;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea,
+.field input,
+.field select,
+.field textarea,
+input,
+select,
+textarea {
+    width: 100%;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 14px;
+    background: #ffffff;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.login-footer {
+    margin-top: 18px;
+    display: grid;
+    gap: 6px;
+    text-align: center;
+}
+
+.actions {
+    margin-top: 30px;
+}
+
+.actions .btn,
+.toolbar .btn,
+.dashboard-actions .link-button,
+.action-bar .btn {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    margin: 20px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+th,
+td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background: #f9f9f9;
+    font-weight: 600;
+}
+
+.unused {
+    background: #fff3cd;
+}
+
+.used {
+    background: #d4edda;
+}
+
+.chart-card canvas,
+canvas {
+    max-height: 300px;
+}
+
+@media (max-width: 900px) {
+    .grid,
+    .stats,
+    .overview-grid,
+    .stats-top,
+    .charts-grid,
+    .panel,
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .wallet-info,
+    .navbar div,
+    .header-content,
+    .action-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

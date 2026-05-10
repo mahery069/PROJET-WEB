@@ -2,22 +2,8 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Créer Activité</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI'; background: #f5f5f5; }
-        .navbar { background: #333; color: white; padding: 15px 0; }
-        .navbar div { max-width: 800px; margin: 0 auto; display: flex; justify-content: space-between; padding: 0 20px; }
-        .navbar a { color: white; text-decoration: none; }
-        .container { max-width: 800px; margin: 20px auto; padding: 20px; background: white; border-radius: 10px; }
-        h1 { color: #333; margin-bottom: 20px; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: 600; }
-        input, textarea, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
-        button { padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer; }
-        button:hover { background: #764ba2; }
-        a { color: #667eea; margin-left: 10px; }
-    </style>
+    <title>Creer Activite</title>
+    <link rel="stylesheet" href="/assets/css/nutriplan.css">
 </head>
 <body>
     <div class="navbar">
@@ -28,7 +14,7 @@
     </div>
 
     <div class="container">
-        <h1>Ajouter Activité</h1>
+        <h1>Ajouter Activite</h1>
 
         <form method="POST" action="/admin/activites">
             <div class="form-group">
@@ -42,16 +28,16 @@
             </div>
 
             <div class="form-group">
-                <label>Intensité *</label>
+                <label>Intensite *</label>
                 <select name="intensite" required>
                     <option value="faible">Faible</option>
                     <option value="moyenne" selected>Moyenne</option>
-                    <option value="elevee">Élevée</option>
+                    <option value="elevee">Elevee</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <label>Durée (minutes) *</label>
+                <label>Duree (minutes) *</label>
                 <input type="number" name="duree_minutes" value="30" required>
             </div>
 
@@ -59,7 +45,7 @@
                 <label><input type="checkbox" name="actif" value="1" checked> Actif</label>
             </div>
 
-            <button type="submit">Créer</button>
+            <button type="submit">Creer</button>
             <a href="/admin/activites">Annuler</a>
         </form>
     </div>

@@ -15,10 +15,12 @@ $routes->post('/auth/login', 'Auth::handleLogin');
 $routes->get('/auth/register', 'Auth::registerStep1');
 $routes->post('/auth/register-step1', 'Auth::handleRegisterStep1');
 $routes->post('/auth/register-step2', 'Auth::handleRegisterStep2');
+$routes->get('/auth/forgot-password', 'Auth::forgotPassword');
 $routes->get('/auth/logout', 'Auth::logout');
 
 // Mahery - Profile routes
 $routes->get('/profil', 'Auth::profile');
+$routes->get('/mon-profil', 'Auth::profile');
 $routes->post('/profil', 'Auth::updateProfile');
 $routes->get('/export-pdf', 'Auth::exportPDF');
 
@@ -30,7 +32,6 @@ $routes->get('/objectifs/data', 'Auth::objectifsData');
 $routes->get('/dashboard', 'Dashboard::index');
 $routes->get('/regimes', 'Dashboard::regimes');
 $routes->get('/porte-monnaie', 'Dashboard::wallet');
-$routes->get('/profil', 'Dashboard::index');
 
 // Bolton - Wallet UI pages
 $routes->get('wallet/gold', 'Wallet::goldPage');
@@ -42,11 +43,6 @@ $routes->post('wallet/purchase', 'Wallet::purchase');
 $routes->get('wallet/subscriptions', 'Wallet::subscriptions');
 $routes->post('wallet/gold/purchase', 'Wallet::purchaseGold');
 $routes->get('wallet/gold/status', 'Wallet::goldStatus');
-
-// Auth routes
-$routes->get('auth/login', 'Auth::login');
-$routes->post('auth/handle-login', 'Auth::handleLogin');
-$routes->get('auth/logout', 'Auth::logout');
 
 // Admin routes
 $routes->get('/admin/login', 'AdminAuth::login');

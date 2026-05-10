@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion</title>
     <link rel="stylesheet" href="/assets/css/app-header.css">
-  
+    <link rel="stylesheet" href="/assets/css/nutriplan.css">
 </head>
 <body>
     <?= view('partials/header') ?>
@@ -45,7 +45,7 @@
 
         <div class="login-footer">
             <p>Pas encore de compte? <a href="/auth/register">S'inscrire</a></p>
-            <p><a href="/auth/forgot-password">Mot de passe oublié?</a></p>
+            <p><a href="/auth/forgot-password">Mot de passe oublie?</a></p>
         </div>
     </div>
 </body>
