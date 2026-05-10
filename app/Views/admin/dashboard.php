@@ -7,22 +7,12 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="/assets/css/nutriplan.css">
 </head>
-<body>
-    <div class="navbar">
-        <div>
-            <h1>NutriPlan Admin</h1>
-            <div>
-                <a href="/admin/dashboard">Dashboard</a>
-                <a href="/admin/regimes">Regimes</a>
-                <a href="/admin/activites">Activites</a>
-                <a href="/admin/codes">Codes Wallet</a>
-                <a href="/admin/logout" class="logout">Deconnexion</a>
-            </div>
-        </div>
-    </div>
+    <body>
+    <?= view('partials/header') ?>
 
-    <div class="container">
-        <h1>Bienvenue <?= esc($admin_nom ?? 'Admin') ?></h1>
+    <div class="wrap">
+        <div class="container">
+            <h1>Bienvenue <?= esc($admin_nom ?? 'Admin') ?></h1>
 
         <div class="stats-grid">
             <div class="stat-card">
