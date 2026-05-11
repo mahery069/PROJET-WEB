@@ -7,7 +7,7 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Home::index');
 
-// Mahery - Authentication routes
+
 $routes->get('/formulaire', 'Auth::registerStep1');
 $routes->get('/formulaire-step2', 'Auth::registerStep2');
 $routes->get('/auth/login', 'Auth::login');
@@ -18,13 +18,11 @@ $routes->post('/auth/register-step2', 'Auth::handleRegisterStep2');
 $routes->get('/auth/forgot-password', 'Auth::forgotPassword');
 $routes->get('/auth/logout', 'Auth::logout');
 
-// Mahery - Profile routes
 $routes->get('/profil', 'Auth::profile');
 $routes->get('/mon-profil', 'Auth::profile');
 $routes->post('/profil', 'Auth::updateProfile');
 $routes->get('/export-pdf', 'Auth::exportPDF');
 
-// Mahery - Objectifs & suggestions
 $routes->get('/objectifs', 'Auth::objectifs');
 $routes->get('/objectifs/data', 'Auth::objectifsData');
 
@@ -33,10 +31,8 @@ $routes->get('/dashboard', 'Dashboard::index');
 $routes->get('/regimes', 'Dashboard::regimes');
 $routes->get('/porte-monnaie', 'Dashboard::wallet');
 
-// Bolton - Wallet UI pages
 $routes->get('wallet/gold', 'Wallet::goldPage');
 
-// Bolton - Wallet routes
 $routes->get('wallet/balance', 'Wallet::balance');
 $routes->post('wallet/redeem', 'Wallet::redeem');
 $routes->post('wallet/purchase', 'Wallet::purchase');
@@ -44,17 +40,12 @@ $routes->get('wallet/subscriptions', 'Wallet::subscriptions');
 $routes->post('wallet/gold/purchase', 'Wallet::purchaseGold');
 $routes->get('wallet/gold/status', 'Wallet::goldStatus');
 
-// Admin routes
 $routes->get('/admin/login', 'AdminAuth::login');
 $routes->post('/admin/login', 'AdminAuth::handleLogin');
 $routes->get('/admin/logout', 'AdminAuth::logout');
 
-// Admin protected routes
-// Miangola - Admin routes (protected by AdminAuth filter)
 $routes->group('admin', ['filter' => 'AdminAuth'], function($routes) {
     $routes->get('dashboard', 'Admin::dashboard');
-    
-    // Regimes CRUD
     $routes->get('regimes', 'Admin::regimesIndex');
     $routes->get('regimes/create', 'Admin::regimesCreate');
     $routes->post('regimes', 'Admin::regimesStore');
@@ -62,7 +53,6 @@ $routes->group('admin', ['filter' => 'AdminAuth'], function($routes) {
     $routes->post('regimes/update/(:num)', 'Admin::regimesUpdate/$1');
     $routes->get('regimes/delete/(:num)', 'Admin::regimesDelete/$1');
 
-    // Activites CRUD
     $routes->get('activites', 'Admin::activitesIndex');
     $routes->get('activites/create', 'Admin::activitesCreate');
     $routes->post('activites', 'Admin::activitesStore');
@@ -70,12 +60,18 @@ $routes->group('admin', ['filter' => 'AdminAuth'], function($routes) {
     $routes->post('activites/update/(:num)', 'Admin::activitesUpdate/$1');
     $routes->get('activites/delete/(:num)', 'Admin::activitesDelete/$1');
 
-    // Codes Wallet
     $routes->get('codes', 'Admin::codesIndex');
     $routes->get('codes/create', 'Admin::codesCreate');
     $routes->post('codes', 'Admin::codesStore');
     $routes->get('codes/delete/(:num)', 'Admin::codesDelete/$1');
     $routes->get('codes/validate/(:num)', 'Admin::codesValidate/$1');
+
+    $routes->get('parametres', 'Admin::parametresIndex');
+    $routes->get('parametres/create', 'Admin::parametresCreate');
+    $routes->post('parametres', 'Admin::parametresStore');
+    $routes->get('parametres/edit/(:num)', 'Admin::parametresEdit/$1');
+    $routes->post('parametres/update/(:num)', 'Admin::parametresUpdate/$1');
+    $routes->get('parametres/delete/(:num)', 'Admin::parametresDelete/$1');
 });
 
 // CRUD API for regimes, activites and codes_wallet

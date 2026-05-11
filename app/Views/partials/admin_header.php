@@ -6,6 +6,7 @@
         <a href="/admin/dashboard">Dashboard</a>
         <a href="/admin/regimes">Regimes</a>
         <a href="/admin/activites">Activites</a>
+        <a href="/admin/parametres">Paramètres</a>
         <a href="/admin/codes">Codes</a>
         <a href="/admin/logout">Deconnexion</a>
     </nav>

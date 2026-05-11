@@ -7,9 +7,6 @@ use Dompdf\Options;
 
 class Auth extends BaseController
 {
-    /**
-     * Display the login form
-     */
     public function login()
     {
         if (session()->get('user_id')) {
@@ -19,9 +16,6 @@ class Auth extends BaseController
         return view('auth/login');
     }
 
-    /**
-     * Handle login form submission
-     */
     public function handleLogin()
     {
         $email = $this->request->getPost('email');
@@ -38,6 +32,10 @@ class Auth extends BaseController
             return redirect()->back()->with('error', 'Utilisateur non trouvé');
         }
 
+        if ($user['role'] === 'admin') {
+            return redirect()->back()->with('error', 'Accès réservé aux utilisateurs. Utilisez la page admin.');
+        }
+
         if (!password_verify($password, $user['mot_de_passe'])) {
             return redirect()->back()->with('error', 'Mot de passe incorrect');
         }
@@ -51,17 +49,11 @@ class Auth extends BaseController
         return redirect()->to('/dashboard');
     }
 
-    /**
-     * Display the registration form - Step 1
-     */
     public function registerStep1()
     {
         return view('auth/formulaire');
     }
 
-    /**
-     * Handle registration step 1 - Store data in session
-     */
     public function handleRegisterStep1()
     {
         session()->set([
@@ -78,17 +70,11 @@ class Auth extends BaseController
         return redirect()->to('/formulaire-step2');
     }
 
-    /**
-     * Display the registration form - Step 2
-     */
     public function registerStep2()
     {
         return view('auth/formuaire2');
     }
 
-    /**
-     * Handle registration step 2 - Final registration
-     */
     public function handleRegisterStep2()
     {
         if (!session()->has('register_step1')) {
@@ -99,6 +85,7 @@ class Auth extends BaseController
         $taille = $this->request->getPost('taille');
         $poids = $this->request->getPost('poids');
         $objectif = $this->request->getPost('objectif');
+        $genre = $this->request->getPost('genre') ?: ($step1['genre'] ?? 'autre');
         $email = $step1['email'] ?? '';
 
         $nomComplet = trim(($step1['nom'] ?? '') . ' ' . ($step1['prenom'] ?? ''));
@@ -118,7 +105,7 @@ class Auth extends BaseController
             'nom' => $nomComplet === '' ? ($step1['nom'] ?? '') : $nomComplet,
             'email' => $email,
             'mot_de_passe' => password_hash($step1['password'] ?? '', PASSWORD_BCRYPT),
-            'genre' => $step1['genre'] ?? 'autre',
+            'genre' => $genre,
             'date_naissance' => $step1['date_naissance'] ?? date('Y-m-d'),
             'role' => 'user',
             'is_gold' => 0,
@@ -145,9 +132,6 @@ class Auth extends BaseController
             ->with('success', 'Inscription reussie! Connectez-vous');
     }
 
-    /**
-     * Logout the user
-     */
     public function logout()
     {
         $userId = session('user_id');
@@ -170,17 +154,11 @@ class Auth extends BaseController
             ->with('success', 'Vous avez été déconnecté');
     }
 
-    /**
-     * Display forgot password form
-     */
     public function forgotPassword()
     {
         return view('auth/forgot-password');
     }
 
-    /**
-     * Display the profile form
-     */
     public function profile()
     {
         $userId = session('user_id');
@@ -198,9 +176,6 @@ class Auth extends BaseController
         ]);
     }
 
-    /**
-     * Handle profile update (placeholder)
-     */
     public function updateProfile()
     {
         $userId = session('user_id');
@@ -277,17 +252,11 @@ class Auth extends BaseController
         return redirect()->back()->with('success', 'Profil mis a jour.');
     }
 
-    /**
-     * Display objectifs and suggestions page
-     */
     public function objectifs()
     {
         return view('auth/objectifs');
     }
 
-    /**
-     * Return suggestions from DB (regimes + activites)
-     */
     public function objectifsData()
     {
         $objectif = $this->request->getGet('objectif');
@@ -304,6 +273,15 @@ class Auth extends BaseController
         }
 
         $regimes = $regimesBuilder->orderBy('variation_poids', 'DESC')->limit(3)->get()->getResultArray();
+
+        if (empty($regimes)) {
+            $regimes = $db->table('regimes')
+                ->where('actif', 1)
+                ->orderBy('prix', 'ASC')
+                ->limit(3)
+                ->get()
+                ->getResultArray();
+        }
 
         $activites = $db->table('activites')
             ->where('actif', 1)
@@ -335,9 +313,6 @@ class Auth extends BaseController
         ]);
     }
 
-    /**
-     * Export user profile and suggestions as PDF
-     */
     public function exportPDF()
     {
         $session = session();

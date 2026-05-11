@@ -5,14 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscription</title>
     <link rel="stylesheet" href="/assets/css/nutriplan.css">
+    <style>
+        .password-field {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .password-field input {
+            width: 100%;
+            padding-right: 40px;
+        }
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 4px;
+            color: #666;
+            transition: color 0.2s;
+        }
+        .password-toggle:hover {
+            color: #333;
+        }
+    </style>
 </head>
 <body>
 
 <?= view('partials/header') ?>
+
 <div class="wrap">
     <div class="login-container">
         <h1>Inscription</h1>
+
         <form id="registerStep1" method="POST" action="/auth/register-step1" novalidate>
+
             <div class="form-group">
                 <label for="nom">Nom</label>
                 <input type="text" id="nom" name="nom">
@@ -26,13 +54,20 @@
             </div>
 
             <div class="form-group">
-                <label for="genre">Genre</label>
-                <select id="genre" name="genre">
-                    <option value="">Selectionner</option>
-                    <option value="homme">Homme</option>
-                    <option value="femme">Femme</option>
-                    <option value="autre">Autre</option>
-                </select>
+                <label>Genre</label>
+
+                <div class="gender-buttons">
+                    <button type="button" class="gender-btn" data-gender="homme">
+                        ♂ Homme
+                    </button>
+
+                    <button type="button" class="gender-btn" data-gender="femme">
+                        ♀ Femme
+                    </button>
+                </div>
+
+                <input type="hidden" id="genre" name="genre" required>
+
                 <div id="genreError"></div>
             </div>
 
@@ -55,16 +90,52 @@
 
             <div class="form-group">
                 <label for="password">Mot de passe</label>
-                <input type="password" id="password" name="password">
+                <div class="password-field">
+                    <input type="password" id="password" name="password">
+                    <button type="button" class="password-toggle" onclick="togglePassword('password')">👁️</button>
+                </div>
                 <div id="passwordError"></div>
             </div>
 
             <div class="actions">
-                <button class="btn btn-login" type="submit">Suivant</button>
+                <button class="btn btn-login" type="submit">
+                    Suivant
+                </button>
             </div>
+
         </form>
     </div>
 </div>
+
+<script>
+    const genderButtons = document.querySelectorAll('.gender-btn');
+    const genderInput = document.getElementById('genre');
+
+    genderButtons.forEach(button => {
+        button.addEventListener('click', () => {
+
+            genderButtons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            button.classList.add('active');
+
+            genderInput.value = button.dataset.gender;
+        });
+    });
+
+    function togglePassword(inputId) {
+        const input = document.getElementById(inputId);
+        const btn = event.target;
+        if (input.type === 'password') {
+            input.type = 'text';
+            btn.textContent = '🙈';
+        } else {
+            input.type = 'password';
+            btn.textContent = '👁️';
+        }
+    }
+</script>
 
 <script src="/assets/js/register-validation.js" defer></script>
 

@@ -5,6 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion</title>
     <link rel="stylesheet" href="/assets/css/nutriplan.css">
+    <style>
+        .password-field {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .password-field input {
+            width: 100%;
+            padding-right: 40px;
+        }
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 4px;
+            color: #666;
+            transition: color 0.2s;
+        }
+        .password-toggle:hover {
+            color: #333;
+        }
+    </style>
 </head>
 <body>
     <div class="login-container">
@@ -24,13 +49,16 @@
 
             <div class="form-group">
                 <label for="password">Mot de passe</label>
-                <input 
-                    type="password" 
-                    id="password" 
-                    name="password" 
-                    placeholder="Votre mot de passe" 
-                    required
-                >
+                <div class="password-field">
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        placeholder="Votre mot de passe" 
+                        required
+                    >
+                    <button type="button" class="password-toggle" onclick="togglePassword('password')">👁️</button>
+                </div>
             </div>
 
             <div class="remember-me">
@@ -46,5 +74,19 @@
             <p><a href="/auth/forgot-password">Mot de passe oublie?</a></p>
         </div>
     </div>
+
+    <script>
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const btn = event.target;
+            if (input.type === 'password') {
+                input.type = 'text';
+                btn.textContent = '🙈';
+            } else {
+                input.type = 'password';
+                btn.textContent = '👁️';
+            }
+        }
+    </script>
 </body>
 </html>

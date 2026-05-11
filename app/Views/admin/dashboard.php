@@ -4,99 +4,120 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="/assets/css/nutriplan.css">
+    <style>
+        .stats-grid { display:flex; gap:16px; flex-wrap:wrap; margin-bottom:20px; }
+        .stat-card { background:#fff; padding:12px 16px; border-radius:6px; box-shadow:0 1px 3px rgba(0,0,0,0.06); min-width:160px; }
+        .charts { display:flex; gap:20px; flex-wrap:wrap; }
+        .chart-card { width:320px; background:#fff; padding:12px; border-radius:6px; }
+        table.pivot { width:100%; border-collapse:collapse; margin-top:16px; }
+        table.pivot th, table.pivot td { border:1px solid #eee; padding:8px; text-align:left; }
+    </style>
 </head>
-    <body>
+<body>
     <?= view('partials/admin_header') ?>
 
-    <div class="wrap">
-        <div class="container">
-            <h1>Bienvenue <?= esc($admin_nom ?? 'Admin') ?></h1>
+    <div class="container">
+        <h1>Dashboard - Statistiques</h1>
 
         <div class="stats-grid">
             <div class="stat-card">
-                <div class="stat-value"><?= $stats['total_users'] ?></div>
-                <div class="stat-label">Utilisateurs</div>
+                <div class="muted">Utilisateurs</div>
+                <div class="mini-stat"><?= $stats['total_users'] ?></div>
             </div>
             <div class="stat-card">
-                <div class="stat-value"><?= number_format($stats['total_wallet'], 2) ?> EUR</div>
-                <div class="stat-label">Portefeuilles Totaux</div>
+                <div class="muted">Solde total (wallet)</div>
+                <div class="mini-stat"><?= number_format((float)$stats['total_wallet'],2,',',' ') ?> EUR</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value"><?= $stats['total_regimes'] ?></div>
-                <div class="stat-label">Regimes</div>
+                <div class="muted">Régimes</div>
+                <div class="mini-stat"><?= $stats['total_regimes'] ?></div>
             </div>
             <div class="stat-card">
-                <div class="stat-value"><?= $stats['total_activites'] ?></div>
-                <div class="stat-label">Activites</div>
+                <div class="muted">Activités</div>
+                <div class="mini-stat"><?= $stats['total_activites'] ?></div>
             </div>
             <div class="stat-card">
-                <div class="stat-value"><?= $stats['used_codes'] ?>/<?= $stats['total_codes'] ?></div>
-                <div class="stat-label">Codes Utilises</div>
+                <div class="muted">Codes (total / utilisés)</div>
+                <div class="mini-stat"><?= $stats['total_codes'] ?> / <?= $stats['used_codes'] ?></div>
             </div>
         </div>
 
-        <div class="charts-grid">
+        <div class="charts">
             <div class="chart-card">
-                <h3>Distribution des Codes Wallet</h3>
+                <h4>Codes: utilisés vs non-utilisés</h4>
                 <canvas id="codesChart"></canvas>
             </div>
+
             <div class="chart-card">
-                <h3>Top 5 Portefeuilles</h3>
+                <h4>Top utilisateurs (solde)</h4>
                 <canvas id="topUsersChart"></canvas>
             </div>
+
             <div class="chart-card">
-                <h3>Objectifs Utilisateurs</h3>
+                <h4>Objectifs utilisateurs</h4>
                 <canvas id="objectiveChart"></canvas>
             </div>
         </div>
 
+        <section style="margin-top:24px;">
+            <h3>Tableau croisé: abonnements par régime</h3>
+            <?php if (!empty($subscriptions_pivot)): ?>
+                <table class="pivot">
+                    <thead>
+                        <tr>
+                            <th>Régime</th>
+                            <th>Actifs</th>
+                            <th>Inactifs</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($subscriptions_pivot as $row): ?>
+                            <tr>
+                                <td><?= esc($row['regime']) ?></td>
+                                <td><?= $row['active_count'] ?></td>
+                                <td><?= $row['inactive_count'] ?></td>
+                                <td><?= $row['total_count'] ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php else: ?>
+                <div class="muted">Aucune donnée d'abonnement disponible.</div>
+            <?php endif; ?>
+        </section>
+
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        const codesCtx = document.getElementById('codesChart').getContext('2d');
-        new Chart(codesCtx, {
+        const codesData = <?= json_encode($codesChart ?? ['used'=>0,'unused'=>0]) ?>;
+        const topUsers = <?= json_encode($topUsersChart ?? ['labels'=>[], 'data'=>[]]) ?>;
+        const objectives = <?= json_encode($objectiveChart ?? ['labels'=>[], 'data'=>[]]) ?>;
+
+        // Codes doughnut
+        new Chart(document.getElementById('codesChart'), {
             type: 'doughnut',
             data: {
-                labels: ['Utilises', 'Disponibles'],
-                datasets: [{
-                    data: [<?= $codesChart['used'] ?>, <?= $codesChart['unused'] ?>],
-                    backgroundColor: ['#667eea', '#ddd'],
-                    borderColor: white,
-                    borderWidth: 2
-                }]
+                labels: ['Utilisés','Non utilisés'],
+                datasets: [{ data: [codesData.used, codesData.unused], backgroundColor: ['#4caf50','#f44336'] }]
             },
-            options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+            options: { responsive: true }
         });
 
-        const topCtx = document.getElementById('topUsersChart').getContext('2d');
-        new Chart(topCtx, {
+        // Top users bar
+        new Chart(document.getElementById('topUsersChart'), {
             type: 'bar',
-            data: {
-                labels: <?= json_encode($topUsersChart['labels']) ?>,
-                datasets: [{
-                    label: 'Solde (€)',
-                    data: <?= json_encode($topUsersChart['data']) ?>,
-                    backgroundColor: '#667eea',
-                    borderRadius: 5
-                }]
-            },
+            data: { labels: topUsers.labels, datasets: [{ label: 'Solde', data: topUsers.data, backgroundColor: '#2196f3' }] },
             options: { responsive: true, scales: { y: { beginAtZero: true } } }
         });
 
-        const objCtx = document.getElementById('objectiveChart').getContext('2d');
-        new Chart(objCtx, {
+        // Objectives pie
+        new Chart(document.getElementById('objectiveChart'), {
             type: 'pie',
-            data: {
-                labels: <?= json_encode($objectiveChart['labels'] ?? []) ?>,
-                datasets: [{
-                    data: <?= json_encode($objectiveChart['data'] ?? []) ?>,
-                    backgroundColor: ['#667eea', '#764ba2', '#f093fb'],
-                    borderWidth: 2
-                }]
-            },
-            options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+            data: { labels: objectives.labels, datasets: [{ data: objectives.data, backgroundColor: ['#ff9800','#8bc34a','#03a9f4'] }] },
+            options: { responsive: true }
         });
     </script>
 </body>

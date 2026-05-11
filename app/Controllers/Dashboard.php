@@ -64,6 +64,15 @@ class Dashboard extends BaseController
 
         $regimes = $builder->orderBy('prix', 'ASC')->limit(6)->get()->getResultArray();
 
+        if (empty($regimes)) {
+            $regimes = $db->table('regimes')
+                ->where('actif', 1)
+                ->orderBy('prix', 'ASC')
+                ->limit(6)
+                ->get()
+                ->getResultArray();
+        }
+
         return array_map(static function (array $regime) use ($isGold): array {
             $prixOriginal = (float) $regime['prix'];
             $prixAffiche = $isGold ? round($prixOriginal * 0.85, 2) : $prixOriginal;

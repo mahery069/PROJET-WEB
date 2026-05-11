@@ -5,18 +5,21 @@ namespace App\Controllers;
 use App\Models\Regime;
 use App\Models\Activite;
 use App\Models\CodesWalletModel;
+use App\Models\ParametreModel;
 
 class Admin extends BaseController
 {
     protected $regimeModel;
     protected $activiteModel;
     protected $codesModel;
+    protected $paramModel;
 
     public function __construct()
     {
         $this->regimeModel = new Regime();
         $this->activiteModel = new Activite();
         $this->codesModel = new CodesWalletModel();
+        $this->paramModel = new ParametreModel();
     }
     
     public function dashboard()
@@ -65,6 +68,19 @@ class Admin extends BaseController
             $objCounts[] = $obj['count'];
         }
 
+        // Pivot: subscriptions per regime (active / inactive)
+        $pivotQuery = $db->query(
+            "SELECT r.nom AS regime, 
+                SUM(CASE WHEN ur.est_actif = 1 THEN 1 ELSE 0 END) AS active_count, 
+                SUM(CASE WHEN ur.est_actif = 0 THEN 1 ELSE 0 END) AS inactive_count, 
+                COUNT(*) AS total_count 
+            FROM user_regimes ur 
+            JOIN regimes r ON r.id = ur.id_regime 
+            GROUP BY r.id, r.nom ORDER BY total_count DESC"
+        );
+
+        $subscriptionsPivot = $pivotQuery->getResultArray();
+
         $data = [
             'admin_nom' => $session->get('admin_nom'),
             'stats' => [
@@ -79,6 +95,7 @@ class Admin extends BaseController
             'codesChart' => [ 'used' => $usedCodes, 'unused' => $unusedCodes ],
             'topUsersChart' => [ 'labels' => $topLabels, 'data' => $topData ],
             'objectiveChart' => [ 'labels' => $objLabels, 'data' => $objCounts ],
+            'subscriptions_pivot' => $subscriptionsPivot,
         ];
 
         return view('admin/dashboard', $data);
@@ -298,5 +315,77 @@ class Admin extends BaseController
         }
 
         return redirect()->to('/admin/codes')->with('error', 'Erreur lors de la suppression');
+    }
+
+    /**
+     * Parametres Management
+     */
+    public function parametresIndex()
+    {
+        $params = $this->paramModel->orderBy('cle','ASC')->findAll();
+        return view('admin/parametres/index', ['params' => $params]);
+    }
+
+    public function parametresCreate()
+    {
+        return view('admin/parametres/form');
+    }
+
+    public function parametresStore()
+    {
+        $data = [
+            'cle' => $this->request->getPost('cle'),
+            'valeur' => $this->request->getPost('valeur'),
+            'description' => $this->request->getPost('description'),
+        ];
+
+        if ($this->paramModel->insert($data)) {
+            return redirect()->to('/admin/parametres')->with('success', 'Paramètre ajouté');
+        }
+
+        return redirect()->back()->with('error', 'Erreur lors de la création');
+    }
+
+    public function parametresEdit($id)
+    {
+        $param = $this->paramModel->find($id);
+        if (!$param) {
+            return redirect()->to('/admin/parametres')->with('error', 'Paramètre non trouvé');
+        }
+        return view('admin/parametres/form', ['parametre' => $param]);
+    }
+
+    public function parametresUpdate($id)
+    {
+        $param = $this->paramModel->find($id);
+        if (!$param) {
+            return redirect()->to('/admin/parametres')->with('error', 'Paramètre non trouvé');
+        }
+
+        $data = [
+            'cle' => $this->request->getPost('cle'),
+            'valeur' => $this->request->getPost('valeur'),
+            'description' => $this->request->getPost('description'),
+        ];
+
+        if ($this->paramModel->update($id, $data)) {
+            return redirect()->to('/admin/parametres')->with('success', 'Paramètre mis à jour');
+        }
+
+        return redirect()->back()->with('error', 'Erreur lors de la mise à jour');
+    }
+
+    public function parametresDelete($id)
+    {
+        $param = $this->paramModel->find($id);
+        if (!$param) {
+            return redirect()->to('/admin/parametres')->with('error', 'Paramètre non trouvé');
+        }
+
+        if ($this->paramModel->delete($id)) {
+            return redirect()->to('/admin/parametres')->with('success', 'Paramètre supprimé');
+        }
+
+        return redirect()->back()->with('error', 'Erreur lors de la suppression');
     }
 }

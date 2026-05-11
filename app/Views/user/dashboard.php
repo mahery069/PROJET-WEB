@@ -27,13 +27,7 @@
             </div>
         </section>
 
-        <div class="nav-tabs dashboard-tabs">
-            <div class="nav-item"><a class="active" href="/dashboard">Vue generale</a></div>
-            <div class="nav-item"><a href="/regimes">Regimes</a></div>
-            <div class="nav-item"><a href="/porte-monnaie">Porte-monnaie</a></div>
-            <div class="nav-item"><a href="/mon-profil">Profil</a></div>
-            <div class="nav-item"><a href="/objectifs">Objectifs</a></div>
-        </div>
+   
 
         <div class="dashboard-layout two-column-layout">
         <aside class="sidebar">
