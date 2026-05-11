@@ -176,6 +176,10 @@ button:hover,
     color: var(--primary-strong);
 }
 
+.admin-header {
+    margin-bottom: 8px;
+}
+
 .navbar div,
 .header-content,
 .action-content {
@@ -283,6 +287,52 @@ button:hover,
     padding: 30px 0 10px;
 }
 
+.dashboard-page {
+    padding-top: 18px;
+}
+
+.dashboard-hero {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    align-items: flex-start;
+    margin-top: 18px;
+}
+
+.dashboard-hero__copy {
+    display: grid;
+    gap: 10px;
+    max-width: 720px;
+}
+
+.dashboard-hero__copy h1 {
+    margin: 0;
+    font-family: "Playfair Display", serif;
+    color: var(--primary-strong);
+    font-size: clamp(2rem, 3vw, 2.6rem);
+}
+
+.dashboard-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--primary);
+}
+
 .dashboard-header .header-content,
 .action-bar .action-content {
     display: flex;
@@ -329,6 +379,18 @@ button:hover,
     gap: 10px;
 }
 
+.dashboard-tabs {
+    margin-top: 16px;
+}
+
+.dashboard-tabs .nav-item a {
+    background: #f3f7f4;
+}
+
+.dashboard-layout {
+    margin-top: 20px;
+}
+
 .nav-item a {
     padding: 10px 14px;
     border-radius: 999px;
@@ -341,6 +403,21 @@ button:hover,
 .nav-item a.active {
     background: var(--primary);
     color: #ffffff;
+}
+
+@media (max-width: 900px) {
+    .dashboard-hero {
+        flex-direction: column;
+    }
+
+    .dashboard-hero__actions {
+        justify-content: flex-start;
+        margin-left: 0;
+    }
+
+    .two-column-layout {
+        grid-template-columns: 1fr;
+    }
 }
 
 .dashboard-container,

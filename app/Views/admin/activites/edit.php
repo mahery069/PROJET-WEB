@@ -6,12 +6,7 @@
     <link rel="stylesheet" href="/assets/css/nutriplan.css">
 </head>
 <body>
-    <div class="navbar">
-        <div>
-            <h1 style="margin: 0; color: white;">NutriPlan</h1>
-            <a href="/admin/activites">Retour</a>
-        </div>
-    </div>
+    <?= view('partials/admin_header') ?>
 
     <div class="container">
         <h1>Modifier Activite</h1>

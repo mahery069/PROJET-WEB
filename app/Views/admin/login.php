@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="/assets/css/nutriplan.css">
 </head>
 <body>
-    <?= view('partials/header') ?>
     <div class="wrap">
         <div class="login-container">
             <h2>Admin NutriPlan</h2>

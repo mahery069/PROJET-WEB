@@ -7,17 +7,7 @@
     <link rel="stylesheet" href="/assets/css/nutriplan.css">
 </head>
 <body>
-    <div class="navbar">
-        <div>
-            <h1 style="margin: 0;">NutriPlan Admin</h1>
-            <div>
-                <a href="/admin/dashboard">Dashboard</a>
-                <a href="/admin/regimes">Regimes</a>
-                <a href="/admin/activites">Activites</a>
-                <a href="/admin/logout">Deconnexion</a>
-            </div>
-        </div>
-    </div>
+    <?= view('partials/admin_header') ?>
 
     <div class="container">
         <h1>Gerer Regimes</h1>

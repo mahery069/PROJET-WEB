@@ -7,6 +7,58 @@ use CodeIgniter\HTTP\ResponseInterface;
 class Wallet extends BaseController
 {
     /**
+     * Convert a decimal amount to integer cents to avoid float precision issues.
+     */
+    private function toCents($amount): int
+    {
+        return (int) round(((float) $amount) * 100);
+    }
+
+    /**
+     * Format integer cents as a 2-decimal string.
+     */
+    private function fromCents(int $cents): string
+    {
+        return number_format($cents / 100, 2, '.', '');
+    }
+
+    private function decAdd($left, $right): string
+    {
+        if (function_exists('bcadd')) {
+            return bcadd((string) $left, (string) $right, 2);
+        }
+
+        return $this->fromCents($this->toCents($left) + $this->toCents($right));
+    }
+
+    private function decSub($left, $right): string
+    {
+        if (function_exists('bcsub')) {
+            return bcsub((string) $left, (string) $right, 2);
+        }
+
+        return $this->fromCents($this->toCents($left) - $this->toCents($right));
+    }
+
+    private function decMul($left, $right): string
+    {
+        if (function_exists('bcmul')) {
+            return bcmul((string) $left, (string) $right, 2);
+        }
+
+        return number_format(((float) $left) * ((float) $right), 2, '.', '');
+    }
+
+    private function decCompare($left, $right): int
+    {
+        if (function_exists('bccomp')) {
+            return bccomp((string) $left, (string) $right, 2);
+        }
+
+        return $this->toCents($left) <=> $this->toCents($right);
+    }
+
+    /**
      * Display Gold page
      */
     public function goldPage()
@@ -93,7 +145,7 @@ class Wallet extends BaseController
         $walletTable = $db->table('user_wallet');
         $wallet = $walletTable->where('id_user', $userId)->get()->getRowArray();
         if ($wallet) {
-            $newSolde = bcadd($wallet['solde'], $montant, 2);
+            $newSolde = $this->decAdd($wallet['solde'], $montant);
             $walletTable->where('id', $wallet['id'])->update(['solde' => $newSolde, 'updated_at' => date('Y-m-d H:i:s')]);
         } else {
             $newSolde = number_format($montant, 2, '.', '');
@@ -210,24 +262,24 @@ class Wallet extends BaseController
         
         // Apply 15% Gold discount if user has Gold membership
         if ($isGold) {
-            $prix = bcmul($prix, '0.85', 2);
+            $prix = $this->decMul($prix, '0.85');
         }
         
         $solde = $wallet['solde'];
 
         // Check if user has enough balance
-        if (bccomp($solde, $prix, 2) < 0) {
+        if ($this->decCompare($solde, $prix) < 0) {
             $db->transComplete();
             return $this->response->setJSON([
                 'success' => false,
                 'message' => 'Solde insuffisant. Vous devez recharger votre portefeuille.',
-                'data' => ['solde_actuel' => $solde, 'prix' => $prix, 'deficit' => bcsub($prix, $solde, 2)],
+                'data' => ['solde_actuel' => $solde, 'prix' => $prix, 'deficit' => $this->decSub($prix, $solde)],
                 'errors' => ['wallet' => 'insufficient_balance']
             ])->setStatusCode(ResponseInterface::HTTP_PAYMENT_REQUIRED);
         }
 
         // Deduct from wallet
-        $newSolde = bcsub($solde, $prix, 2);
+        $newSolde = $this->decSub($solde, $prix);
         $db->table('user_wallet')
             ->where('id', $wallet['id'])
             ->update([
@@ -373,18 +425,18 @@ class Wallet extends BaseController
         $solde = $wallet['solde'];
 
         // Check if user has enough balance
-        if (bccomp($solde, $goldPrice, 2) < 0) {
+        if ($this->decCompare($solde, $goldPrice) < 0) {
             $db->transComplete();
             return $this->response->setJSON([
                 'success' => false,
                 'message' => 'Solde insuffisant pour acheter Gold.',
-                'data' => ['solde_actuel' => $solde, 'prix_gold' => $goldPrice, 'deficit' => bcsub($goldPrice, $solde, 2)],
+                'data' => ['solde_actuel' => $solde, 'prix_gold' => $goldPrice, 'deficit' => $this->decSub($goldPrice, $solde)],
                 'errors' => ['wallet' => 'insufficient_balance']
             ])->setStatusCode(ResponseInterface::HTTP_PAYMENT_REQUIRED);
         }
 
         // Deduct from wallet
-        $newSolde = bcsub($solde, $goldPrice, 2);
+        $newSolde = $this->decSub($solde, $goldPrice);
         $db->table('user_wallet')
             ->where('id', $wallet['id'])
             ->update([

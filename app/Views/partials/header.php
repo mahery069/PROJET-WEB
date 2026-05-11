@@ -14,7 +14,6 @@
         <?php else: ?>
             <a href="/formulaire">Inscription</a>
             <a href="/auth/login">Login</a>
-            <a href="/objectifs">Objectifs</a>
         <?php endif; ?>
     </nav>
 </header>

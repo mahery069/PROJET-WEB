@@ -2,6 +2,9 @@
 
 namespace App\Controllers;
 
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
 class Auth extends BaseController
 {
     /**
@@ -443,10 +446,20 @@ class Auth extends BaseController
 </body>
 </html>';
 
-        // Set headers for PDF download
-        header('Content-Type: text/html; charset=utf-8');
-        header('Content-Disposition: inline; filename="profil_' . $user['id'] . '.html"');
-        
-        echo $html;
+        $options = new Options();
+        $options->set('isRemoteEnabled', true);
+
+        $dompdf = new Dompdf($options);
+        $dompdf->loadHtml($html, 'UTF-8');
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+
+        $filename = 'profil_' . $user['id'] . '_' . date('Ymd_His') . '.pdf';
+        $pdfOutput = $dompdf->output();
+
+        return $this->response
+            ->setHeader('Content-Type', 'application/pdf')
+            ->setHeader('Content-Disposition', 'attachment; filename="' . $filename . '"')
+            ->setBody($pdfOutput);
     }
 }

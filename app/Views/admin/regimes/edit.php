@@ -7,12 +7,7 @@
     <link rel="stylesheet" href="/assets/css/nutriplan.css">
 </head>
 <body>
-    <div class="navbar">
-        <div>
-            <h1 style="margin: 0; color: white;">NutriPlan Admin</h1>
-            <a href="/admin/dashboard">Dashboard</a>
-        </div>
-    </div>
+    <?= view('partials/admin_header') ?>
 
     <div class="container">
         <h1>Modifier Regime</h1>

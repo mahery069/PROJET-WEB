@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/assets/css/nutriplan-home.css">
 </head>
 <body>
-<?= view('partials/header') ?>
+
 
 <div class="page-wrapper">
 

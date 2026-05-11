@@ -7,32 +7,35 @@
     <link rel="stylesheet" href="/assets/css/nutriplan.css">
 </head>
 <body>
-    <header class="dashboard-header">
-        <div class="header-content">
-            <div class="header-title">Bonjour, <?= esc($userName ?? 'Utilisateur') ?></div>
-            <div class="header-subtitle">Voici votre tableau de bord NutriPlan</div>
-            <?php if (! empty($isGold)): ?>
-                <div class="badge">Option Gold active - 15% sur les regimes</div>
-            <?php endif; ?>
+    <?= view('partials/header') ?>
+
+    <div class="wrap dashboard-page">
+        <section class="dashboard-hero panel">
+            <div class="dashboard-hero__copy">
+                <p class="eyebrow">Dashboard NutriPlan</p>
+                <h1>Bonjour, <?= esc($userName ?? 'Utilisateur') ?></h1>
+                <p class="header-subtitle">Voici votre tableau de bord NutriPlan. Accédez rapidement à vos objectifs, vos régimes et votre porte-monnaie.</p>
+                <?php if (! empty($isGold)): ?>
+                    <div class="badge">Option Gold active - 15% sur les regimes</div>
+                <?php endif; ?>
+            </div>
+
+            <div class="dashboard-hero__actions">
+                <a class="btn btn-gold" href="/wallet/gold">Option Gold</a>
+                <a class="btn secondary" href="/objectifs">Objectifs</a>
+                <a class="btn secondary" href="/export-pdf">Export PDF</a>
+            </div>
+        </section>
+
+        <div class="nav-tabs dashboard-tabs">
+            <div class="nav-item"><a class="active" href="/dashboard">Vue generale</a></div>
+            <div class="nav-item"><a href="/regimes">Regimes</a></div>
+            <div class="nav-item"><a href="/porte-monnaie">Porte-monnaie</a></div>
+            <div class="nav-item"><a href="/mon-profil">Profil</a></div>
+            <div class="nav-item"><a href="/objectifs">Objectifs</a></div>
         </div>
-    </header>
 
-    <div class="action-bar">
-        <div class="action-content">
-            <a class="btn btn-gold" href="/wallet/gold">Option Gold</a>
-            <a class="btn btn-export" href="/export-pdf">Export PDF</a>
-            <a class="btn btn-export" href="/auth/logout">Deconnexion</a>
-        </div>
-    </div>
-
-    <div class="nav-tabs">
-        <div class="nav-item"><a class="active" href="/dashboard">Vue generale</a></div>
-        <div class="nav-item"><a href="/regimes">Regimes</a></div>
-        <div class="nav-item"><a href="/porte-monnaie">Porte-monnaie</a></div>
-        <div class="nav-item"><a href="/mon-profil">Profil</a></div>
-    </div>
-
-    <div class="dashboard-container two-column-layout">
+        <div class="dashboard-layout two-column-layout">
         <aside class="sidebar">
             <div class="login-card">
                 <h3>NutriBalance</h3>

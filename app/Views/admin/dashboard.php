@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/assets/css/nutriplan.css">
 </head>
     <body>
-    <?= view('partials/header') ?>
+    <?= view('partials/admin_header') ?>
 
     <div class="wrap">
         <div class="container">
@@ -52,15 +52,6 @@
             </div>
         </div>
 
-        <div class="actions">
-            <h2>Actions rapides</h2>
-            <a href="/admin/regimes/create" class="btn">+ Ajouter Regime</a>
-            <a href="/admin/activites/create" class="btn">+ Ajouter Activite</a>
-            <a href="/admin/codes/create" class="btn">+ Generer Code</a>
-            <a href="/admin/regimes" class="btn">Gerer Regimes</a>
-            <a href="/admin/activites" class="btn">Gerer Activites</a>
-            <a href="/admin/codes" class="btn">Gerer Codes</a>
-        </div>
     </div>
 
     <script>
