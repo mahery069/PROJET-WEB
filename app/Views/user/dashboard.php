@@ -35,7 +35,7 @@
                 <h3>NutriBalance</h3>
                 <p class="muted">Solde disponible</p>
                 <div class="balance"><?= number_format((float)($walletBalance ?? 0), 2, ',', ' ') ?> EUR</div>
-                <div style="margin-top:12px">
+                <div class="mt-12">
                     <a class="btn" href="/porte-monnaie">Ouvrir le porte-monnaie</a>
                 </div>
             </div>
@@ -43,7 +43,7 @@
             <div class="wallet-card">
                 <div class="muted">Abonnements</div>
                 <div class="mini-stat">Active: <?= count($subscriptions ?? []) ?></div>
-                <div style="margin-top:10px">
+                <div class="mt-10">
                     <a class="btn btn-gold" href="/wallet/gold">Voir Gold</a>
                 </div>
             </div>
@@ -64,7 +64,7 @@
 
             <div class="stat-item accent-weight">
                 <div class="stat-label">Poids actuel</div>
-                <div class="stat-value"><?= esc($health['poids_kg'] ?? '0') ?> <span style="font-size: 20px;">kg</span></div>
+                <div class="stat-value"><?= esc($health['poids_kg'] ?? '0') ?> <span class="fs-20">kg</span></div>
                 <div class="stat-subtitle">Taille : <?= esc($health['taille_cm'] ?? '0') ?> cm</div>
             </div>
 

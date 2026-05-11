@@ -58,11 +58,13 @@
 
             <div class="form-group">
                 <label for="actif">Actif</label>
-                <input type="checkbox" id="actif" name="actif" value="1" checked style="width: auto;">
+                <input type="checkbox" id="actif" name="actif" value="1" checked class="w-auto">
             </div>
 
-            <button type="submit">Creer Regime</button>
-            <a href="/admin/regimes">Retour</a>
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">Creer Regime</button>
+                <a href="/admin/regimes" class="btn-outline">Retour</a>
+            </div>
         </form>
     </div>
 </body>

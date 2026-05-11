@@ -5,97 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscription - Etape 2</title>
     <link rel="stylesheet" href="/assets/css/nutriplan.css">
-    <style>
-        .gender-buttons {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-        .gender-btn {
-            flex: 1;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 6px;
-            background: #fff;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-        .gender-btn:hover {
-            border-color: #4CAF50;
-        }
-        .gender-btn.active {
-            background: #4CAF50;
-            color: #fff;
-            border-color: #4CAF50;
-        }
-        .input-row {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 16px;
-        }
-        .input-row .form-group {
-            flex: 1;
-            margin-bottom: 0;
-        }
-        .imc-container {
-            margin: 20px 0;
-            padding: 16px;
-            background: #f5f5f5;
-            border-radius: 6px;
-        }
-        .imc-label {
-            font-size: 12px;
-            color: #666;
-            margin-bottom: 8px;
-        }
-        .imc-bar {
-            width: 100%;
-            height: 8px;
-            background: #ddd;
-            border-radius: 4px;
-            overflow: hidden;
-            margin-bottom: 8px;
-        }
-        .imc-progress {
-            height: 100%;
-            background: linear-gradient(90deg, #4CAF50, #8BC34A);
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-        .imc-values {
-            display: flex;
-            justify-content: space-between;
-            font-size: 11px;
-            color: #999;
-        }
-        .imc-category {
-            margin-top: 8px;
-            padding: 8px;
-            border-radius: 4px;
-            font-size: 13px;
-            font-weight: 500;
-            text-align: center;
-            display: none;
-        }
-        .imc-category.underweight {
-            background: #E3F2FD;
-            color: #1976D2;
-        }
-        .imc-category.normal {
-            background: #E8F5E9;
-            color: #388E3C;
-        }
-        .imc-category.overweight {
-            background: #FFF3E0;
-            color: #F57C00;
-        }
-        .imc-category.obese {
-            background: #FFEBEE;
-            color: #D32F2F;
-        }
-    </style>
 </head>
 <body>
 
@@ -133,12 +42,18 @@
 
             <div class="form-group">
                 <label for="objectif">Objectif</label>
-                <select id="objectif" name="objectif" required>
-                    <option value="">Selectionner</option>
-                    <option value="augmenter">Augmenter son poids</option>
-                    <option value="reduire">Reduire son poids</option>
-                    <option value="imc_ideal">Atteindre l'IMC ideal</option>
-                </select>
+                <div class="gender-buttons">
+                    <button type="button" class="gender-btn" data-gender="augmenter">
+                        📈 Augmenter
+                    </button>
+                    <button type="button" class="gender-btn" data-gender="reduire">
+                        📉 Reduire
+                    </button>
+                    <button type="button" class="gender-btn" data-gender="imc_ideal">
+                        ⚖️ IMC ideal
+                    </button>
+                </div>
+                <input type="hidden" id="objectif" name="objectif" required>
             </div>
 
             <div class="actions">
@@ -156,13 +71,16 @@
     const imcValue = document.getElementById('imcValue');
     const imcProgress = document.getElementById('imcProgress');
     const imcCategory = document.getElementById('imcCategory');
+    const objectifInput = document.getElementById('objectif');
+    const objectifBtns = document.querySelectorAll('.gender-buttons:last-of-type .gender-btn');
 
-    genderBtns.forEach(btn => {
+    // Handle objectif button selection
+    objectifBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
-            genderBtns.forEach(b => b.classList.remove('active'));
+            objectifBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            genreInput.value = btn.dataset.gender;
+            objectifInput.value = btn.dataset.gender;
         });
     });
 
@@ -205,9 +123,9 @@
     poidsInput.addEventListener('input', calculateIMC);
 
     document.getElementById('registerStep2').addEventListener('submit', (e) => {
-        if (!genreInput.value) {
+        if (!objectifInput.value) {
             e.preventDefault();
-            alert('Veuillez choisir votre genre');
+            alert('Veuillez choisir votre objectif');
         }
     });
 </script>

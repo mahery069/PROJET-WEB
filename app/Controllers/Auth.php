@@ -340,33 +340,28 @@ class Auth extends BaseController
     <meta charset="UTF-8">
     <title>Profil Utilisateur - NutriPlan</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; color: #333; }
-        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 8px; margin-bottom: 30px; }
-        h1 { margin: 0; font-size: 28px; }
-        .section { margin: 20px 0; }
-        .section-title { background: #f0f0f0; padding: 10px; font-weight: bold; border-left: 4px solid #667eea; margin: 20px 0 10px 0; }
-        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
-        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
-        th { background: #f9f9f9; font-weight: bold; }
-        .info-box { background: #f9f9f9; padding: 15px; border-radius: 8px; margin: 10px 0; }
-        .footer { text-align: center; color: #999; font-size: 12px; margin-top: 40px; }
-        .imc { font-size: 18px; font-weight: bold; color: #667eea; }
+        body { font-family: Arial, sans-serif; margin: 20px; color: #000; }
+        h1 { margin: 0 0 6px 0; font-size: 22px; font-weight: bold; }
+        p { margin: 4px 0; }
+        .section { margin-top: 18px; }
+        .section-title { font-weight: bold; margin-bottom: 8px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+        th, td { padding: 8px; text-align: left; border: 1px solid #000; }
+        th { font-weight: bold; }
+        .imc { font-weight: bold; }
+        .footer { margin-top: 24px; font-size: 12px; }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Profil Utilisateur - NutriPlan</h1>
-        <p>Rapport généré le ' . date('d/m/Y H:i') . '</p>
-    </div>
+    <h1>Profil Utilisateur - NutriPlan</h1>
+    <p>Rapport généré le ' . date('d/m/Y H:i') . '</p>
 
     <div class="section">
         <div class="section-title">Informations Personnelles</div>
-        <div class="info-box">
-            <p><strong>Nom:</strong> ' . htmlspecialchars($user['nom'] ?? 'N/A') . '</p>
-            <p><strong>Email:</strong> ' . htmlspecialchars($user['email']) . '</p>
-            <p><strong>Genre:</strong> ' . htmlspecialchars($user['genre'] ?? 'N/A') . '</p>
-            <p><strong>Statut Gold:</strong> ' . ($user['is_gold'] ? '✓ Membre Gold (15% remise)' : 'Standard') . '</p>
-        </div>
+        <p><strong>Nom:</strong> ' . htmlspecialchars($user['nom'] ?? 'N/A') . '</p>
+        <p><strong>Email:</strong> ' . htmlspecialchars($user['email']) . '</p>
+        <p><strong>Genre:</strong> ' . htmlspecialchars($user['genre'] ?? 'N/A') . '</p>
+        <p><strong>Statut Gold:</strong> ' . ($user['is_gold'] ? 'Membre Gold (15% remise)' : 'Standard') . '</p>
     </div>';
 
         if ($health) {
@@ -374,12 +369,10 @@ class Auth extends BaseController
             $html .= '
     <div class="section">
         <div class="section-title">Données de Santé</div>
-        <div class="info-box">
-            <p><strong>Taille:</strong> ' . htmlspecialchars($health['taille_cm']) . ' cm</p>
-            <p><strong>Poids:</strong> ' . htmlspecialchars($health['poids_kg']) . ' kg</p>
-            <p><strong>IMC (Indice de Masse Corporelle):</strong> <span class="imc">' . number_format($imc, 2) . '</span></p>
-            <p><strong>Objectif:</strong> ' . htmlspecialchars($health['objectif']) . '</p>
-        </div>
+        <p><strong>Taille:</strong> ' . htmlspecialchars($health['taille_cm']) . ' cm</p>
+        <p><strong>Poids:</strong> ' . htmlspecialchars($health['poids_kg']) . ' kg</p>
+        <p><strong>IMC (Indice de Masse Corporelle):</strong> <span class="imc">' . number_format($imc, 2) . '</span></p>
+        <p><strong>Objectif:</strong> ' . htmlspecialchars($health['objectif']) . '</p>
     </div>';
         }
 
@@ -393,7 +386,7 @@ class Auth extends BaseController
                     <th>Régime</th>
                     <th>Description</th>
                     <th>Prix Payé</th>
-                    <th>Date Fim</th>
+                    <th>Date Fin</th>
                 </tr>
             </thead>
             <tbody>';

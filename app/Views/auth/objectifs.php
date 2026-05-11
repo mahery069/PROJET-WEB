@@ -18,12 +18,18 @@
             <div class="card">
                 <h2>Choisir votre objectif</h2>
                 <label for="objectif">Objectif</label>
-                <select id="objectif" name="objectif">
-                    <option value="">Selectionner un objectif</option>
-                    <option value="augmenter">Augmenter son poids</option>
-                    <option value="reduire">Reduire son poids</option>
-                    <option value="imc_ideal">Atteindre l'IMC ideal</option>
-                </select>
+                <div class="gender-buttons">
+                    <button type="button" class="gender-btn" data-gender="augmenter">
+                        📈 Augmenter
+                    </button>
+                    <button type="button" class="gender-btn" data-gender="reduire">
+                        📉 Reduire
+                    </button>
+                    <button type="button" class="gender-btn" data-gender="imc_ideal">
+                        ⚖️ IMC ideal
+                    </button>
+                </div>
+                <input type="hidden" id="objectif" name="objectif">
 
                 <label for="duree">Duree (semaines)</label>
                 <input id="duree" type="number" min="2" max="24" placeholder="Ex: 8">
@@ -44,6 +50,19 @@
     </div>
 
     <script>
+        // Handle objectif button selection
+        const objectifBtns = document.querySelectorAll('.gender-buttons .gender-btn');
+        const objectifInput = document.getElementById('objectif');
+
+        objectifBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                objectifBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                objectifInput.value = btn.dataset.gender;
+            });
+        });
+
         async function updateSuggestions() {
             const target = document.getElementById("suggestions");
             const objectif = document.getElementById("objectif").value;

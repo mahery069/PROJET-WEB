@@ -5,14 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="/assets/css/nutriplan.css">
-    <style>
-        .stats-grid { display:flex; gap:16px; flex-wrap:wrap; margin-bottom:20px; }
-        .stat-card { background:#fff; padding:12px 16px; border-radius:6px; box-shadow:0 1px 3px rgba(0,0,0,0.06); min-width:160px; }
-        .charts { display:flex; gap:20px; flex-wrap:wrap; }
-        .chart-card { width:320px; background:#fff; padding:12px; border-radius:6px; }
-        table.pivot { width:100%; border-collapse:collapse; margin-top:16px; }
-        table.pivot th, table.pivot td { border:1px solid #eee; padding:8px; text-align:left; }
-    </style>
 </head>
 <body>
     <?= view('partials/admin_header') ?>
@@ -20,7 +12,7 @@
     <div class="container">
         <h1>Dashboard - Statistiques</h1>
 
-        <div class="stats-grid">
+        <div class="grid-4 mt-16">
             <div class="stat-card">
                 <div class="muted">Utilisateurs</div>
                 <div class="mini-stat"><?= $stats['total_users'] ?></div>
@@ -43,24 +35,24 @@
             </div>
         </div>
 
-        <div class="charts">
-            <div class="chart-card">
+        <div class="grid-3 mt-16">
+            <div class="card">
                 <h4>Codes: utilisés vs non-utilisés</h4>
                 <canvas id="codesChart"></canvas>
             </div>
 
-            <div class="chart-card">
+            <div class="card">
                 <h4>Top utilisateurs (solde)</h4>
                 <canvas id="topUsersChart"></canvas>
             </div>
 
-            <div class="chart-card">
+            <div class="card">
                 <h4>Objectifs utilisateurs</h4>
                 <canvas id="objectiveChart"></canvas>
             </div>
         </div>
 
-        <section style="margin-top:24px;">
+        <section class="mt-24">
             <h3>Tableau croisé: abonnements par régime</h3>
             <?php if (!empty($subscriptions_pivot)): ?>
                 <table class="pivot">

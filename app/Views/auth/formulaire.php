@@ -5,31 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscription</title>
     <link rel="stylesheet" href="/assets/css/nutriplan.css">
-    <style>
-        .password-field {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-        .password-field input {
-            width: 100%;
-            padding-right: 40px;
-        }
-        .password-toggle {
-            position: absolute;
-            right: 12px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 18px;
-            padding: 4px;
-            color: #666;
-            transition: color 0.2s;
-        }
-        .password-toggle:hover {
-            color: #333;
-        }
-    </style>
 </head>
 <body>
 

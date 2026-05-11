@@ -12,7 +12,7 @@
     <div class="container">
         <h1>Gerer Regimes</h1>
         <?php if (session()->getFlashdata('success')): ?>
-            <div class="success"><?= session()->getFlashdata('success') ?></div>
+            <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
         <?php endif; ?>
 
         <div class="actions">
@@ -41,8 +41,8 @@
                     <td><?= $regime['pourcentage_viande'] ?>%</td>
                     <td><?= $regime['actif'] ? 'Oui' : 'Non' ?></td>
                     <td>
-                        <a href="/admin/regimes/edit/<?= $regime['id'] ?>" class="btn" style="padding: 5px 10px; font-size: 12px;">Modifier</a>
-                        <a href="/admin/regimes/delete/<?= $regime['id'] ?>" class="btn btn-danger" style="padding: 5px 10px; font-size: 12px;" onclick="return confirm('Confirmer?')">Supprimer</a>
+                        <a href="/admin/regimes/edit/<?= $regime['id'] ?>" class="btn-sm">Modifier</a>
+                        <a href="/admin/regimes/delete/<?= $regime['id'] ?>" class="btn-sm btn-sm-danger" onclick="return confirm('Confirmer?')">Supprimer</a>
                     </td>
                 </tr>
                 <?php endforeach; ?>

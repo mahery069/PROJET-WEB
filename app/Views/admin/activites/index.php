@@ -23,8 +23,8 @@
                     <td><?= $a['duree_minutes'] ?></td>
                     <td><?= $a['actif'] ? 'Oui' : 'Non' ?></td>
                     <td>
-                        <a href="/admin/activites/edit/<?= $a['id'] ?>" class="btn" style="padding: 5px 10px; font-size: 12px;">Modifier</a>
-                        <a href="/admin/activites/delete/<?= $a['id'] ?>" class="btn btn-danger" style="padding: 5px 10px; font-size: 12px;" onclick="return confirm('Confirmer?')">Supprimer</a>
+                        <a href="/admin/activites/edit/<?= $a['id'] ?>" class="btn-sm">Modifier</a>
+                        <a href="/admin/activites/delete/<?= $a['id'] ?>" class="btn-sm btn-sm-danger" onclick="return confirm('Confirmer?')">Supprimer</a>
                     </td>
                 </tr>
                 <?php endforeach; ?>

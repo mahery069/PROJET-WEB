@@ -53,12 +53,18 @@
                 <div class="grid">
                     <div class="form-group">
                         <label for="genre">Genre</label>
-                        <select id="genre" name="genre">
-                            <option value="" <?= $genreValue === '' ? 'selected' : '' ?>>Selectionner</option>
-                            <option value="homme" <?= $genreValue === 'homme' ? 'selected' : '' ?>>Homme</option>
-                            <option value="femme" <?= $genreValue === 'femme' ? 'selected' : '' ?>>Femme</option>
-                            <option value="autre" <?= $genreValue === 'autre' ? 'selected' : '' ?>>Autre</option>
-                        </select>
+                        <div class="gender-buttons">
+                            <button type="button" class="gender-btn" data-gender="homme" <?= $genreValue === 'homme' ? 'data-preselected="1"' : '' ?>>
+                                ♂ Homme
+                            </button>
+                            <button type="button" class="gender-btn" data-gender="femme" <?= $genreValue === 'femme' ? 'data-preselected="1"' : '' ?>>
+                                ♀ Femme
+                            </button>
+                            <button type="button" class="gender-btn" data-gender="autre" <?= $genreValue === 'autre' ? 'data-preselected="1"' : '' ?>>
+                                ⚧ Autre
+                            </button>
+                        </div>
+                        <input type="hidden" id="genre" name="genre" value="<?= esc($genreValue) ?>">
                     </div>
 
                     <div class="form-group">
@@ -80,12 +86,18 @@
 
                 <div class="form-group">
                     <label for="objectif">Objectif</label>
-                    <select id="objectif" name="objectif">
-                        <option value="" <?= $objectifValue === '' ? 'selected' : '' ?>>Selectionner</option>
-                        <option value="augmenter" <?= $objectifValue === 'augmenter' ? 'selected' : '' ?>>Augmenter son poids</option>
-                        <option value="reduire" <?= $objectifValue === 'reduire' ? 'selected' : '' ?>>Reduire son poids</option>
-                        <option value="imc_ideal" <?= $objectifValue === 'imc_ideal' ? 'selected' : '' ?>>Atteindre l'IMC ideal</option>
-                    </select>
+                    <div class="gender-buttons">
+                        <button type="button" class="gender-btn" data-gender="augmenter" <?= $objectifValue === 'augmenter' ? 'data-preselected="1"' : '' ?>>
+                            📈 Augmenter
+                        </button>
+                        <button type="button" class="gender-btn" data-gender="reduire" <?= $objectifValue === 'reduire' ? 'data-preselected="1"' : '' ?>>
+                            📉 Reduire
+                        </button>
+                        <button type="button" class="gender-btn" data-gender="imc_ideal" <?= $objectifValue === 'imc_ideal' ? 'data-preselected="1"' : '' ?>>
+                            ⚖️ IMC ideal
+                        </button>
+                    </div>
+                    <input type="hidden" id="objectif" name="objectif" value="<?= esc($objectifValue) ?>">
                 </div>
 
                 <div class="actions">
@@ -96,5 +108,39 @@
             </form>
         </div>
     </div>
+
+    <script>
+        // Handle genre button selection
+        const genreBtns = document.querySelectorAll('.gender-buttons:nth-of-type(1) .gender-btn');
+        const genreInput = document.getElementById('genre');
+
+        genreBtns.forEach(btn => {
+            if (btn.dataset.preselected === '1') {
+                btn.classList.add('active');
+            }
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                genreBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                genreInput.value = btn.dataset.gender;
+            });
+        });
+
+        // Handle objectif button selection
+        const objectifBtns = document.querySelectorAll('.gender-buttons:nth-of-type(2) .gender-btn');
+        const objectifInput = document.getElementById('objectif');
+
+        objectifBtns.forEach(btn => {
+            if (btn.dataset.preselected === '1') {
+                btn.classList.add('active');
+            }
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                objectifBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                objectifInput.value = btn.dataset.gender;
+            });
+        });
+    </script>
 </body>
 </html>

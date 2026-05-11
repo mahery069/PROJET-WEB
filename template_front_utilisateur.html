@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NutriPlan — [NOM DE LA PAGE]</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   NUTRIPLAN — TEMPLATE FRONT UTILISATEUR
+   Remplacez [NOM DE LA PAGE] et le contenu de .page-content
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --green:       #2d6a4f;
+  --green-light: #f0faf5;
+  --green-mid:   #e1f5ee;
+  --gold:        #FAC775;
+  --gold-dark:   #633806;
+  --text-main:   #1a2e1e;
+  --text-mid:    #4a5e4e;
+  --text-soft:   #8a9e8c;
+  --border:      #e4ece5;
+  --bg:          #f5f0e8;
+  --white:       #ffffff;
+  --red:         #E24B4A;
+  --amber:       #EF9F27;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── TOPBAR ─────────────────────────────────────────── */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  height: 56px;
+  display: flex;
+  align-items: center;
+  padding: 0 1.25rem;
+  gap: 12px;
+}
+
+.topbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.logo-icon {
+  width: 30px; height: 30px;
+  background: var(--green);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+}
+.logo-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  color: var(--text-main);
+}
+
+.topbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: 1;
+  justify-content: center;
+}
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 13px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-mid);
+  text-decoration: none;
+  transition: background .12s, color .12s;
+}
+.nav-link:hover { background: var(--green-light); color: var(--green); }
+.nav-link.active { background: var(--green-light); color: var(--green); font-weight: 500; }
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.badge-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--gold);
+  color: var(--gold-dark);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+.wallet-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--green-light);
+  border: 1px solid var(--green-mid);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--green);
+}
+.icon-btn {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  position: relative;
+  transition: background .12s;
+}
+.icon-btn:hover { background: var(--green-light); }
+.notif-dot {
+  position: absolute;
+  top: 6px; right: 7px;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--red);
+  border: 2px solid var(--white);
+}
+.avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: var(--green);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  position: relative;
+}
+.dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 6px;
+  min-width: 180px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.08);
+  z-index: 200;
+}
+.dropdown.open { display: block; }
+.dd-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--text-main);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background .1s;
+}
+.dd-item:hover { background: var(--green-light); }
+.dd-item.danger { color: var(--red); }
+.dd-item.danger:hover { background: #fff5f5; }
+.dd-sep { height: 1px; background: var(--border); margin: 4px 0; }
+
+/* ─── IMC BANNER ─────────────────────────────────────── */
+.imc-banner {
+  background: var(--green-light);
+  border-bottom: 1px solid var(--green-mid);
+  padding: 6px 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 12px;
+  color: var(--text-mid);
+  flex-wrap: wrap;
+}
+.imc-banner strong { color: var(--text-main); }
+.imc-val { font-weight: 600; color: var(--amber); }
+.banner-sep { color: var(--border); }
+.progress-wrap { display: flex; align-items: center; gap: 6px; }
+.progress-bar {
+  width: 100px; height: 5px;
+  border-radius: 999px;
+  background: var(--border);
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--green);
+  /* Modifier la largeur selon la progression : ex width: 30% */
+  width: 30%;
+}
+.export-btn {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--white);
+  font-size: 12px;
+  color: var(--text-mid);
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: border-color .12s, color .12s;
+}
+.export-btn:hover { border-color: var(--green); color: var(--green); }
+
+/* ─── LAYOUT PRINCIPAL ───────────────────────────────── */
+.layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  flex: 1;
+  min-height: 0;
+}
+
+/* ─── SIDEBAR ────────────────────────────────────────── */
+.sidebar {
+  background: var(--white);
+  border-right: 1px solid var(--border);
+  padding: 1.25rem 0;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 56px; /* hauteur topbar */
+  height: calc(100vh - 56px);
+  overflow-y: auto;
+}
+.sidebar-section { padding: 0 .75rem; margin-bottom: .75rem; }
+.sidebar-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-soft);
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  padding: 0 .5rem;
+  margin-bottom: 4px;
+}
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--text-mid);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .1s, color .1s;
+  margin-bottom: 2px;
+}
+.sidebar-link:hover { background: var(--green-light); color: var(--green); }
+.sidebar-link.active { background: var(--green-light); color: var(--green); font-weight: 500; }
+.sidebar-link .icon { font-size: 17px; flex-shrink: 0; }
+.sidebar-badge {
+  margin-left: auto;
+  background: var(--green);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 999px;
+}
+.sidebar-bottom {
+  margin-top: auto;
+  padding: .75rem .75rem 0;
+  border-top: 1px solid var(--border);
+}
+
+/* IMC mini-card dans sidebar */
+.sidebar-imc {
+  background: var(--green-light);
+  border: 1px solid var(--green-mid);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin: 0 .75rem .75rem;
+  text-align: center;
+}
+.sidebar-imc .val { font-size: 22px; font-weight: 700; color: var(--amber); }
+.sidebar-imc .lbl { font-size: 11px; color: var(--text-soft); margin-bottom: 4px; }
+.sidebar-imc .status { font-size: 12px; color: var(--green); font-weight: 500; margin-top: 2px; }
+
+/* ─── CONTENU PRINCIPAL ──────────────────────────────── */
+.main {
+  padding: 1.75rem 2rem;
+  overflow-y: auto;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-soft);
+  margin-bottom: 1.25rem;
+}
+.breadcrumb a { color: var(--text-soft); text-decoration: none; }
+.breadcrumb a:hover { color: var(--green); }
+.breadcrumb .sep { color: var(--border); }
+.breadcrumb .current { color: var(--text-main); font-weight: 500; }
+
+/* En-tête de page */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.page-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.2;
+}
+.page-sub {
+  font-size: 13px;
+  color: var(--text-mid);
+  margin-top: 4px;
+}
+.page-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+
+/* ─── COMPOSANTS RÉUTILISABLES ───────────────────────── */
+
+/* Cartes */
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.25rem;
+}
+.card-title { font-size: 14px; font-weight: 600; color: var(--text-main); margin-bottom: .75rem; }
+
+/* Grilles */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+
+/* Stat cards */
+.stat-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1rem 1.25rem;
+}
+.stat-label { font-size: 12px; color: var(--text-soft); margin-bottom: 4px; }
+.stat-value { font-size: 22px; font-weight: 700; color: var(--text-main); }
+.stat-sub { font-size: 12px; color: var(--text-soft); margin-top: 3px; }
+
+/* Boutons */
+.btn-primary {
+  height: 38px;
+  padding: 0 18px;
+  background: var(--green);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'DM Sans', sans-serif;
+  transition: opacity .15s;
+}
+.btn-primary:hover { opacity: .88; }
+.btn-primary:disabled { opacity: .4; cursor: not-allowed; }
+
+.btn-outline {
+  height: 38px;
+  padding: 0 16px;
+  background: var(--white);
+  color: var(--text-main);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'DM Sans', sans-serif;
+  transition: background .12s;
+  text-decoration: none;
+}
+.btn-outline:hover { background: var(--green-light); border-color: var(--green); color: var(--green); }
+
+/* Badges */
+.badge {
+  display: inline-block;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-weight: 500;
+}
+.badge-green { background: var(--green-mid); color: #085041; }
+.badge-amber { background: #FAEEDA; color: #633806; }
+.badge-red   { background: #FCEBEB; color: #791F1F; }
+.badge-blue  { background: #E6F1FB; color: #0C447C; }
+.badge-gold  { background: var(--gold); color: var(--gold-dark); }
+
+/* Tableaux */
+.table-wrap {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead { background: var(--green-light); }
+th {
+  padding: 9px 14px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 12px;
+  color: var(--text-mid);
+  border-bottom: 1px solid var(--border);
+}
+td {
+  padding: 10px 14px;
+  color: var(--text-main);
+  border-bottom: 1px solid var(--border);
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--green-light); }
+
+/* Formulaires */
+.field { margin-bottom: 1rem; }
+.field label { display: block; font-size: 12px; font-weight: 500; color: var(--text-mid); margin-bottom: 5px; }
+.field input, .field select, .field textarea {
+  width: 100%;
+  height: 40px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0 12px;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  background: var(--white);
+  color: var(--text-main);
+  transition: border-color .12s;
+}
+.field textarea { height: auto; padding: 10px 12px; resize: vertical; }
+.field input:focus, .field select:focus, .field textarea:focus {
+  outline: none;
+  border-color: var(--green);
+}
+.field-hint { font-size: 11px; color: var(--text-soft); margin-top: 4px; }
+.field-error { font-size: 11px; color: var(--red); margin-top: 4px; display: none; }
+.field-error.show { display: block; }
+
+/* Alertes */
+.alert {
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+.alert-success { background: var(--green-mid); color: #085041; border: 1px solid #a8d5c2; }
+.alert-error   { background: #FCEBEB; color: #791F1F; border: 1px solid #f5b8b8; }
+.alert-info    { background: #E6F1FB; color: #0C447C; border: 1px solid #b3d0f0; }
+
+/* Séparateur */
+.divider { height: 1px; background: var(--border); margin: 1.25rem 0; }
+
+/* ─── CONTENU DE LA PAGE ─────────────────────────────── 
+   ↓↓↓ MODIFIER CETTE SECTION POUR CHAQUE PAGE ↓↓↓      */
+.page-content { display: flex; flex-direction: column; gap: 1rem; }
+
+/* ─── FOOTER ─────────────────────────────────────────── */
+.footer {
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  padding: .75rem 2rem;
+  font-size: 12px;
+  color: var(--text-soft);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ─── RESPONSIVE ─────────────────────────────────────── */
+@media (max-width: 768px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .topbar-nav { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════
+     TOPBAR
+     ══════════════════════════════════════════════════════ -->
+<header class="topbar">
+  <a href="../index.html" class="topbar-logo">
+    <div class="logo-icon">🌿</div>
+    <span class="logo-name">NutriPlan</span>
+  </a>
+
+  <nav class="topbar-nav">
+    <a href="dashboard.php" class="nav-link">🏠 Dashboard</a>
+    <a href="objectifs.php" class="nav-link">🎯 Objectifs</a>
+    <a href="regimes.php"   class="nav-link active">🥗 Régimes</a><!-- ← page active -->
+    <a href="sport.php"     class="nav-link">🏃 Sport</a>
+    <a href="wallet.php"    class="nav-link">💰 Wallet</a>
+  </nav>
+
+  <div class="topbar-right">
+    <!-- Afficher .badge-gold uniquement si user Gold -->
+    <div class="badge-gold">⭐ Gold</div>
+
+    <!-- Solde porte-monnaie -->
+    <div class="wallet-chip">🪙 125 000 Ar</div>
+
+    <!-- Notifications -->
+    <button class="icon-btn" title="Notifications">
+      🔔
+      <span class="notif-dot"></span>
+    </button>
+
+    <!-- Avatar + dropdown -->
+    <div class="avatar" onclick="toggleDD()" id="avatar">RJ
+      <div class="dropdown" id="dd">
+        <a href="profil.php"    class="dd-item">👤 Mon profil</a>
+        <a href="settings.php"  class="dd-item">⚙️ Paramètres</a>
+        <div class="dd-sep"></div>
+        <a href="logout.php"    class="dd-item danger">🚪 Déconnexion</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Barre IMC secondaire -->
+<div class="imc-banner">
+  <span>IMC : <span class="imc-val">23.4</span></span>
+  <span class="banner-sep">|</span>
+  <span>Poids : <strong>72 kg</strong> · Taille : <strong>175 cm</strong></span>
+  <span class="banner-sep">|</span>
+  <span>Régime actif : <strong>Méditerranéen léger</strong></span>
+  <div class="progress-wrap">
+    <!-- Changer width du .progress-fill selon avancement -->
+    <div class="progress-bar"><div class="progress-fill" style="width:30%"></div></div>
+    <span>30%</span>
+  </div>
+  <button class="export-btn">⬇ Export PDF</button>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     LAYOUT : SIDEBAR + MAIN
+     ══════════════════════════════════════════════════════ -->
+<div class="layout">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar">
+
+    <!-- Mini carte IMC -->
+    <div class="sidebar-imc">
+      <div class="lbl">Mon IMC</div>
+      <div class="val">23.4</div>
+      <div class="status">✅ Poids normal</div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Navigation</div>
+      <a href="dashboard.php" class="sidebar-link">🏠 <span>Dashboard</span></a>
+      <a href="objectifs.php" class="sidebar-link">🎯 <span>Mes objectifs</span></a>
+      <a href="regimes.php"   class="sidebar-link active">🥗 <span>Régimes</span><span class="sidebar-badge">5</span></a>
+      <a href="sport.php"     class="sidebar-link">🏃 <span>Activités sport</span></a>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Mon compte</div>
+      <a href="profil.php"    class="sidebar-link">👤 <span>Mon profil</span></a>
+      <a href="wallet.php"    class="sidebar-link">💰 <span>Porte-monnaie</span></a>
+      <a href="export.php"    class="sidebar-link">📄 <span>Export PDF</span></a>
+    </div>
+
+    <div class="sidebar-bottom">
+      <a href="logout.php" class="sidebar-link" style="color:#E24B4A">🚪 <span>Déconnexion</span></a>
+    </div>
+  </aside>
+
+  <!-- ── MAIN ── -->
+  <main class="main">
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a href="dashboard.php">Accueil</a>
+      <span class="sep">›</span>
+      <!-- Modifier selon la page courante -->
+      <span class="current">Régimes</span>
+    </div>
+
+    <!-- En-tête de page -->
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Mes régimes</h1><!-- ← CHANGER LE TITRE -->
+        <p class="page-sub">Choisissez un régime adapté à votre objectif.</p><!-- ← CHANGER LE SOUS-TITRE -->
+      </div>
+      <div class="page-actions">
+        <!-- Boutons d'action optionnels -->
+        <a href="objectifs.php" class="btn-outline">← Objectifs</a>
+        <button class="btn-primary">Acheter un régime</button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════
+         CONTENU DE LA PAGE — MODIFIER ICI
+         ══════════════════════════════════════════════════ -->
+    <div class="page-content">
+
+      <!-- Exemple : alerte succès -->
+      <div class="alert alert-success">✅ Votre régime a bien été activé !</div>
+
+      <!-- Exemple : 3 cartes stat -->
+      <div class="grid-3">
+        <div class="stat-card">
+          <div class="stat-label">Régime actif</div>
+          <div class="stat-value" style="font-size:15px;margin-top:4px">Méditerranéen léger</div>
+          <div class="stat-sub">30 jours · 18 restants</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Progression</div>
+          <div class="stat-value">30%</div>
+          <div class="stat-sub">−2.1 kg depuis le début</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Solde wallet</div>
+          <div class="stat-value" style="color:var(--green)">125 000 Ar</div>
+          <div class="stat-sub">Option Gold active ⭐</div>
+        </div>
+      </div>
+
+      <!-- Exemple : tableau -->
+      <div class="card">
+        <div class="card-title">Régimes disponibles</div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Nom</th>
+                <th>Durée</th>
+                <th>Prix</th>
+                <th>Impact</th>
+                <th>Statut</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Méditerranéen léger</td>
+                <td>30 jours</td>
+                <td>68 000 Ar <small style="color:var(--text-soft);text-decoration:line-through">80 000</small></td>
+                <td>−5 kg</td>
+                <td><span class="badge badge-green">Actif</span></td>
+                <td><button class="btn-outline" style="height:30px;font-size:12px">Voir</button></td>
+              </tr>
+              <tr>
+                <td>Détox végétarien</td>
+                <td>14 jours</td>
+                <td>42 500 Ar</td>
+                <td>−3 kg</td>
+                <td><span class="badge badge-blue">Disponible</span></td>
+                <td><button class="btn-primary" style="height:30px;font-size:12px">Acheter</button></td>
+              </tr>
+              <tr>
+                <td>Protéiné actif</td>
+                <td>21 jours</td>
+                <td>55 250 Ar</td>
+                <td>−4 kg</td>
+                <td><span class="badge badge-blue">Disponible</span></td>
+                <td><button class="btn-primary" style="height:30px;font-size:12px">Acheter</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Exemple : formulaire -->
+      <div class="card" style="max-width:500px">
+        <div class="card-title">Exemple de formulaire</div>
+        <div class="field">
+          <label>Champ texte</label>
+          <input type="text" placeholder="Valeur...">
+          <div class="field-hint">Indication optionnelle sous le champ</div>
+        </div>
+        <div class="field">
+          <label>Sélection</label>
+          <select><option>Option 1</option><option>Option 2</option></select>
+        </div>
+        <div style="display:flex;gap:8px;justify-content:flex-end">
+          <button class="btn-outline">Annuler</button>
+          <button class="btn-primary">Enregistrer</button>
+        </div>
+      </div>
+
+    </div>
+    <!-- ══ FIN DU CONTENU ══ -->
+
+  </main>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     FOOTER
+     ══════════════════════════════════════════════════════ -->
+<footer class="footer">
+  <span>NutriPlan S4 — Groupe mixte de 3</span>
+  <span>CodeIgniter + PHP + MySQL</span>
+</footer>
+
+<script>
+/* Dropdown avatar */
+function toggleDD() {
+  const dd = document.getElementById('dd');
+  dd.classList.toggle('open');
+  if (dd.classList.contains('open')) {
+    setTimeout(() => document.addEventListener('click', () => dd.classList.remove('open'), { once: true }), 0);
+  }
+}
+</script>
+</body>
+</html>

@@ -77,15 +77,15 @@
     <div class="container">
         <h1>Selecteur de regime alimentaire</h1>
         
-        <section id="wallet-widget" style="margin-top:20px;padding:12px;border:1px solid #ddd;border-radius:6px;max-width:420px;">
+        <section id="wallet-widget" class="card mt-20 max-w-420">
             <h2>Wallet</h2>
-            <div style="margin-bottom:8px;">Solde: <strong id="wallet-balance">0.00 EUR</strong></div>
-            <div style="display:flex;gap:8px;margin-bottom:8px;">
-                <input id="wallet-user-id" type="number" placeholder="user id" value="1" style="width:80px;padding:6px;" />
-                <input id="wallet-code" type="text" placeholder="Entrez code" style="flex:1;padding:6px;" />
-                <button id="wallet-redeem-btn" style="padding:6px 10px;">Recharger</button>
+            <div class="mb-8">Solde: <strong id="wallet-balance">0.00 EUR</strong></div>
+            <div class="d-flex gap-8 mb-8">
+                <input id="wallet-user-id" type="number" placeholder="user id" value="1" class="w-80 p-6" />
+                <input id="wallet-code" type="text" placeholder="Entrez code" class="p-6" />
+                <button id="wallet-redeem-btn" class="btn-outline p-6-10" type="button">Recharger</button>
             </div>
-            <div id="wallet-message" style="color:#333;font-size:0.95rem;"></div>
+            <div id="wallet-message" class="fs-12"></div>
         </section>
     </div>
     <script src="/assets/js/script.js"></script>

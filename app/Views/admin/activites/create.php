@@ -24,11 +24,18 @@
 
             <div class="form-group">
                 <label>Intensite *</label>
-                <select name="intensite" required>
-                    <option value="faible">Faible</option>
-                    <option value="moyenne" selected>Moyenne</option>
-                    <option value="elevee">Elevee</option>
-                </select>
+                <div class="gender-buttons">
+                    <button type="button" class="gender-btn" data-gender="faible">
+                        🟢 Faible
+                    </button>
+                    <button type="button" class="gender-btn" data-gender="moyenne" data-preselected="1">
+                        🟡 Moyenne
+                    </button>
+                    <button type="button" class="gender-btn" data-gender="elevee">
+                        🔴 Elevee
+                    </button>
+                </div>
+                <input type="hidden" id="intensite" name="intensite" required>
             </div>
 
             <div class="form-group">
@@ -43,6 +50,25 @@
             <button type="submit">Creer</button>
             <a href="/admin/activites">Annuler</a>
         </form>
+
+        <script>
+            // Handle intensite button selection
+            const intensiteBtns = document.querySelectorAll('.gender-buttons .gender-btn');
+            const intensiteInput = document.getElementById('intensite');
+
+            intensiteBtns.forEach(btn => {
+                if (btn.dataset.preselected === '1') {
+                    btn.classList.add('active');
+                    intensiteInput.value = btn.dataset.gender;
+                }
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    intensiteBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    intensiteInput.value = btn.dataset.gender;
+                });
+            });
+        </script>
     </div>
 </body>
 </html>

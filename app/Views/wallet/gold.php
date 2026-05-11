@@ -15,19 +15,19 @@
                 <p class="subtitle">Adhesion Premium</p>
             </div>
 
-            <div id="gold-status-loading">
-                <p style="text-align: center;">Verification de votre statut...</p>
+            <div id="gold-status-loading" class="text-center">
+                <p>Verification de votre statut...</p>
             </div>
 
-            <div id="gold-content" style="display: none;">
-                <div id="already-gold-section" style="display: none;">
+            <div id="gold-content" class="hidden">
+                <div id="already-gold-section" class="hidden">
                     <div class="already-gold">
                         <h2>Vous etes Gold!</h2>
                         <p>Vous beneficiez deja de 15% de remise sur tous les regimes.</p>
                     </div>
                 </div>
 
-                <div id="not-gold-section" style="display: none;">
+                <div id="not-gold-section" class="hidden">
                     <div class="gold-benefits">
                         <h3>Avantages Gold</h3>
                         <div class="benefit-item">15% de remise sur tous les regimes</div>
@@ -40,7 +40,7 @@
                         <div class="wallet-balance">
                             Solde wallet: <strong id="wallet-balance-display">0.00 EUR</strong>
                         </div>
-                        <button onclick="refreshBalance()" style="padding: 6px 12px; background: #f0f0f0; border: 1px solid #ccc; border-radius: 4px; cursor: pointer;">Refresh</button>
+                        <button type="button" class="btn-outline btn-sm" onclick="refreshBalance()">Refresh</button>
                     </div>
 
                     <div class="gold-price">
@@ -86,24 +86,24 @@
             })
             .then(response => response.json())
             .then(data => {
-                document.getElementById('gold-status-loading').style.display = 'none';
-                document.getElementById('gold-content').style.display = 'block';
+                document.getElementById('gold-status-loading').classList.add('hidden');
+                document.getElementById('gold-content').classList.remove('hidden');
 
                 if (data.success) {
                     if (data.data.is_gold) {
-                        document.getElementById('already-gold-section').style.display = 'block';
-                        document.getElementById('not-gold-section').style.display = 'none';
+                        document.getElementById('already-gold-section').classList.remove('hidden');
+                        document.getElementById('not-gold-section').classList.add('hidden');
                     } else {
-                        document.getElementById('already-gold-section').style.display = 'none';
-                        document.getElementById('not-gold-section').style.display = 'block';
+                        document.getElementById('already-gold-section').classList.add('hidden');
+                        document.getElementById('not-gold-section').classList.remove('hidden');
                     }
                 } else {
                     showMessage('error', 'Erreur: ' + data.message);
                 }
             })
             .catch(error => {
-                document.getElementById('gold-status-loading').style.display = 'none';
-                document.getElementById('gold-content').style.display = 'block';
+                document.getElementById('gold-status-loading').classList.add('hidden');
+                document.getElementById('gold-content').classList.remove('hidden');
                 showMessage('error', 'Erreur de connexion: ' + error);
             });
         }

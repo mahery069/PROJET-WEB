@@ -24,11 +24,18 @@
 
             <div class="form-group">
                 <label>Intensite</label>
-                <select name="intensite" required>
-                    <option value="faible" <?= $activite['intensite'] == 'faible' ? 'selected' : '' ?>>Faible</option>
-                    <option value="moyenne" <?= $activite['intensite'] == 'moyenne' ? 'selected' : '' ?>>Moyenne</option>
-                    <option value="elevee" <?= $activite['intensite'] == 'elevee' ? 'selected' : '' ?>>Elevee</option>
-                </select>
+                <div class=\"gender-buttons\">
+                    <button type=\"button\" class=\"gender-btn\" data-gender=\"faible\" <?= $activite['intensite'] == 'faible' ? 'data-preselected=\"1\"' : '' ?>>
+                        🟢 Faible
+                    </button>
+                    <button type=\"button\" class=\"gender-btn\" data-gender=\"moyenne\" <?= $activite['intensite'] == 'moyenne' ? 'data-preselected=\"1\"' : '' ?>>
+                        🟡 Moyenne
+                    </button>
+                    <button type=\"button\" class=\"gender-btn\" data-gender=\"elevee\" <?= $activite['intensite'] == 'elevee' ? 'data-preselected=\"1\"' : '' ?>>
+                        🔴 Elevee
+                    </button>
+                </div>
+                <input type=\"hidden\" id=\"intensite\" name=\"intensite\" value=\"<?= esc($activite['intensite']) ?>\" required>
             </div>
 
             <div class="form-group">
@@ -43,6 +50,24 @@
             <button type="submit">Mettre a jour</button>
             <a href="/admin/activites">Annuler</a>
         </form>
+
+        <script>
+            // Handle intensite button selection
+            const intensiteBtns = document.querySelectorAll('.gender-buttons .gender-btn');
+            const intensiteInput = document.getElementById('intensite');
+
+            intensiteBtns.forEach(btn => {
+                if (btn.dataset.preselected === '1') {
+                    btn.classList.add('active');
+                }
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    intensiteBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    intensiteInput.value = btn.dataset.gender;
+                });
+            });
+        </script>
     </div>
 </body>
 </html>

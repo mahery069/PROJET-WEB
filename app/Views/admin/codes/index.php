@@ -13,7 +13,7 @@
         <a href="/admin/codes/create" class="btn">+ Generer Code</a>
         
         <?php if (session()->getFlashdata('success')): ?>
-            <div style="background: #d4edda; color: #155724; padding: 12px; border-radius: 5px; margin: 20px 0;">
+            <div class="alert alert-success mt-20">
                 <?= session()->getFlashdata('success') ?>
             </div>
         <?php endif; ?>
@@ -32,8 +32,8 @@
                     <td><?= $code['date_utilisation'] ?? '-' ?></td>
                     <td>
                         <?php if (!$code['est_utilise']): ?>
-                            <a href="/admin/codes/validate/<?= $code['id'] ?>" class="btn btn-success" style="padding: 5px 10px; font-size: 12px;">Valider</a>
-                            <a href="/admin/codes/delete/<?= $code['id'] ?>" class="btn" style="padding: 5px 10px; font-size: 12px; background: #dc3545;" onclick="return confirm('Supprimer ce code?');">Supprimer</a>
+                            <a href="/admin/codes/validate/<?= $code['id'] ?>" class="btn-sm btn-success">Valider</a>
+                            <a href="/admin/codes/delete/<?= $code['id'] ?>" class="btn-sm btn-danger" onclick="return confirm('Supprimer ce code?');">Supprimer</a>
                         <?php endif; ?>
                     </td>
                 </tr>
