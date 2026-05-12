@@ -110,7 +110,6 @@
     </div>
 
     <script>
-        // Handle genre button selection
         const genreBtns = document.querySelectorAll('.gender-buttons--genre .gender-btn');
         const genreInput = document.getElementById('genre');
 
@@ -126,7 +125,6 @@
             });
         });
 
-        // Handle objectif button selection
         const objectifBtns = document.querySelectorAll('.gender-buttons--objectif .gender-btn');
         const objectifInput = document.getElementById('objectif');
 

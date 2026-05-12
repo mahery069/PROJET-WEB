@@ -13,9 +13,6 @@
     <div class="login-container">
         <h1>Etape 2 — Informations physiques</h1>
         <form id="registerStep2" method="POST" action="/auth/register-step2" novalidate>
-            <div class="form-group">
-               
-
             <div class="input-row">
                 <div class="form-group">
                     <label for="taille">Taille (cm)</label>
@@ -28,7 +25,7 @@
             </div>
 
             <div class="imc-container">
-                <div class="imc-label">Votre IMC calculé</div>
+                <div class="imc-label">Votre IMC calcule</div>
                 <div class="imc-bar">
                     <div class="imc-progress" id="imcProgress"></div>
                 </div>
@@ -74,7 +71,6 @@
     const objectifInput = document.getElementById('objectif');
     const objectifBtns = document.querySelectorAll('.gender-buttons:last-of-type .gender-btn');
 
-    // Handle objectif button selection
     objectifBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -115,7 +111,7 @@
             imcCategory.textContent = 'Surpoids';
         } else {
             imcCategory.classList.add('obese');
-            imcCategory.textContent = 'Obésité';
+            imcCategory.textContent = 'Obesite';
         }
     }
 

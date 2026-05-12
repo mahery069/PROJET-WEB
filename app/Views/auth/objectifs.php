@@ -50,7 +50,6 @@
     </div>
 
     <script>
-        // Handle objectif button selection
         const objectifBtns = document.querySelectorAll('.gender-buttons .gender-btn');
         const objectifInput = document.getElementById('objectif');
 

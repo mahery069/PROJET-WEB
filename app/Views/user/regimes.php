@@ -20,7 +20,6 @@
             <h1>Regimes suggeres</h1>
             <p>Choisissez un regime adapte a votre objectif. Si vous etes Gold, la remise de 15% est appliquee automatiquement.</p>
             <div class="toolbar">
-                <a class="btn" href="/dashboard">Retour dashboard</a>
                 <a class="btn secondary" href="/porte-monnaie">Ouvrir le wallet</a>
                 <a class="btn gold" href="/wallet/gold">Option Gold</a>
             </div>

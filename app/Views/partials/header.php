@@ -19,7 +19,7 @@
 
     <script>
         function confirmLogout(logoutUrl) {
-            if (confirm('Souhaitez-vous vraiment vous déconnecter ?')) {
+            if (confirm('Souhaitez-vous vraiment vous deconnecter ?')) {
                 window.location.href = logoutUrl;
             }
         }

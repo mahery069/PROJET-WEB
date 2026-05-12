@@ -3,26 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paramètres</title>
+    <title>Parametres</title>
     <link rel="stylesheet" href="/assets/css/nutriplan.css">
 </head>
 <body>
     <?= view('partials/admin_header') ?>
 
     <div class="container">
-        <h1>Paramètres</h1>
+        <h1>Parametres</h1>
         <?php if (session()->getFlashdata('success')): ?>
             <div class="success"><?= session()->getFlashdata('success') ?></div>
         <?php endif; ?>
 
         <div class="actions">
-            <a href="/admin/parametres/create" class="btn">+ Ajouter Paramètre</a>
+            <a href="/admin/parametres/create" class="btn">+ Ajouter Parametre</a>
         </div>
 
         <table>
             <thead>
                 <tr>
-                    <th>Clé</th>
+                    <th>Cle</th>
                     <th>Valeur</th>
                     <th>Description</th>
                     <th>Actions</th>

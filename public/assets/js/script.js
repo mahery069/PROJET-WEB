@@ -1,12 +1,7 @@
-// Script principal du projet S4
-// Selecteur de regime alimentaire
-
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Application chargee');
-    // Ajouter votre code JavaScript ici
 });
 
-// Wallet helper functions
 function fetchWalletBalance(userId) {
     if (!userId) return;
     fetch('/wallet/balance?user_id=' + encodeURIComponent(userId))
@@ -63,7 +58,6 @@ function applyGoldDiscount(price, isGold) {
     return amount.toFixed(2);
 }
 
-// UI wiring for wallet widget
 document.addEventListener('DOMContentLoaded', function() {
     var btn = document.getElementById('wallet-redeem-btn');
     var codeInput = document.getElementById('wallet-code');

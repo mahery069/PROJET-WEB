@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= isset($parametre) ? 'Modifier' : 'Ajouter' ?> Paramètre</title>
+    <title><?= isset($parametre) ? 'Modifier' : 'Ajouter' ?> Parametre</title>
     <link rel="stylesheet" href="/assets/css/nutriplan.css">
 </head>
 <body>
     <?= view('partials/admin_header') ?>
 
     <div class="container">
-        <h1><?= isset($parametre) ? 'Modifier' : 'Ajouter' ?> Paramètre</h1>
+        <h1><?= isset($parametre) ? 'Modifier' : 'Ajouter' ?> Parametre</h1>
 
         <form method="POST" action="<?= isset($parametre) ? '/admin/parametres/update/'.$parametre['id'] : '/admin/parametres' ?>">
             <div class="form-group">
-                <label>Clé</label>
+                <label>Cle</label>
                 <input type="text" name="cle" value="<?= esc($parametre['cle'] ?? '') ?>" required />
             </div>
             <div class="form-group">

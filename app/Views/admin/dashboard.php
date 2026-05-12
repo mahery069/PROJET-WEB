@@ -22,22 +22,22 @@
                 <div class="mini-stat"><?= number_format((float)$stats['total_wallet'],0,',',' ') ?> Ar</div>
             </div>
             <div class="stat-card">
-                <div class="muted">Régimes</div>
+                <div class="muted">Regimes</div>
                 <div class="mini-stat"><?= $stats['total_regimes'] ?></div>
             </div>
             <div class="stat-card">
-                <div class="muted">Activités</div>
+                <div class="muted">Activites</div>
                 <div class="mini-stat"><?= $stats['total_activites'] ?></div>
             </div>
             <div class="stat-card">
-                <div class="muted">Codes (total / utilisés)</div>
+                <div class="muted">Codes (total / utilises)</div>
                 <div class="mini-stat"><?= $stats['total_codes'] ?> / <?= $stats['used_codes'] ?></div>
             </div>
         </div>
 
         <div class="grid-3 mt-16">
             <div class="card">
-                <h4>Codes: utilisés vs non-utilisés</h4>
+                <h4>Codes: utilises vs non utilises</h4>
                 <canvas id="codesChart"></canvas>
             </div>
 
@@ -53,12 +53,12 @@
         </div>
 
         <section class="mt-24">
-            <h3>Tableau croisé: abonnements par régime</h3>
+            <h3>Tableau croise: abonnements par regime</h3>
             <?php if (!empty($subscriptions_pivot)): ?>
                 <table class="pivot">
                     <thead>
                         <tr>
-                            <th>Régime</th>
+                            <th>Regime</th>
                             <th>Actifs</th>
                             <th>Inactifs</th>
                             <th>Total</th>
@@ -76,7 +76,7 @@
                     </tbody>
                 </table>
             <?php else: ?>
-                <div class="muted">Aucune donnée d'abonnement disponible.</div>
+                <div class="muted">Aucune donnee d'abonnement disponible.</div>
             <?php endif; ?>
         </section>
 
@@ -88,24 +88,21 @@
         const topUsers = <?= json_encode($topUsersChart ?? ['labels'=>[], 'data'=>[]]) ?>;
         const objectives = <?= json_encode($objectiveChart ?? ['labels'=>[], 'data'=>[]]) ?>;
 
-        // Codes doughnut
         new Chart(document.getElementById('codesChart'), {
             type: 'doughnut',
             data: {
-                labels: ['Utilisés','Non utilisés'],
+                labels: ['Utilises','Non utilises'],
                 datasets: [{ data: [codesData.used, codesData.unused], backgroundColor: ['#4caf50','#f44336'] }]
             },
             options: { responsive: true }
         });
 
-        // Top users bar
         new Chart(document.getElementById('topUsersChart'), {
             type: 'bar',
             data: { labels: topUsers.labels, datasets: [{ label: 'Solde', data: topUsers.data, backgroundColor: '#2196f3' }] },
             options: { responsive: true, scales: { y: { beginAtZero: true } } }
         });
 
-        // Objectives pie
         new Chart(document.getElementById('objectiveChart'), {
             type: 'pie',
             data: { labels: objectives.labels, datasets: [{ data: objectives.data, backgroundColor: ['#ff9800','#8bc34a','#03a9f4'] }] },

@@ -20,7 +20,7 @@
             <h1>Porte-monnaie</h1>
             <p>Rechargez avec un code, consultez votre solde et accedez a l'adhesion Gold.</p>
             <div class="toolbar">
-                <a class="btn" href="/dashboard">Retour dashboard</a>
+               
                 <a class="btn secondary" href="/regimes">Voir les regimes</a>
                 <a class="btn gold" href="/wallet/gold">Option Gold</a>
             </div>

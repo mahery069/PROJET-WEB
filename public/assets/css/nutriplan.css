@@ -40,12 +40,12 @@ button, input, select, textarea { font: inherit; }
 .container,
 .dashboard-page,
 .main {
-  width: min(1180px, calc(100% - 36px));
+  width: min(1240px, calc(100% - 28px));
   margin: 0 auto;
 }
 
 .wrap,
-.container { padding: 28px 0 48px; }
+.container { padding: 28px 0 56px; }
 
 /* Typography */
 h1, h2, h3, h4, .page-title, .logo-name, .sidebar-logo-text, .topbar-title {
@@ -75,9 +75,10 @@ h1, h2, h3, h4, .page-title, .logo-name, .sidebar-logo-text, .topbar-title {
 .minimal-box {
   background: rgba(255,255,255,.94);
   border: 1px solid var(--border);
-  border-radius: 18px;
-  box-shadow: var(--shadow);
+  border-radius: 24px;
+  box-shadow: 0 18px 42px rgba(26, 46, 30, 0.08);
   backdrop-filter: blur(10px);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
 }
 
 .card,
@@ -95,7 +96,24 @@ h1, h2, h3, h4, .page-title, .logo-name, .sidebar-logo-text, .topbar-title {
 .message,
 .alert,
 .minimal-box {
-  padding: 18px;
+  padding: 22px;
+}
+
+.card:hover,
+.card-shell:hover,
+.stat-card:hover,
+.stat-item:hover,
+.panel:hover,
+.login-container:hover,
+.hero:hover,
+.subscription:hover,
+.gold-box:hover,
+.admin-card:hover,
+.wallet-card:hover,
+.login-card:hover,
+.info-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 22px 48px rgba(26, 46, 30, 0.11);
 }
 
 /* Buttons */
@@ -133,7 +151,7 @@ button,
   gap: 6px;
   min-height: 40px;
   padding: 0 18px;
-  border-radius: 999px;
+  border-radius: 14px;
   color: #fff;
   font-weight: 700;
   background: linear-gradient(135deg, var(--green), #21533e);
@@ -197,7 +215,7 @@ button:hover,
   height: 30px;
   padding: 0 10px;
   font-size: 12px;
-  border-radius: 8px;
+  border-radius: 10px;
   box-shadow: none;
 }
 
@@ -214,9 +232,11 @@ button:hover,
   align-items: center;
   gap: 12px;
   justify-content: space-between;
-  background: rgba(255,255,255,.92);
+  background: rgba(255,255,255,.95);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--border);
+  padding: 14px 18px;
+  border-radius: 0 0 18px 18px;
 }
 
 .app-header {
@@ -412,6 +432,14 @@ button:hover,
   gap: 16px;
 }
 
+.hero,
+.panel,
+.login-container,
+.dashboard-hero,
+.page-header {
+  overflow: hidden;
+}
+
 .hero h1,
 .dashboard-hero__copy h1,
 .page-title { font-size: clamp(1.7rem, 3vw, 2.35rem); margin: 0; color: var(--text-main); }
@@ -454,7 +482,7 @@ button:hover,
 .grid-4,
 .form-grid {
   display: grid;
-  gap: 16px;
+  gap: 18px;
 }
 
 .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -668,7 +696,7 @@ tr:hover td { background: rgba(240,250,245,.7); }
 
 .gender-buttons { display: flex; gap: 12px; margin-bottom: 16px; }
 .gender-btn {
-  flex: 1; min-height: 44px; padding: 0 14px; border-radius: 12px;
+  flex: 1; min-height: 44px; padding: 0 14px; border-radius: 16px;
   border: 1px solid #d7dbe4; background: #fff; cursor: pointer; font-weight: 700; color: var(--text-mid);
 }
 
@@ -678,7 +706,7 @@ tr:hover td { background: rgba(240,250,245,.7); }
 .input-row .form-group { flex: 1; margin-bottom: 0; }
 
 .imc-container {
-  margin: 20px 0; padding: 16px; border-radius: 14px; border: 1px solid var(--border); background: rgba(255,255,255,.72);
+  margin: 20px 0; padding: 18px; border-radius: 18px; border: 1px solid var(--border); background: rgba(255,255,255,.74);
 }
 
 .imc-label { font-size: 12px; color: var(--text-soft); margin-bottom: 8px; }

@@ -14,15 +14,13 @@
             <div class="dashboard-hero__copy">
                 <p class="eyebrow">Dashboard NutriPlan</p>
                 <h1>Bonjour, <?= esc($userName ?? 'Utilisateur') ?></h1>
-                <p class="header-subtitle">Voici votre tableau de bord NutriPlan. Accédez rapidement à vos objectifs, vos régimes et votre porte-monnaie.</p>
+                <p class="header-subtitle">Voici votre tableau de bord NutriPlan. Accedez rapidement a vos objectifs, vos regimes et votre porte-monnaie.</p>
                 <?php if (! empty($isGold)): ?>
                     <div class="badge">Option Gold active - 15% sur les regimes</div>
                 <?php endif; ?>
             </div>
 
             <div class="dashboard-hero__actions">
-                <a class="btn btn-gold" href="/wallet/gold">Option Gold</a>
-                <a class="btn secondary" href="/objectifs">Objectifs</a>
                 <a class="btn secondary" href="/export-pdf">Export PDF</a>
             </div>
         </section>
@@ -51,7 +49,7 @@
                     <nav class="shortcuts-nav">
                         <a href="/regimes" class="shortcut-link">
                             <span class="shortcut-icon">RG</span>
-                            <span>Mes Régimes</span>
+                            <span>Mes Regimes</span>
                         </a>
                         <a href="/objectifs" class="shortcut-link">
                             <span class="shortcut-icon">OB</span>
@@ -70,7 +68,6 @@
             </aside>
 
             <main class="main-content">
-                <!-- Stats Top -->
                 <div class="stats-top">
                     <div class="stat-item">
                         <div class="stat-label">IMC actuel</div>
@@ -91,9 +88,8 @@
                     </div>
                 </div>
 
-                <!-- IMC Detail Section -->
                 <div class="imc-detail-card card-shell">
-                    <h3>Mon IMC en détail</h3>
+                    <h3>Mon IMC en detail</h3>
                     <div class="imc-detail-container">
                         <div class="imc-circle">
                             <svg viewBox="0 0 200 200" class="imc-svg">
@@ -116,18 +112,17 @@
                                 </div>
                                 <div class="imc-range-indicator" style="left: <?= $imc ? min(100, (($imc - 18.5) / (40 - 18.5)) * 100) : 0 ?>%"></div>
                             </div>
-                            <div class="imc-status">IMC ideal : 18.5 – 24.9  Vous êtes dans la norme, proche du seuil superieur.</div>
+                            <div class="imc-status">IMC ideal : 18.5 - 24.9  Vous etes dans la norme, proche du seuil superieur.</div>
                         </div>
                     </div>
                     <div class="imc-range-legend">
                         <span class="legend-item" style="color: #3b8bd4;">Poids insuffisant</span>
                         <span class="legend-item" style="color: var(--green);">Poids normal</span>
                         <span class="legend-item" style="color: #e65100;">Surpoids</span>
-                        <span class="legend-item" style="color: var(--red);">Obésité</span>
+                        <span class="legend-item" style="color: var(--red);">Obesite</span>
                     </div>
                 </div>
 
-                <!-- Regime Actif -->
                 <div class="overview-grid">
                     <section class="card-shell">
                         <h3>Regime actif</h3>

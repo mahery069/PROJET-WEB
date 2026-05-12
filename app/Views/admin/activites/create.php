@@ -26,13 +26,13 @@
                 <label>Intensite *</label>
                 <div class="gender-buttons">
                     <button type="button" class="gender-btn" data-gender="faible">
-                        🟢 Faible
+                        Faible
                     </button>
                     <button type="button" class="gender-btn" data-gender="moyenne" data-preselected="1">
-                        🟡 Moyenne
+                        Moyenne
                     </button>
                     <button type="button" class="gender-btn" data-gender="elevee">
-                        🔴 Elevee
+                        Elevee
                     </button>
                 </div>
                 <input type="hidden" id="intensite" name="intensite" required>
@@ -52,7 +52,6 @@
         </form>
 
         <script>
-            // Handle intensite button selection
             const intensiteBtns = document.querySelectorAll('.gender-buttons .gender-btn');
             const intensiteInput = document.getElementById('intensite');
 

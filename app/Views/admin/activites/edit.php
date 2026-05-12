@@ -26,13 +26,13 @@
                 <label>Intensite</label>
                 <div class=\"gender-buttons\">
                     <button type=\"button\" class=\"gender-btn\" data-gender=\"faible\" <?= $activite['intensite'] == 'faible' ? 'data-preselected=\"1\"' : '' ?>>
-                        🟢 Faible
+                        Faible
                     </button>
                     <button type=\"button\" class=\"gender-btn\" data-gender=\"moyenne\" <?= $activite['intensite'] == 'moyenne' ? 'data-preselected=\"1\"' : '' ?>>
-                        🟡 Moyenne
+                        Moyenne
                     </button>
                     <button type=\"button\" class=\"gender-btn\" data-gender=\"elevee\" <?= $activite['intensite'] == 'elevee' ? 'data-preselected=\"1\"' : '' ?>>
-                        🔴 Elevee
+                        Elevee
                     </button>
                 </div>
                 <input type=\"hidden\" id=\"intensite\" name=\"intensite\" value=\"<?= esc($activite['intensite']) ?>\" required>
@@ -52,7 +52,6 @@
         </form>
 
         <script>
-            // Handle intensite button selection
             const intensiteBtns = document.querySelectorAll('.gender-buttons .gender-btn');
             const intensiteInput = document.getElementById('intensite');
 
