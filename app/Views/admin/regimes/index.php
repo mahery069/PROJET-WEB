@@ -24,7 +24,7 @@
                 <tr>
                     <th>Nom</th>
                     <th>Duree (jours)</th>
-                    <th>Prix (EUR)</th>
+                    <th>Prix (Ar)</th>
                     <th>Variation Poids (kg)</th>
                     <th>Viande %</th>
                     <th>Actif</th>

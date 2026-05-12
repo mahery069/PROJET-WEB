@@ -150,7 +150,7 @@ class Auth extends BaseController
         }
 
         session()->destroy();
-        return redirect()->to('/auth/login')
+        return redirect()->to('/')
             ->with('success', 'Vous avez été déconnecté');
     }
 
@@ -396,7 +396,7 @@ class Auth extends BaseController
                 <tr>
                     <td>' . htmlspecialchars($sub['nom']) . '</td>
                     <td>' . htmlspecialchars(substr($sub['description'] ?? '', 0, 50)) . '...</td>
-                    <td>€' . number_format($sub['prix_paye'], 2) . '</td>
+                    <td>' . number_format($sub['prix_paye'], 0, ',', ' ') . ' Ar</td>
                     <td>' . htmlspecialchars($sub['date_fin']) . '</td>
                 </tr>';
             }

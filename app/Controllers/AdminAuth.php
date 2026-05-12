@@ -60,6 +60,6 @@ class AdminAuth extends BaseController
     public function logout()
     {
         session()->remove(['admin_id', 'admin_email', 'admin_nom', 'admin_role']);
-        return redirect()->to('/admin/login')->with('success', 'Vous avez été déconnecté');
+        return redirect()->to('/')->with('success', 'Vous avez été déconnecté');
     }
 }

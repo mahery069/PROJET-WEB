@@ -19,7 +19,7 @@
             </div>
             <div class="stat-card">
                 <div class="muted">Solde total (wallet)</div>
-                <div class="mini-stat"><?= number_format((float)$stats['total_wallet'],2,',',' ') ?> EUR</div>
+                <div class="mini-stat"><?= number_format((float)$stats['total_wallet'],0,',',' ') ?> Ar</div>
             </div>
             <div class="stat-card">
                 <div class="muted">Régimes</div>

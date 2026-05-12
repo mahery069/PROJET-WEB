@@ -30,7 +30,7 @@
             <div class="stats">
                 <div class="stat">
                     <div class="label">Solde actuel</div>
-                    <div class="value" data-wallet-balance><?= number_format($balance, 2, ',', ' ') ?> EUR</div>
+                    <div class="value" data-wallet-balance><?= number_format($balance, 0, ',', ' ') ?> Ar</div>
                 </div>
                 <div class="stat">
                     <div class="label">Statut</div>
@@ -64,7 +64,7 @@
                             <div class="subscription">
                                 <strong><?= esc($subscription['nom']) ?></strong>
                                 <div class="meta">Du <?= esc($subscription['date_debut']) ?> au <?= esc($subscription['date_fin']) ?></div>
-                                <div class="meta">Paye: <?= number_format((float) $subscription['prix_paye'], 2, ',', ' ') ?> EUR</div>
+                                <div class="meta">Paye: <?= number_format((float) $subscription['prix_paye'], 0, ',', ' ') ?> Ar</div>
                             </div>
                         <?php endforeach; ?>
                     <?php else: ?>

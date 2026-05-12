@@ -38,14 +38,14 @@
 
                     <div class="wallet-info">
                         <div class="wallet-balance">
-                            Solde wallet: <strong id="wallet-balance-display">0.00 EUR</strong>
+                            Solde wallet: <strong id="wallet-balance-display">0 Ar</strong>
                         </div>
                         <button type="button" class="btn-outline btn-sm" onclick="refreshBalance()">Refresh</button>
                     </div>
 
                     <div class="gold-price">
                         <div>Prix unique</div>
-                        <div class="price">50.00 EUR</div>
+                        <div class="price">50 Ar</div>
                         <div class="price-details">Acces illimite a 15% de remise</div>
                     </div>
 
@@ -119,7 +119,7 @@
             .then(data => {
                 if (data.success) {
                     document.getElementById('wallet-balance-display').textContent = 
-                        parseFloat(data.data.solde).toFixed(2) + ' EUR';
+                        parseFloat(data.data.solde).toFixed(0) + ' Ar';
                 }
             })
             .catch(error => console.error('Error fetching balance:', error));

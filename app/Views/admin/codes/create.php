@@ -17,7 +17,7 @@
 
         <form method="POST" action="/admin/codes">
             <div class="form-group">
-                <label>Montant (€) *</label>
+                <label>Montant (Ar) *</label>
                 <input type="number" name="montant" min="0" step="0.01" required placeholder="Ex: 10.00">
             </div>
 

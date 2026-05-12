@@ -53,7 +53,7 @@
                 <div class="grid">
                     <div class="form-group">
                         <label for="genre">Genre</label>
-                        <div class="gender-buttons">
+                        <div class="gender-buttons gender-buttons--genre">
                             <button type="button" class="gender-btn" data-gender="homme" <?= $genreValue === 'homme' ? 'data-preselected="1"' : '' ?>>
                                 ♂ Homme
                             </button>
@@ -84,17 +84,17 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                    <div class="form-group">
                     <label for="objectif">Objectif</label>
-                    <div class="gender-buttons">
+                        <div class="gender-buttons gender-buttons--objectif">
                         <button type="button" class="gender-btn" data-gender="augmenter" <?= $objectifValue === 'augmenter' ? 'data-preselected="1"' : '' ?>>
-                            📈 Augmenter
+                            Augmenter
                         </button>
                         <button type="button" class="gender-btn" data-gender="reduire" <?= $objectifValue === 'reduire' ? 'data-preselected="1"' : '' ?>>
-                            📉 Reduire
+                            Reduire
                         </button>
                         <button type="button" class="gender-btn" data-gender="imc_ideal" <?= $objectifValue === 'imc_ideal' ? 'data-preselected="1"' : '' ?>>
-                            ⚖️ IMC ideal
+                            IMC ideal
                         </button>
                     </div>
                     <input type="hidden" id="objectif" name="objectif" value="<?= esc($objectifValue) ?>">
@@ -111,7 +111,7 @@
 
     <script>
         // Handle genre button selection
-        const genreBtns = document.querySelectorAll('.gender-buttons:nth-of-type(1) .gender-btn');
+        const genreBtns = document.querySelectorAll('.gender-buttons--genre .gender-btn');
         const genreInput = document.getElementById('genre');
 
         genreBtns.forEach(btn => {
@@ -127,7 +127,7 @@
         });
 
         // Handle objectif button selection
-        const objectifBtns = document.querySelectorAll('.gender-buttons:nth-of-type(2) .gender-btn');
+        const objectifBtns = document.querySelectorAll('.gender-buttons--objectif .gender-btn');
         const objectifInput = document.getElementById('objectif');
 
         objectifBtns.forEach(btn => {

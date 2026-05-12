@@ -18,27 +18,28 @@ $routes->post('/auth/register-step2', 'Auth::handleRegisterStep2');
 $routes->get('/auth/forgot-password', 'Auth::forgotPassword');
 $routes->get('/auth/logout', 'Auth::logout');
 
-$routes->get('/profil', 'Auth::profile');
-$routes->get('/mon-profil', 'Auth::profile');
-$routes->post('/profil', 'Auth::updateProfile');
-$routes->get('/export-pdf', 'Auth::exportPDF');
+// Protected user routes (require authentication)
+$routes->group('', ['filter' => 'UserAuth'], function($routes) {
+    $routes->get('/profil', 'Auth::profile');
+    $routes->get('/mon-profil', 'Auth::profile');
+    $routes->post('/profil', 'Auth::updateProfile');
+    $routes->get('/export-pdf', 'Auth::exportPDF');
+    $routes->get('/objectifs', 'Auth::objectifs');
+    $routes->get('/objectifs/data', 'Auth::objectifsData');
 
-$routes->get('/objectifs', 'Auth::objectifs');
-$routes->get('/objectifs/data', 'Auth::objectifsData');
+    // User Dashboard routes
+    $routes->get('/dashboard', 'Dashboard::index');
+    $routes->get('/regimes', 'Dashboard::regimes');
+    $routes->get('/porte-monnaie', 'Dashboard::wallet');
 
-// User Dashboard routes (protected by user auth)
-$routes->get('/dashboard', 'Dashboard::index');
-$routes->get('/regimes', 'Dashboard::regimes');
-$routes->get('/porte-monnaie', 'Dashboard::wallet');
-
-$routes->get('wallet/gold', 'Wallet::goldPage');
-
-$routes->get('wallet/balance', 'Wallet::balance');
-$routes->post('wallet/redeem', 'Wallet::redeem');
-$routes->post('wallet/purchase', 'Wallet::purchase');
-$routes->get('wallet/subscriptions', 'Wallet::subscriptions');
-$routes->post('wallet/gold/purchase', 'Wallet::purchaseGold');
-$routes->get('wallet/gold/status', 'Wallet::goldStatus');
+    $routes->get('wallet/gold', 'Wallet::goldPage');
+    $routes->get('wallet/balance', 'Wallet::balance');
+    $routes->post('wallet/redeem', 'Wallet::redeem');
+    $routes->post('wallet/purchase', 'Wallet::purchase');
+    $routes->get('wallet/subscriptions', 'Wallet::subscriptions');
+    $routes->post('wallet/gold/purchase', 'Wallet::purchaseGold');
+    $routes->get('wallet/gold/status', 'Wallet::goldStatus');
+});
 
 $routes->get('/admin/login', 'AdminAuth::login');
 $routes->post('/admin/login', 'AdminAuth::handleLogin');

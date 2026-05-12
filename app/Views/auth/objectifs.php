@@ -20,13 +20,13 @@
                 <label for="objectif">Objectif</label>
                 <div class="gender-buttons">
                     <button type="button" class="gender-btn" data-gender="augmenter">
-                        📈 Augmenter
+                        Augmenter
                     </button>
                     <button type="button" class="gender-btn" data-gender="reduire">
-                        📉 Reduire
+                        Reduire
                     </button>
                     <button type="button" class="gender-btn" data-gender="imc_ideal">
-                        ⚖️ IMC ideal
+                        IMC ideal
                     </button>
                 </div>
                 <input type="hidden" id="objectif" name="objectif">

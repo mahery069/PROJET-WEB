@@ -34,7 +34,7 @@
                 </div>
                 <div class="stat">
                     <div class="label">Solde wallet</div>
-                    <div class="value" data-wallet-balance><?= number_format($balance, 2, ',', ' ') ?> EUR</div>
+                    <div class="value" data-wallet-balance><?= number_format($balance, 0, ',', ' ') ?> Ar</div>
                 </div>
                 <div class="stat">
                     <div class="label">Statut</div>
@@ -51,9 +51,9 @@
                             <div class="desc"><?= esc($regime['description'] ?? 'Regime disponible') ?></div>
                             <div class="price-row">
                                 <div>
-                                    <div class="current"><?= number_format((float) $regime['prix_affiche'], 2, ',', ' ') ?> EUR</div>
+                                    <div class="current"><?= number_format((float) $regime['prix_affiche'], 0, ',', ' ') ?> Ar</div>
                                     <?php if (! empty($isGold) && (float) $regime['prix_original'] > (float) $regime['prix_affiche']): ?>
-                                        <div class="original"><?= number_format((float) $regime['prix_original'], 2, ',', ' ') ?> EUR</div>
+                                        <div class="original"><?= number_format((float) $regime['prix_original'], 0, ',', ' ') ?> Ar</div>
                                     <?php endif; ?>
                                 </div>
                                 <div class="pill"><?= esc($regime['variation_poids']) ?> kg</div>

@@ -20,13 +20,13 @@
 
         <table>
             <thead>
-                <tr><th>Code</th><th>Montant (EUR)</th><th>Utilise</th><th>Utilisateur</th><th>Date Utilisation</th><th>Actions</th></tr>
+                <tr><th>Code</th><th>Montant (Ar)</th><th>Utilise</th><th>Utilisateur</th><th>Date Utilisation</th><th>Actions</th></tr>
             </thead>
             <tbody>
                 <?php foreach ($codes as $code): ?>
                 <tr class="<?= $code['est_utilise'] ? 'used' : 'unused' ?>">
                     <td><strong><?= esc($code['code']) ?></strong></td>
-                    <td><?= number_format($code['montant'], 2) ?></td>
+                    <td><?= number_format($code['montant'], 0, ',', ' ') ?> Ar</td>
                     <td><?= $code['est_utilise'] ? 'Oui' : 'Non' ?></td>
                     <td><?= $code['id_utilisateur'] ?? '-' ?></td>
                     <td><?= $code['date_utilisation'] ?? '-' ?></td>

@@ -79,7 +79,7 @@
         
         <section id="wallet-widget" class="card mt-20 max-w-420">
             <h2>Wallet</h2>
-            <div class="mb-8">Solde: <strong id="wallet-balance">0.00 EUR</strong></div>
+            <div class="mb-8">Solde: <strong id="wallet-balance">0 Ar</strong></div>
             <div class="d-flex gap-8 mb-8">
                 <input id="wallet-user-id" type="number" placeholder="user id" value="1" class="w-80 p-6" />
                 <input id="wallet-code" type="text" placeholder="Entrez code" class="p-6" />

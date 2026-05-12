@@ -8,6 +8,14 @@
         <a href="/admin/activites">Activites</a>
         <a href="/admin/parametres">Paramètres</a>
         <a href="/admin/codes">Codes</a>
-        <a href="/admin/logout">Deconnexion</a>
+        <a href="javascript:void(0);" onclick="confirmLogout('/admin/logout')">Déconnexion</a>
     </nav>
+
+    <script>
+        function confirmLogout(logoutUrl) {
+            if (confirm('Souhaitez-vous vraiment vous déconnecter ?')) {
+                window.location.href = logoutUrl;
+            }
+        }
+    </script>
 </header>

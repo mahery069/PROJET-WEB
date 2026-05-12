@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (msg) msg.textContent = 'En cours...';
             redeemCode(userId, code).then(function(json){
                 if (json && json.success) {
-                    if (msg) msg.textContent = 'Recharge OK: +' + (json.data && json.data.montant ? json.data.montant + ' €' : '');
+                    if (msg) msg.textContent = 'Recharge OK: +' + (json.data && json.data.montant ? json.data.montant + ' Ar' : '');
                     fetchWalletBalance(userId);
                     codeInput.value = '';
                 } else {

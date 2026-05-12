@@ -29,7 +29,7 @@
                     <input type="number" id="duree_jours" name="duree_jours" required min="1">
                 </div>
                 <div class="form-group">
-                    <label for="prix">Prix (€) *</label>
+                    <label for="prix">Prix (Ar) *</label>
                     <input type="number" id="prix" name="prix" required min="0" step="0.01">
                 </div>
             </div>
