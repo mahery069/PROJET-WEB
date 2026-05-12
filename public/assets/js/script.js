@@ -13,7 +13,7 @@ function fetchWalletBalance(userId) {
         .then(function(res){ return res.json(); })
         .then(function(json){
             if (json && json.success && json.data) {
-                var amount = parseFloat(json.data.solde).toFixed(2) + ' €';
+                var amount = parseFloat(json.data.solde).toFixed(2) + ' Ar';
                 var el = document.getElementById('wallet-balance');
                 if (el) el.textContent = amount;
 

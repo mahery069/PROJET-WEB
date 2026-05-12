@@ -3,7 +3,7 @@
         <a href="/">NutriPlan</a>
     </div>
     <nav class="app-header__nav">
-        <a href="/">Accueil</a>
+        <a href="/dashboard">Accueil</a>
         <?php if (session()->get('user_id')): ?>
             <a href="/dashboard">Dashboard</a>
             <a href="/regimes">Regimes</a>
